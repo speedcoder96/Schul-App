@@ -1,6 +1,7 @@
 
 package de.szut.ita13.app.schulapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import de.szut.ita13.app.schulapp.calendar.CalendarActivity;
 import de.szut.ita13.app.schulapp.utilities.DateUtilities;
 import de.szut.ita13.app.schulapp.utilities.InvalidTimeException;
 
@@ -38,23 +40,16 @@ public class TimeTableActivity extends ActionBarActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -62,5 +57,8 @@ public class TimeTableActivity extends ActionBarActivity {
         TextView textView = (TextView) view;
         TimeTableSubject timeTableSubject = (TimeTableSubject) textView.getTag();
         Toast.makeText(this, timeTableSubject.getInformation(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent();
+        intent.setClass(this.getApplicationContext(), CalendarActivity.class);
+        startActivity(intent);
     }
 }
