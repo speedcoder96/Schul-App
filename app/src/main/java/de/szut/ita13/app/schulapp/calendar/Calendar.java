@@ -23,6 +23,7 @@ public class Calendar {
         this.calendarView = (ListView) calendarActivity.findViewById(R.id.calendar);
         this.calendarElements = new ArrayList<CalendarElement>();
         this.calendarAdapter = new CalendarAdapter(calendarActivity, this);
+        this.calendarView.setAdapter(calendarAdapter);
     }
 
     public Activity getCalendarActivity() {

@@ -30,4 +30,9 @@ public class CalendarWeek implements CalendarElement {
     public int getSize() {
         return calendarDates.size();
     }
+
+    @Override
+    public int getLayoutID(int index) {
+        return CalendarElement.LAYOUT_IDS[index];
+    }
 }

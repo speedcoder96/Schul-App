@@ -20,4 +20,9 @@ public class CalendarHeader implements CalendarElement {
     public int getSize() {
         return WEEKDAYS.length;
     }
+
+    @Override
+    public int getLayoutID(int index) {
+        return CalendarElement.LAYOUT_IDS[index];
+    }
 }

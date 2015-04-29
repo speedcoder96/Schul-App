@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -50,9 +51,19 @@ public class CalendarAdapter extends BaseAdapter {
         if(calendarElement instanceof CalendarHeader) {
             view = calendarLayoutInflater.inflate(R.layout.calendar_header_layout, parent, false);
             view.setBackgroundColor(calendarActivity.getResources().getColor(R.color.orange));
+            CalendarHeader header = (CalendarHeader) calendarElement;
+            for(int i = 0; i < header.getSize(); i++) {
+                TextView textView = (TextView) view.findViewById(header.getLayoutID(i));
+                textView.setBackgroundColor(calendarActivity.getResources().getColor(R.color.yellow));
+            }
         } else if(calendarElement instanceof CalendarWeek) {
             view = calendarLayoutInflater.inflate(R.layout.calendar_week_layout, parent, false);
             view.setBackgroundColor(calendarActivity.getResources().getColor(R.color.red));
+            CalendarWeek week = (CalendarWeek) calendarElement;
+            for(int i = 0; i < week.getSize(); i++) {
+                TextView textView = (TextView) view.findViewById(week.getLayoutID(i));
+                textView.setBackgroundColor(calendarActivity.getResources().getColor(R.color.green));
+            }
         }
         return view;
     }
