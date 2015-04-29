@@ -58,6 +58,7 @@ public class TimeTableActivity extends ActionBarActivity {
         TimeTableSubject timeTableSubject = (TimeTableSubject) textView.getTag();
         Toast.makeText(this, timeTableSubject.getInformation(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent();
+
         intent.setClass(this.getApplicationContext(), CalendarActivity.class);
         startActivity(intent);
     }

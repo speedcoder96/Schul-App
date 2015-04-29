@@ -14,11 +14,12 @@ public class CalendarActivity extends ActionBarActivity {
 
     public static final String TAG = CalendarActivity.class.getSimpleName();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_time_table);
+
+        Calendar calendar = new Calendar(this);
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
