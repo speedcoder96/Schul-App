@@ -19,6 +19,10 @@ public class CalendarWeek implements CalendarElement {
         this.calendarDates = new ArrayList<CalendarDate>();
     }
 
+    public void addCalendarDate(CalendarDate calendarDate) {
+        calendarDates.add(calendarDate);
+    }
+
     @Override
     public Object getItem(int index) {
         if(index >= 0 && index < calendarDates.size())

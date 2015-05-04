@@ -1,7 +1,9 @@
 package de.szut.ita13.app.schulapp.calendar;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -20,6 +22,7 @@ public class CalendarActivity extends ActionBarActivity {
 
         Calendar calendar = new Calendar(this);
 
+        Log.d("Calendar", String.valueOf(CalendarMonth.getFirstDayIndexOfMonth(5, 2015)));
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

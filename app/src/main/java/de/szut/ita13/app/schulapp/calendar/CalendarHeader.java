@@ -6,13 +6,13 @@ package de.szut.ita13.app.schulapp.calendar;
 public class CalendarHeader implements CalendarElement {
 
     public static final String[] WEEKDAYS = {
-           "Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"
+           "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"
     };
 
     @Override
     public Object getItem(int index) {
         if(index >= 0 && index < WEEKDAYS.length)
-            return WEEKDAYS.length;
+            return WEEKDAYS[index];
         return null;
     }
 

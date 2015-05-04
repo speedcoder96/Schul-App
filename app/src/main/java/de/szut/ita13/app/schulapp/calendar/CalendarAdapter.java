@@ -19,24 +19,27 @@ public class CalendarAdapter extends BaseAdapter {
 
     private Calendar calendar;
     private Activity calendarActivity;
-    private ArrayList<CalendarElement> calendarElements;
+    private CalendarMonth currentMonth;
+    private ArrayList<CalendarElement> currentMonthElements;
     private final LayoutInflater calendarLayoutInflater;
 
     public CalendarAdapter(Context context, Calendar calendar) {
         this.calendar = calendar;
         this.calendarActivity = calendar.getCalendarActivity();
+        this.currentMonth = calendar.getCalendarMonth(CalendarMonth.CURRENT_MONTH);
+        this.currentMonthElements = currentMonth.getCalendarElements();
         this.calendarLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.calendarElements = calendar.getElements();
+
     }
 
     @Override
     public int getCount() {
-        return calendarElements.size();
+        return currentMonthElements.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return calendarElements.get(position);
+        return currentMonthElements.get(position);
     }
 
     @Override
@@ -47,22 +50,28 @@ public class CalendarAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        CalendarElement calendarElement = calendarElements.get(position);
+        CalendarElement calendarElement = currentMonthElements.get(position);
         if(calendarElement instanceof CalendarHeader) {
             view = calendarLayoutInflater.inflate(R.layout.calendar_header_layout, parent, false);
             view.setBackgroundColor(calendarActivity.getResources().getColor(R.color.orange));
             CalendarHeader header = (CalendarHeader) calendarElement;
             for(int i = 0; i < header.getSize(); i++) {
                 TextView textView = (TextView) view.findViewById(header.getLayoutID(i));
-                textView.setBackgroundColor(calendarActivity.getResources().getColor(R.color.yellow));
+                String weekday = String.valueOf(header.getItem(i));
+                textView.setText(weekday);
+                if(i == 0) {
+                    textView.setTextColor(calendarActivity.getResources().getColor(R.color.red));
+                }
             }
         } else if(calendarElement instanceof CalendarWeek) {
             view = calendarLayoutInflater.inflate(R.layout.calendar_week_layout, parent, false);
-            view.setBackgroundColor(calendarActivity.getResources().getColor(R.color.red));
             CalendarWeek week = (CalendarWeek) calendarElement;
             for(int i = 0; i < week.getSize(); i++) {
                 TextView textView = (TextView) view.findViewById(week.getLayoutID(i));
-                textView.setBackgroundColor(calendarActivity.getResources().getColor(R.color.green));
+                CalendarDate calendarDate = (CalendarDate) week.getItem(i);
+                textView.setOnClickListener(calendarDate);
+                if(!calendarDate.isNone())
+                    textView.setText(String.valueOf(calendarDate.getDay()));
             }
         }
         return view;
