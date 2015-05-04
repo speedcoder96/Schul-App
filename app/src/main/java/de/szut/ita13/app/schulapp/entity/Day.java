@@ -5,9 +5,9 @@ package de.szut.ita13.app.schulapp.entity;
  */
 public class Day implements Table{
 
-    private Integer id;
+    private Long id;
 
-    private Integer timeId;
+    private Long timeId;
     
     private String day;
 
@@ -19,19 +19,19 @@ public class Day implements Table{
 
     private String room;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getTimeId() {
+    public Long getTimeId() {
         return timeId;
     }
 
-    public void setTimeId(Integer timeId) {
+    public void setTimeId(Long timeId) {
         this.timeId = timeId;
     }
 
