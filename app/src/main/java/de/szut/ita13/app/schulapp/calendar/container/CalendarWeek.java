@@ -1,4 +1,4 @@
-package de.szut.ita13.app.schulapp.calendar;
+package de.szut.ita13.app.schulapp.calendar.container;
 
 import java.util.ArrayList;
 
@@ -37,6 +37,6 @@ public class CalendarWeek implements CalendarElement {
 
     @Override
     public int getLayoutID(int index) {
-        return CalendarElement.LAYOUT_IDS[index];
+        return LAYOUT_IDS[index];
     }
 }

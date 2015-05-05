@@ -1,11 +1,9 @@
-package de.szut.ita13.app.schulapp.calendar;
+package de.szut.ita13.app.schulapp.calendar.container;
 
 import android.app.Activity;
-import android.util.Log;
 import android.widget.ListView;
 import de.szut.ita13.app.schulapp.R;
-
-import static de.szut.ita13.app.schulapp.calendar.CalendarMonth.*;
+import de.szut.ita13.app.schulapp.calendar.adapter.CalendarAdapter;
 
 /**
  * Created by Rene on 29.04.2015.
@@ -36,12 +34,12 @@ public class Calendar {
 
     public CalendarMonth getCalendarMonth(int pointer) {
         switch(pointer) {
-            case PREVIOUS_MONTH:
-                return calendarMonths[PREVIOUS_MONTH];
-            case CURRENT_MONTH:
-                return calendarMonths[CURRENT_MONTH];
-            case NEXT_MONTH:
-                return calendarMonths[NEXT_MONTH];
+            case CalendarMonth.PREVIOUS_MONTH:
+                return calendarMonths[CalendarMonth.PREVIOUS_MONTH];
+            case CalendarMonth.CURRENT_MONTH:
+                return calendarMonths[CalendarMonth.CURRENT_MONTH];
+            case CalendarMonth.NEXT_MONTH:
+                return calendarMonths[CalendarMonth.NEXT_MONTH];
             default:
                 return null;
         }

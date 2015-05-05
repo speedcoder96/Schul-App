@@ -1,4 +1,4 @@
-package de.szut.ita13.app.schulapp.calendar;
+package de.szut.ita13.app.schulapp.calendar.container;
 
 import java.util.ArrayList;
 

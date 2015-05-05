@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
-import de.szut.ita13.app.schulapp.TimeTable;
-import de.szut.ita13.app.schulapp.TimeTableColumn;
-import de.szut.ita13.app.schulapp.TimeTableElement;
-import de.szut.ita13.app.schulapp.TimeTableRow;
-import de.szut.ita13.app.schulapp.TimeTableSubject;
+import de.szut.ita13.app.schulapp.timetable.container.TimeTable;
+import de.szut.ita13.app.schulapp.timetable.container.TimeTableColumn;
+import de.szut.ita13.app.schulapp.timetable.container.TimeTableElement;
+import de.szut.ita13.app.schulapp.timetable.container.TimeTableRow;
+import de.szut.ita13.app.schulapp.timetable.container.TimeTableSubject;
 
 
 /**

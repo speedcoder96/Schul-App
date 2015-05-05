@@ -1,4 +1,4 @@
-package de.szut.ita13.app.schulapp.calendar;
+package de.szut.ita13.app.schulapp.calendar.container;
 
 /**
  * Created by Rene on 29.04.2015.
@@ -23,6 +23,6 @@ public class CalendarHeader implements CalendarElement {
 
     @Override
     public int getLayoutID(int index) {
-        return CalendarElement.LAYOUT_IDS[index];
+        return LAYOUT_IDS[index];
     }
 }

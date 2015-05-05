@@ -1,4 +1,4 @@
-package de.szut.ita13.app.schulapp.calendar;
+package de.szut.ita13.app.schulapp.calendar.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.szut.ita13.app.schulapp.R;
+import de.szut.ita13.app.schulapp.calendar.container.Calendar;
+import de.szut.ita13.app.schulapp.calendar.container.CalendarDate;
+import de.szut.ita13.app.schulapp.calendar.container.CalendarElement;
+import de.szut.ita13.app.schulapp.calendar.container.CalendarHeader;
+import de.szut.ita13.app.schulapp.calendar.container.CalendarMonth;
+import de.szut.ita13.app.schulapp.calendar.container.CalendarWeek;
 
 /**
  * Created by Rene on 29.04.2015.
