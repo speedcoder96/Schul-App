@@ -14,7 +14,7 @@ import de.szut.ita13.app.schulapp.calendar.container.Calendar;
  */
 public class CalendarActivity extends ActionBarActivity {
 
-    public static final String TAG = CalendarActivity.class.getSimpleName();
+    public static final String TAGS = CalendarActivity.class.getSimpleName();
 
 
     @Override
