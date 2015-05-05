@@ -1,4 +1,4 @@
-package de.szut.ita13.app.schulapp.calendar;
+package de.szut.ita13.app.schulapp.calendar.views;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -14,11 +14,13 @@ public class CalendarActivity extends ActionBarActivity {
 
     public static final String TAG = CalendarActivity.class.getSimpleName();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Calendar calendar = new Calendar(this);
+        //Calendar calendar = new Calendar(this);
+
 
     }
 

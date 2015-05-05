@@ -1,6 +1,7 @@
-package de.szut.ita13.app.schulapp;
+package de.szut.ita13.app.schulapp.timetable.models;
 
 
+import de.szut.ita13.app.schulapp.timetable.container.TimeTableModel;
 import de.szut.ita13.app.schulapp.utilities.DateUtilities;
 
 /**

@@ -1,7 +1,8 @@
-package de.szut.ita13.app.schulapp;
+package de.szut.ita13.app.schulapp.timetable.container;
 
 import android.app.Activity;
 
+import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.utilities.Time;
 import de.szut.ita13.app.schulapp.utilities.TimeUtilities;
 

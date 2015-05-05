@@ -1,10 +1,12 @@
-package de.szut.ita13.app.schulapp;
+package de.szut.ita13.app.schulapp.timetable.container;
 
 import android.app.Activity;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import de.szut.ita13.app.schulapp.R;
+import de.szut.ita13.app.schulapp.timetable.adapter.TimeTableRowAdapter;
 import de.szut.ita13.app.schulapp.utilities.DateUtilities;
 import de.szut.ita13.app.schulapp.utilities.InvalidTimeException;
 import de.szut.ita13.app.schulapp.utilities.Time;
