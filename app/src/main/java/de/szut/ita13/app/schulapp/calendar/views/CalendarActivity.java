@@ -1,11 +1,13 @@
 package de.szut.ita13.app.schulapp.calendar.views;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import de.szut.ita13.app.schulapp.R;
+import de.szut.ita13.app.schulapp.calendar.container.Calendar;
 
 /**
  * Created by Rene on 27.04.2015.
@@ -19,8 +21,7 @@ public class CalendarActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Calendar calendar = new Calendar(this);
-
+        Calendar calendar = new Calendar(this);
 
     }
 
