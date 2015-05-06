@@ -4,4 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="timetable_menu_name">Timetable</string>
+    <string name="calendar_menu_name">Calendar</string>
+    <string name="main_menu_label">Schul-App</string>
 </resources>
