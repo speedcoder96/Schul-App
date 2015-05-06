@@ -1,4 +1,4 @@
-package de.szut.ita13.app.schulapp.dao;
+package de.szut.ita13.app.schulapp.timetable.dao;
 
 /**
  * Created by Chris on 28.04.2015.

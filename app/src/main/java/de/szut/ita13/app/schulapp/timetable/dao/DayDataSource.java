@@ -1,4 +1,4 @@
-package de.szut.ita13.app.schulapp.dao;
+package de.szut.ita13.app.schulapp.timetable.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.szut.ita13.app.schulapp.DatabaseRequest;
-import de.szut.ita13.app.schulapp.entity.Day;
+import de.szut.ita13.app.schulapp.timetable.DatabaseRequest;
+import de.szut.ita13.app.schulapp.timetable.entity.Day;
 
 /**
  * Created by Chris on 28.04.2015.
