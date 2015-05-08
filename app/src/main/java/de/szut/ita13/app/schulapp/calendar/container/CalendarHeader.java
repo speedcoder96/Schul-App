@@ -6,7 +6,7 @@ package de.szut.ita13.app.schulapp.calendar.container;
 public class CalendarHeader implements CalendarElement {
 
     public static final String[] WEEKDAYS = {
-           "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"
+           "Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"
     };
 
     @Override

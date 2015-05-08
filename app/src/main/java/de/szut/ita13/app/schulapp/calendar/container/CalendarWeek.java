@@ -35,6 +35,10 @@ public class CalendarWeek implements CalendarElement {
         this.oddWeek = weekNumber % 2 == 1;
     }
 
+    public int getWeekNumber() {
+        return weekNumber;
+    }
+
     @Override
     public int getSize() {
         return calendarDates.size();

@@ -1,5 +1,6 @@
 package de.szut.ita13.app.schulapp.calendar.adapter;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -72,6 +73,8 @@ public class CalendarAdapter extends BaseAdapter {
         } else if(calendarElement instanceof CalendarWeek) {
             view = calendarLayoutInflater.inflate(R.layout.calendar_week_layout, parent, false);
             CalendarWeek week = (CalendarWeek) calendarElement;
+            TextView weekTextView = (TextView)view.findViewById(R.id.week);
+            weekTextView.setText(String.valueOf(week.getWeekNumber()));
             for(int i = 0; i < week.getSize(); i++) {
                 TextView textView = (TextView) view.findViewById(week.getLayoutID(i));
                 CalendarDate calendarDate = (CalendarDate) week.getItem(i);

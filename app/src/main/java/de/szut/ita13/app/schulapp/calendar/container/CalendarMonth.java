@@ -50,23 +50,27 @@ public class CalendarMonth {
         calendarMonth.setCalendarHeader(new CalendarHeader());
         int[] firstOfMonth = DateUtil.getWeekdayIndex(1, month, year);
         int leapYearCorrection = (firstOfMonth[1] == -1) ? 1 : 0;
-        int firstOfMonthOffset = firstOfMonth[0];
+        int firstOfMonthOffset = firstOfMonth[0] - 1;
+        int firstWeekNumberOfMonth = DateUtil.getWeekNumber(1, month, year);
         boolean hasFilledBlanks = false;
         CalendarWeek week = new CalendarWeek(calendar);
+        week.setWeekNumber(firstWeekNumberOfMonth);
         for(int i = 0; i < DateUtil.DAYS_IN_MONTH[month - 1] + leapYearCorrection; i++) {
             if((i + firstOfMonthOffset) % 7 == 0 && i != 0) {
                 calendarMonth.addCalendarElement(week);
                 week = new CalendarWeek(calendar);
-                week.setWeekNumber(DateUtil.getWeekNumber(i + 1, month, year));
+                firstWeekNumberOfMonth += 1;
+                week.setWeekNumber(firstWeekNumberOfMonth);
             }
             if(!hasFilledBlanks) {
-                for(int j = 0; j < firstOfMonth[0]; j++) {
+                for(int j = 0; j < firstOfMonthOffset; j++) {
                     week.addCalendarDate(new CalendarDate(CalendarDate.NONE));
                 }
                 hasFilledBlanks = true;
             }
-            week.addCalendarDate(new CalendarDate((i / 7) * 7 + (i % 7) + 1, month, year));
+            week.addCalendarDate(new CalendarDate(i + 1, month, year));
         }
+
         calendarMonth.addCalendarElement(week);
         return calendarMonth;
     }
