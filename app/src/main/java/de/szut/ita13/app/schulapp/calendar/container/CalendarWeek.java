@@ -30,6 +30,11 @@ public class CalendarWeek implements CalendarElement {
         return null;
     }
 
+    public void setWeekNumber(int weekNumber) {
+        this.weekNumber = weekNumber;
+        this.oddWeek = weekNumber % 2 == 1;
+    }
+
     @Override
     public int getSize() {
         return calendarDates.size();
