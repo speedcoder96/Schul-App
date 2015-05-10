@@ -1,6 +1,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".TimeTableActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <!-- New, should appear as action button -->
+    <item android:id="@+id/action_new"
+        android:icon="@drawable/ic_action_new"
+        android:title="@string/action_new"
+        app:showAsAction="always"  />
+
+    <!-- Edit, should appear as action button -->
+    <item android:id="@+id/action_edit"
+        android:icon="@drawable/ic_action_edit"
+        android:title="@string/action_edit"
+        app:showAsAction="always"  />
+
+    <!-- Remove, should appear as action button -->
+    <item android:id="@+id/action_remove"
+        android:icon="@drawable/ic_action_remove"
+        android:title="@string/action_remove"
+        app:showAsAction="always"  />
+
+    <!-- Settings, should appear as action button -->
+    <item android:id="@+id/action_settings"
+        android:icon="@drawable/ic_action_settings"
+        android:title="@string/action_settings"
+        app:showAsAction="always"  />
+
+
 </menu>

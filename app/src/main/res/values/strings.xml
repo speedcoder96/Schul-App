@@ -7,4 +7,7 @@
     <string name="timetable_menu_name">Timetable</string>
     <string name="calendar_menu_name">Calendar</string>
     <string name="main_menu_label">Schul-App</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_new">New</string>
+    <string name="action_remove">Remove</string>
 </resources>
