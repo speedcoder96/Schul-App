@@ -31,6 +31,7 @@ public class TimeTableActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         timeTable = new TimeTable(this, new ITA13Model());
         try {
             timeTable.createTimeTable();
@@ -42,7 +43,6 @@ public class TimeTableActivity extends ActionBarActivity {
         timeTableColumnRange.setProperties("Mathe", "MAT", "202", "Engelke", R.color.yellow);
         timeTableColumnRange = timeTable.getTimeTableColumnRange(DateUtilities.DAY_THURSDAY, 0, 5);
         timeTableColumnRange.setProperties("Sport", "SPO", "TH", "Dünschede", R.color.green);
-
     }
 
     @Override
@@ -55,11 +55,40 @@ public class TimeTableActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_new:
+                openNew();
+                return true;
+            case R.id.action_edit:
+                openEdit();
+                return true;
+            case R.id.action_remove:
+                openRemove();
+                return true;
+            case R.id.action_overflow:
+                openOverflow();
+                return true;
+            case R.id.action_settings:
+                openSettings();
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+    }
+
+    private void openNew() {
+    }
+
+    private void openEdit() {
+    }
+
+    private void openRemove() {
+    }
+
+    private void openOverflow() {
+    }
+
+    private void openSettings() {
     }
 
     public void clickedSubject(View view) {
