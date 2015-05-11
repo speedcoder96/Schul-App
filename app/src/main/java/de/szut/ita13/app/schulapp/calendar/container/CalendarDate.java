@@ -15,6 +15,8 @@ import de.szut.ita13.app.schulapp.calendar.views.CalendarDateEditor;
  */
 public class CalendarDate implements View.OnClickListener, Serializable {
 
+    public static String SERIALIZABLE_KEY = "calendardate";
+
     public static boolean NONE = true;
 
     private int day;
@@ -70,11 +72,15 @@ public class CalendarDate implements View.OnClickListener, Serializable {
         return calendarAppointments;
     }
 
+    public boolean hasAppointments() {
+        return calendarAppointments.size() != 0;
+    }
+
     @Override
     public void onClick(View v) {
         CalendarDateEditor editor = new CalendarDateEditor();
         Intent intent = new Intent(Calendar.getCalendarActivity(), CalendarDateEditor.class);
-        intent.putExtra("calendardate", this);
+        intent.putExtra(SERIALIZABLE_KEY, this);
         Calendar.getCalendarActivity().startActivity(intent);
     }
 

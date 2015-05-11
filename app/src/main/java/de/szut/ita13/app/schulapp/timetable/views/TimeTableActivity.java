@@ -41,7 +41,7 @@ public class TimeTableActivity extends ActionBarActivity {
         TimeTableColumnRange timeTableColumnRange  = timeTable.getTimeTableColumnRange(DateUtilities.DAY_FRIDAY, 0,3);
         timeTableColumnRange.setProperties("Mathe", "MAT", "202", "Engelke", R.color.yellow);
         timeTableColumnRange = timeTable.getTimeTableColumnRange(DateUtilities.DAY_THURSDAY, 0, 5);
-        timeTableColumnRange.setProperties("Sport", "SPO", "TH", "Dünschede", R.color.green);
+        timeTableColumnRange.setProperties("Sport", "SPO", "TH", "Dünschede", R.color.red);
 
     }
 

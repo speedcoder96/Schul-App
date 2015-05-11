@@ -19,8 +19,7 @@ public class CalendarDateEditor extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendardate_editor);
         Intent intent = getIntent();
-        CalendarDate calendarDate = (CalendarDate)intent.getSerializableExtra("calendardate");
-        Toast.makeText(this, "Date:" + calendarDate.getDay() + "." +  calendarDate.getMonth() + "." + calendarDate.getYear(), Toast.LENGTH_SHORT).show();
+        CalendarDate calendarDate = (CalendarDate)intent.getSerializableExtra(CalendarDate.SERIALIZABLE_KEY);
 
     }
 }
