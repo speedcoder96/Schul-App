@@ -1,16 +1,19 @@
 package de.szut.ita13.app.schulapp.calendar.container;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import de.szut.ita13.app.schulapp.R;
+import de.szut.ita13.app.schulapp.calendar.views.CalendarDateEditor;
 
 /**
  * Created by Rene on 29.04.2015.
  */
-public class CalendarDate implements View.OnClickListener {
+public class CalendarDate implements View.OnClickListener, Serializable {
 
     public static boolean NONE = true;
 
@@ -18,15 +21,17 @@ public class CalendarDate implements View.OnClickListener {
     private int month;
     private int year;
     private boolean none;
+    private boolean actualDate;
 
     private ArrayList<CalendarAppointment> calendarAppointments;
 
-    public CalendarDate(int day, int month, int year) {
+    public CalendarDate(int day, int month, int year, boolean actualDate) {
         this.day = day;
         this.month = month;
         this.year = year;
         calendarAppointments = new ArrayList<CalendarAppointment>();
         none = false;
+        this.actualDate = actualDate;
     }
 
     public CalendarDate(boolean none) {
@@ -57,14 +62,20 @@ public class CalendarDate implements View.OnClickListener {
         return none;
     }
 
+    public boolean isActualDate() {
+        return actualDate;
+    }
+
     public ArrayList<CalendarAppointment> getCalendarAppointments() {
         return calendarAppointments;
     }
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(v.getContext(), String.valueOf(day + "." + month + "." + year), Toast.LENGTH_LONG).show();
-        v.setBackgroundColor(Calendar.getCalendarActivity().getResources().getColor(R.color.red));
+        CalendarDateEditor editor = new CalendarDateEditor();
+        Intent intent = new Intent(Calendar.getCalendarActivity(), CalendarDateEditor.class);
+        intent.putExtra("calendardate", this);
+        Calendar.getCalendarActivity().startActivity(intent);
     }
 
 }

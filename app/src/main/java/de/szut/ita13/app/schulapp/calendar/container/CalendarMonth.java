@@ -48,6 +48,7 @@ public class CalendarMonth {
     public static CalendarMonth generate(Calendar calendar, int month, int year) {
         CalendarMonth calendarMonth = new CalendarMonth(calendar);
         calendarMonth.setCalendarHeader(new CalendarHeader());
+        int[] currentDate = DateUtil.getActualDate();
         int[] firstOfMonth = DateUtil.getWeekdayIndex(1, month, year);
         int leapYearCorrection = (firstOfMonth[1] == -1) ? 1 : 0;
         int firstOfMonthOffset = firstOfMonth[0] - 1;
@@ -68,7 +69,8 @@ public class CalendarMonth {
                 }
                 hasFilledBlanks = true;
             }
-            week.addCalendarDate(new CalendarDate(i + 1, month, year));
+            boolean isActual = DateUtil.isActualDate(currentDate, i + 1, month, year);
+            week.addCalendarDate(new CalendarDate(i + 1, month, year, isActual));
         }
 
         calendarMonth.addCalendarElement(week);

@@ -23,6 +23,10 @@
             android:name=".timetable.views.TimeTableActivity"
             android:label="SchulApp">
         </activity>
+        <activity
+            android:name=".calendar.views.CalendarDateEditor"
+            android:label="SchulApp">
+            </activity>
     </application>
 
 </manifest>

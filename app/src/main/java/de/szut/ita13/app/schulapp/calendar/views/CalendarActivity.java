@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.container.Calendar;
+import de.szut.ita13.app.schulapp.newutils.DateUtil;
 
 /**
  * Created by Rene on 27.04.2015.
@@ -22,6 +23,7 @@ public class CalendarActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         Calendar calendar = new Calendar(this);
+        DateUtil.getActualDate();
 
     }
 
