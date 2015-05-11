@@ -22,18 +22,20 @@ public class CalendarDate implements View.OnClickListener, Serializable {
     private int day;
     private int month;
     private int year;
+    private int weekday;
     private boolean none;
     private boolean actualDate;
 
     private ArrayList<CalendarAppointment> calendarAppointments;
 
-    public CalendarDate(int day, int month, int year, boolean actualDate) {
+    public CalendarDate(int day, int month, int year, int weekday, boolean actualDate) {
         this.day = day;
         this.month = month;
         this.year = year;
+        this.weekday = weekday;
         calendarAppointments = new ArrayList<CalendarAppointment>();
-        none = false;
         this.actualDate = actualDate;
+        none = false;
     }
 
     public CalendarDate(boolean none) {
@@ -60,6 +62,10 @@ public class CalendarDate implements View.OnClickListener, Serializable {
         return year;
     }
 
+    public int getWeekday() {
+        return weekday;
+    }
+
     public boolean isNone() {
         return none;
     }
@@ -74,6 +80,14 @@ public class CalendarDate implements View.OnClickListener, Serializable {
 
     public boolean hasAppointments() {
         return calendarAppointments.size() != 0;
+    }
+
+
+
+    public String getDateString() {
+        String dayStr = (day < 10) ? "0" + day : String.valueOf(day);
+        String monthStr = (month < 10) ? "0" + month : String.valueOf(month);
+        return dayStr + "." + monthStr + "." + year;
     }
 
     @Override

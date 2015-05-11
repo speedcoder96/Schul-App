@@ -70,7 +70,7 @@ public class CalendarMonth {
                 hasFilledBlanks = true;
             }
             boolean isActual = DateUtil.isActualDate(currentDate, i + 1, month, year);
-            week.addCalendarDate(new CalendarDate(i + 1, month, year, isActual));
+            week.addCalendarDate(new CalendarDate(i + 1, month, year, (firstOfMonthOffset + i) % 7, isActual));
         }
 
         calendarMonth.addCalendarElement(week);

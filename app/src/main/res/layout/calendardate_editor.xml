@@ -8,14 +8,14 @@
         android:id="@+id/calendardate_date"
         android:layout_marginTop="40dp"
         android:textSize="30sp"
-        android:text="11.05.2015"
+        android:text=""
         android:paddingLeft="10dp"
         android:layout_alignParentTop="true" />
 
     <TextView
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:text="Montag"
+        android:text=""
         android:textSize="20sp"
         android:paddingLeft="15dp"
         android:id="@+id/calendardate_weekday"

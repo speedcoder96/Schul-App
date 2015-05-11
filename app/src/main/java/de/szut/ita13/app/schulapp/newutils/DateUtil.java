@@ -14,6 +14,7 @@ public class DateUtil {
 
     public static final int[] DAYS_IN_MONTH = {31,28,31,30,31,30,31,31,30,31,30,31};
     public static final int[] MONTHS_IDS = {0,3,3,6,1,4,6,2,5,0,3,5};
+    public static final String[] WEEKDAYS = {"Montag", "Dienstag","Mittwoch","Donnerstag","Freitag","Samstag","Sonntag"};
 
     public static int WEEKDAY_INDEX = 0;
     public static int LEAPYEAR_CORRECTION = 1;
