@@ -7,6 +7,8 @@ import java.util.ArrayList;
  */
 public class CalendarAppointment {
 
+    public static int TAG_KEY = 0;
+
     private CalendarDate calendarDate;
     private CalendarTime calendarTime;
     private String subject;

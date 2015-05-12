@@ -24,7 +24,8 @@ import de.szut.ita13.app.schulapp.newutils.DateUtil;
 /**
  * Created by Rene on 11.05.2015.
  */
-public class CalendarDateEditor extends ActionBarActivity implements MenuItem.OnMenuItemClickListener {
+public class CalendarDateEditor extends ActionBarActivity implements MenuItem.OnMenuItemClickListener,
+    View.OnClickListener {
 
     private CalendarDate calendarDate;
 
@@ -49,6 +50,7 @@ public class CalendarDateEditor extends ActionBarActivity implements MenuItem.On
                 .build(calendarDate, new CalendarTime(8, 45), "Ramazan", "Wir sind gut!");
         calendarAppointments.add(test);
         calendarAppointments.add(test2);
+
         calendarAppointments = CalendarAppointment.Sorter.sort(calendarAppointments);
 
         if(calendarDate.hasAppointments()) {
@@ -74,11 +76,19 @@ public class CalendarDateEditor extends ActionBarActivity implements MenuItem.On
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        //TODO hier kommt der Code zum Hinzufügen eines Termins rein
+        if(item.getItemId() == R.id.action_new_appointment) {
+            //TODO neuen Termin hinzufügen
+        }
         return true;
     }
 
     public CalendarDate getCalendarDate() {
         return calendarDate;
+    }
+
+    @Override
+    public void onClick(View appointmentView) {
+        CalendarAppointment appointment = (CalendarAppointment)appointmentView.getTag();
+        Toast.makeText(this, "Appointment : " + appointment.getCalendarTime().getTimeString(), Toast.LENGTH_LONG).show();
     }
 }

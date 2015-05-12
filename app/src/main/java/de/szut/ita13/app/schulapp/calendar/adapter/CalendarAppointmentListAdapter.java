@@ -20,11 +20,13 @@ import de.szut.ita13.app.schulapp.calendar.views.CalendarDateEditor;
  */
 public class CalendarAppointmentListAdapter extends BaseAdapter {
 
+    private CalendarDateEditor editor;
     private CalendarDate calendarDate;
     private ArrayList<CalendarAppointment> calendarAppointments;
     private LayoutInflater calendarAppointmentListInflater;
 
     public CalendarAppointmentListAdapter(CalendarDateEditor editor) {
+        this.editor = editor;
         this.calendarDate = editor.getCalendarDate();
         this.calendarAppointments = calendarDate.getCalendarAppointments();
         this.calendarAppointmentListInflater = (LayoutInflater) editor.getApplicationContext()
@@ -50,6 +52,8 @@ public class CalendarAppointmentListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
         view = calendarAppointmentListInflater.inflate(R.layout.calendardate_appointmentlist_layout, parent, false);
+        view.setOnClickListener(editor);
+
         TextView cTime = (TextView) view.findViewById(R.id.calendardate_time);
         TextView cSubject = (TextView) view.findViewById(R.id.calendardate_subject);
         CalendarAppointment appointment = calendarAppointments.get(position);
@@ -57,6 +61,7 @@ public class CalendarAppointmentListAdapter extends BaseAdapter {
         String subject = appointment.getSubject();
         cTime.setText(time.getTimeString());
         cSubject.setText(subject);
+        view.setTag(appointment);
         return view;
     }
 }

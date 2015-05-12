@@ -23,7 +23,7 @@ public class CalendarActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         Calendar calendar = new Calendar(this);
-        DateUtil.getActualDate();
+
 
     }
 
