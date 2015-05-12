@@ -24,9 +24,13 @@
             android:label="SchulApp">
         </activity>
         <activity
-            android:name=".calendar.views.CalendarDateEditor"
+            android:name=".calendar.views.CalendarDateViewer"
             android:label="SchulApp">
             </activity>
+        <activity android:name=".calendar.views.CalendarDateEditor"
+                  android:label="SchulApp">
+
+        </activity>
     </application>
 
 </manifest>

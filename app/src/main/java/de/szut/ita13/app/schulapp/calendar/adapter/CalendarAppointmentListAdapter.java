@@ -13,19 +13,19 @@ import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarAppointment;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarDate;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
-import de.szut.ita13.app.schulapp.calendar.views.CalendarDateEditor;
+import de.szut.ita13.app.schulapp.calendar.views.CalendarDateViewer;
 
 /**
  * Created by Rene on 11.05.2015.
  */
 public class CalendarAppointmentListAdapter extends BaseAdapter {
 
-    private CalendarDateEditor editor;
+    private CalendarDateViewer editor;
     private CalendarDate calendarDate;
     private ArrayList<CalendarAppointment> calendarAppointments;
     private LayoutInflater calendarAppointmentListInflater;
 
-    public CalendarAppointmentListAdapter(CalendarDateEditor editor) {
+    public CalendarAppointmentListAdapter(CalendarDateViewer editor) {
         this.editor = editor;
         this.calendarDate = editor.getCalendarDate();
         this.calendarAppointments = calendarDate.getCalendarAppointments();

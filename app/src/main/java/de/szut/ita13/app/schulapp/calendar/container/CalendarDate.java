@@ -2,13 +2,11 @@ package de.szut.ita13.app.schulapp.calendar.container;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import de.szut.ita13.app.schulapp.R;
-import de.szut.ita13.app.schulapp.calendar.views.CalendarDateEditor;
+import de.szut.ita13.app.schulapp.calendar.views.CalendarDateViewer;
 
 /**
  * Created by Rene on 29.04.2015.
@@ -92,8 +90,8 @@ public class CalendarDate implements View.OnClickListener, Serializable {
 
     @Override
     public void onClick(View v) {
-        CalendarDateEditor editor = new CalendarDateEditor();
-        Intent intent = new Intent(Calendar.getCalendarActivity(), CalendarDateEditor.class);
+        CalendarDateViewer editor = new CalendarDateViewer();
+        Intent intent = new Intent(Calendar.getCalendarActivity(), CalendarDateViewer.class);
         intent.putExtra(SERIALIZABLE_KEY, this);
         Calendar.getCalendarActivity().startActivity(intent);
     }
