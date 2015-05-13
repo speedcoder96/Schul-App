@@ -8,7 +8,7 @@ import de.szut.ita13.app.schulapp.R;
 /**
  * Created by rama on 12.05.2015.
  */
-public class CalendarDateEditor extends ActionBarActivity{
+public class CalendarDateEditor extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
