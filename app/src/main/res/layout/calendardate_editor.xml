@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <de.szut.ita13.app.schulapp.calendar.views.CalendarTimePicker
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        custom:hours="00"
-        custom:minute="00"
-        />
+        android:layout_height="100dp">
+        </de.szut.ita13.app.schulapp.calendar.views.CalendarTimePicker>
 
 
 </RelativeLayout>

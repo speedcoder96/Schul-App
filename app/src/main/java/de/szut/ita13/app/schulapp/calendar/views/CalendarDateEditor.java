@@ -13,7 +13,5 @@ public class CalendarDateEditor extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendardate_editor);
-
-
     }
 }
