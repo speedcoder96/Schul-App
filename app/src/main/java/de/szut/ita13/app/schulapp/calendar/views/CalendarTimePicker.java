@@ -96,20 +96,18 @@ public class CalendarTimePicker extends RelativeLayout implements View.OnClickLi
 
     @Override
     public void onFocusChange(View view, boolean b) {
-
-            String s = ((EditText) view).getText().toString();
-            if(!b) {
-
-                if (view == hour) {
-                    int value = Integer.parseInt(s);
-                    value = value % HOURS_PER_DAY;
-                    hour.setText(fillMissingDigit(value));
-                } else {
-                    int value = Integer.parseInt(s);
-                    value = value % MINUTES_PER_HOUR;
-                    minute.setText(fillMissingDigit(value));
-                }
+        String s = ((EditText) view).getText().toString();
+        if(!b) {
+            if (view == hour) {
+                int value = Integer.parseInt(s);
+                value = value % HOURS_PER_DAY;
+                hour.setText(fillMissingDigit(value));
+            } else {
+                int value = Integer.parseInt(s);
+                value = value % MINUTES_PER_HOUR;
+                minute.setText(fillMissingDigit(value));
             }
+        }
     }
 
     private String fillMissingDigit(int value) {
