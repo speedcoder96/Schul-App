@@ -7,7 +7,8 @@
 
     <de.szut.ita13.app.schulapp.calendar.views.CalendarTimePicker
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="100dp"
+        android:id="@+id/timepicker">
         </de.szut.ita13.app.schulapp.calendar.views.CalendarTimePicker>
 
 
