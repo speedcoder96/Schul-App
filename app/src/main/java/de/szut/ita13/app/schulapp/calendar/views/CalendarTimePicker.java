@@ -121,4 +121,9 @@ public class CalendarTimePicker extends RelativeLayout implements View.OnClickLi
                 Integer.parseInt(minute.getText().toString()));
     }
 
+    public void setCalendarTime(CalendarTime ct){
+        hour.setText(fillMissingDigit(ct.getHours()));
+        minute.setText(fillMissingDigit(ct.getMinutes()));
+    }
+
 }

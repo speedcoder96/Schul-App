@@ -19,6 +19,7 @@ import de.szut.ita13.app.schulapp.calendar.container.Calendar;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarAppointment;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarDate;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
+import de.szut.ita13.app.schulapp.newutils.AppointmentUtil;
 import de.szut.ita13.app.schulapp.newutils.DateUtil;
 
 /**
@@ -44,14 +45,9 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
         calendarDateDate.setText(calendarDate.getDateString());
         calendarDateWeekday.setText(DateUtil.WEEKDAYS[calendarDate.getWeekday()]);
 
-        CalendarAppointment test = CalendarAppointment.Builder
-                .build(calendarDate, new CalendarTime(10, 0), "Ramazan", "Wir sind gut!");
-        CalendarAppointment test2 = CalendarAppointment.Builder
-                .build(calendarDate, new CalendarTime(8, 45), "Ramazan", "Wir sind gut!");
-        calendarAppointments.add(test);
-        calendarAppointments.add(test2);
 
-        calendarAppointments = CalendarAppointment.Sorter.sort(calendarAppointments);
+
+        calendarAppointments = AppointmentUtil.Sorter.sort(calendarAppointments);
 
         if(calendarDate.hasAppointments()) {
             CalendarAppointmentListAdapter calendarAppointmentListAdapter =
@@ -90,6 +86,7 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
     public void onClick(View appointmentView) {
         CalendarAppointment appointment = (CalendarAppointment)appointmentView.getTag();
         Intent intent = new Intent(Calendar.getCalendarActivity(), CalendarDateEditor.class);
+        intent.putExtra(CalendarAppointment.SERIALIZABLE_KEY, appointment);
         Calendar.getCalendarActivity().startActivity(intent);
     }
 }

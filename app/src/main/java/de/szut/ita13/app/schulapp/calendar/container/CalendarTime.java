@@ -1,9 +1,11 @@
 package de.szut.ita13.app.schulapp.calendar.container;
 
+import java.io.Serializable;
+
 /**
  * Created by Rene on 11.05.2015.
  */
-public class CalendarTime {
+public class CalendarTime implements Serializable {
 
     public static final int MINUTES_PER_HOURS = 60;
 

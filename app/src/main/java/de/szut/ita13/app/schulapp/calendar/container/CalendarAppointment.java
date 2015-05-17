@@ -1,16 +1,18 @@
 package de.szut.ita13.app.schulapp.calendar.container;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Rene on 29.04.2015.
  */
-public class CalendarAppointment {
+public class CalendarAppointment implements Serializable {
 
-    public static int TAG_KEY = 0;
+    public static String SERIALIZABLE_KEY = "appointment";
 
     private CalendarDate calendarDate;
-    private CalendarTime calendarTime;
+    private CalendarTime startTime;
+    private CalendarTime endTime;
     private String subject;
     private String note;
 
@@ -19,9 +21,16 @@ public class CalendarAppointment {
         this.calendarDate = calendarDate;
     }
 
-    public void setCalendarTime(CalendarTime calendarTime) {
-        this.calendarTime = calendarTime;
+    public void setStartTime(CalendarTime startTime) {
+        this.startTime = startTime;
+        this.endTime = startTime;
     }
+
+
+    public void setEndTime(CalendarTime endTime) {
+        this.endTime = endTime;
+    }
+
 
     public void setSubject(String subject) {
         this.subject = subject;
@@ -35,8 +44,11 @@ public class CalendarAppointment {
         return calendarDate;
     }
 
-    public CalendarTime getCalendarTime() {
-        return calendarTime;
+    public CalendarTime getStartTime() {
+        return startTime;
+    }
+    public CalendarTime getEndTime() {
+        return endTime;
     }
 
     public String getSubject() {
@@ -47,37 +59,7 @@ public class CalendarAppointment {
         return note;
     }
 
-    public static class Builder {
 
-        public static CalendarAppointment build(CalendarDate cd, CalendarTime ct, String subject, String note) {
-            CalendarAppointment appointment = new CalendarAppointment(cd);
-            appointment.setCalendarTime(ct);
-            appointment.setSubject(subject);
-            appointment.setNote(note);
-            return appointment;
-        }
-
-    }
-
-    public static class Sorter {
-
-        public static ArrayList<CalendarAppointment> sort(ArrayList<CalendarAppointment> calendarAppointments) {
-            int max = calendarAppointments.size() - 1;
-            while(max > 0) {
-                for(int i = 0; i < max; i++) {
-                    CalendarAppointment left = calendarAppointments.get(i);
-                    CalendarAppointment right = calendarAppointments.get(i + 1);
-                    if(right.getCalendarTime().isBefore(left.getCalendarTime())) {
-                        calendarAppointments.set(i, right);
-                        calendarAppointments.set(i + 1, left);
-                    }
-                }
-                max--;
-            }
-            return calendarAppointments;
-        }
-
-    }
 
 
 }

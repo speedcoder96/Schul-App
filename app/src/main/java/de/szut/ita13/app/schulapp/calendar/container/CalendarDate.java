@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import de.szut.ita13.app.schulapp.calendar.views.CalendarDateViewer;
+import de.szut.ita13.app.schulapp.newutils.AppointmentUtil;
 
 /**
  * Created by Rene on 29.04.2015.
@@ -34,6 +35,13 @@ public class CalendarDate implements View.OnClickListener, Serializable {
         calendarAppointments = new ArrayList<CalendarAppointment>();
         this.actualDate = actualDate;
         none = false;
+
+        CalendarAppointment test = AppointmentUtil.Builder
+                .build(this, new CalendarTime(10, 0), "Ramazan", "Wir sind gut!");
+        CalendarAppointment test2 = AppointmentUtil.Builder
+                .build(this, new CalendarTime(8, 45), "Ramazan", "Wir sind gut!");
+        calendarAppointments.add(test);
+        calendarAppointments.add(test2);
     }
 
     public CalendarDate(boolean none) {
@@ -90,7 +98,6 @@ public class CalendarDate implements View.OnClickListener, Serializable {
 
     @Override
     public void onClick(View v) {
-        CalendarDateViewer editor = new CalendarDateViewer();
         Intent intent = new Intent(Calendar.getCalendarActivity(), CalendarDateViewer.class);
         intent.putExtra(SERIALIZABLE_KEY, this);
         Calendar.getCalendarActivity().startActivity(intent);
