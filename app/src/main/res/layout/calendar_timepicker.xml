@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_horizontal"
+        android:id="@+id/timepicker_linearlayout"
+        >
+
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:text="+"
+            android:id="@+id/hours_increment"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:text="-"
+            android:textSize="15sp"
+            android:id="@+id/hours_decrement" />
+
+        <EditText
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:id="@+id/hour"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text=":"
+            android:id="@+id/separator"
+            android:textSize="20sp" />
+
+        <EditText
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:id="@+id/minute"
+            android:inputType="number" />
+
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:text="+"
+            android:textSize="15sp"
+            android:id="@+id/minutes_increment" />
+
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:text="-"
+            android:textSize="15sp"
+            android:id="@+id/minutes_decrement" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

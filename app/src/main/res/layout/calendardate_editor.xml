@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/calendareditor_date"
+        android:layout_marginTop="10dp"
+        android:textSize="30sp"
+        android:text=""
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text=""
+        android:textSize="20sp"
+        android:paddingLeft="5dp"
+        android:id="@+id/calendareditor_weekday"
+        android:layout_below="@+id/calendareditor_date"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calendareditor_weekday"
+        android:text="Titel"
+        android:textSize="20sp"
+        android:id="@+id/text_title"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/text_title"
+        android:text=""
+        android:id="@+id/calendareditor_title"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true" />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calendareditor_title"
+        android:text="Start"
+        android:textSize="20sp"
+        android:id="@+id/text_starttime"
+         />
+
+    <de.szut.ita13.app.schulapp.calendar.views.CalendarTimePicker
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_starttime"
+        android:id="@+id/timepicker_start">
+        </de.szut.ita13.app.schulapp.calendar.views.CalendarTimePicker>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timepicker_start"
+        android:textSize="20sp"
+        android:text="Ende"
+        android:id="@+id/text_endtime"
+        />
+    <de.szut.ita13.app.schulapp.calendar.views.CalendarTimePicker
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/timepicker_end"
+        android:layout_below="@+id/text_endtime"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentStart="true">
+    </de.szut.ita13.app.schulapp.calendar.views.CalendarTimePicker>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timepicker_end"
+        android:text="Notiz"
+        android:textSize="20sp"
+        android:id="@+id/text_note"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="left|top"
+        android:text=""
+        android:inputType="textMultiLine"
+        android:layout_below="@id/text_note"
+        android:id="@+id/calendareditor_note"
+
+
+        android:layout_centerHorizontal="true" />
+
+
+
+
+</RelativeLayout>

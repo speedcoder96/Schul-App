@@ -81,6 +81,9 @@ public class CalendarAdapter extends BaseAdapter {
                 textView.setOnClickListener(calendarDate);
                 if(!calendarDate.isNone())
                     textView.setText(String.valueOf(calendarDate.getDay()));
+                if(calendarDate.isActualDate()) {
+                    textView.setBackgroundColor(calendarActivity.getResources().getColor(R.color.yellow));
+                }
             }
         }
         return view;

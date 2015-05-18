@@ -1,6 +1,7 @@
 
 package de.szut.ita13.app.schulapp.timetable.views;
 
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -8,11 +9,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.views.CalendarActivity;
+import de.szut.ita13.app.schulapp.timetable.dao.TimeDataSource;
+import de.szut.ita13.app.schulapp.timetable.entity.Time;
 import de.szut.ita13.app.schulapp.timetable.models.ITA13Model;
 import de.szut.ita13.app.schulapp.timetable.container.TimeTable;
 import de.szut.ita13.app.schulapp.timetable.container.TimeTableColumnRange;
@@ -26,11 +33,12 @@ public class TimeTableActivity extends ActionBarActivity {
     public static final String TAG = TimeTableActivity.class.getSimpleName();
 
     private TimeTable timeTable;
+    private TimeDataSource datasource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_time_table);
 
         timeTable = new TimeTable(this, new ITA13Model());
         try {
@@ -42,8 +50,20 @@ public class TimeTableActivity extends ActionBarActivity {
         TimeTableColumnRange timeTableColumnRange  = timeTable.getTimeTableColumnRange(DateUtilities.DAY_FRIDAY, 0,3);
         timeTableColumnRange.setProperties("Mathe", "MAT", "202", "Engelke", R.color.yellow);
         timeTableColumnRange = timeTable.getTimeTableColumnRange(DateUtilities.DAY_THURSDAY, 0, 5);
-        timeTableColumnRange.setProperties("Sport", "SPO", "TH", "Dünschede", R.color.green);
-    }
+        timeTableColumnRange.setProperties("Sport", "SPO", "TH", "Dünschede", R.color.red);
+
+        ListView lv = (ListView) findViewById(R.id.timetableDatabase);
+        datasource = new TimeDataSource(this);
+        datasource.open();
+
+        List<Time> values = datasource.getAllNames();
+
+        // use the SimpleCursorAdapter to show the
+        // elements in a ListView
+        ArrayAdapter<Time> adapter = new ArrayAdapter<Time>(this,
+                android.R.layout.simple_list_item_1, values);
+        lv.setAdapter(adapter);
+}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -55,40 +75,11 @@ public class TimeTableActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
-        switch (item.getItemId()) {
-            case R.id.action_new:
-                openNew();
-                return true;
-            case R.id.action_edit:
-                openEdit();
-                return true;
-            case R.id.action_remove:
-                openRemove();
-                return true;
-            case R.id.action_overflow:
-                openOverflow();
-                return true;
-            case R.id.action_settings:
-                openSettings();
-            default:
-                return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
         }
-    }
-
-    private void openNew() {
-    }
-
-    private void openEdit() {
-    }
-
-    private void openRemove() {
-    }
-
-    private void openOverflow() {
-    }
-
-    private void openSettings() {
+        return super.onOptionsItemSelected(item);
     }
 
     public void clickedSubject(View view) {
