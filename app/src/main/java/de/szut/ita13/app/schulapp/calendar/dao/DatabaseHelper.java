@@ -3,21 +3,24 @@ package de.szut.ita13.app.schulapp.calendar.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by rama on 17.05.2015.
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "database.db";
-    private static final int DATABASE_VERSION = 1;
-
-    public static final String TABLE_NAME = "appointments";
-    public static final String ID = "id";
-
     public static enum Appointments {
 
         ID, TITLE, DATE, START, END, NOTE;
+
+        public static final String DATABASE_NAME = "database.db";
+        public static final int DATABASE_VERSION = 1;
+
+        public static String TABLE_NAME = "appointments";
+        public static String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " " +
+                ID.name() + "," + TITLE.name() + "," + DATE.name() + "," + START.name() + "," +
+                END.name() + "," + NOTE.name();
 
         public static String[] names() {
             Appointments[] appointments = values();
@@ -30,16 +33,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, Appointments.DATABASE_NAME, null, Appointments.DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
+       sqLiteDatabase.execSQL(Appointments.CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Appointments.TABLE_NAME);
+        onCreate(sqLiteDatabase);
     }
 }
