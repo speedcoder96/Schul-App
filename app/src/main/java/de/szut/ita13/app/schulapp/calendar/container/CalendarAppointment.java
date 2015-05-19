@@ -9,12 +9,15 @@ import java.util.ArrayList;
 public class CalendarAppointment implements Serializable {
 
     public static String SERIALIZABLE_KEY = "appointment";
+    public static String NONE = "appointment_none";
 
     private CalendarDate calendarDate;
     private CalendarTime startTime;
     private CalendarTime endTime;
     private String subject;
     private String note;
+
+    private boolean none;
 
     private long refID;
 

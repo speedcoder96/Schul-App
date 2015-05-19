@@ -94,7 +94,7 @@ public class CalendarDate implements View.OnClickListener, Serializable {
     public String getDateString() {
         String dayStr = (day < 10) ? "0" + day : String.valueOf(day);
         String monthStr = (month < 10) ? "0" + month : String.valueOf(month);
-        return dayStr + "." + monthStr + "." + year;
+        return year + "-" + monthStr + "-" + dayStr;
     }
 
     public void setRefID(long refID) {

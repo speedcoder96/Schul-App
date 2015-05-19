@@ -22,6 +22,7 @@ import de.szut.ita13.app.schulapp.newutils.DateUtil;
  * Created by rama on 12.05.2015.
  */
 public class CalendarDateEditor extends ActionBarActivity {
+
     TextView date;
     TextView weekday;
     EditText title;
@@ -43,24 +44,32 @@ public class CalendarDateEditor extends ActionBarActivity {
 
         String dateString = calendarDate.getDateString();
         String weekdayString = DateUtil.WEEKDAYS[calendarDate.getWeekday()];
+        String titleString = appointment.getSubject();
+        String noteString = appointment.getNote();
+        CalendarTime startTime = appointment.getStartTime();
+        CalendarTime endTime = appointment.getEndTime();
 
-        date = (TextView) findViewById(R.id.calendareditor_date);
-        date.setText(dateString);
+        if(titleString != null) {
+            date = (TextView) findViewById(R.id.calendareditor_date);
+            date.setText(dateString);
 
-        weekday = (TextView) findViewById(R.id.calendareditor_weekday);
-        weekday.setText(weekdayString);
+            weekday = (TextView) findViewById(R.id.calendareditor_weekday);
+            weekday.setText(weekdayString);
 
-        title = (EditText) findViewById(R.id.calendareditor_title);
-        title.setText(appointment.getSubject());
+            title = (EditText) findViewById(R.id.calendareditor_title);
+            title.setText(titleString);
 
-        note = (EditText) findViewById(R.id.calendareditor_note);
-        note.setText(appointment.getNote());
+            note = (EditText) findViewById(R.id.calendareditor_note);
+            note.setText(noteString);
 
-        start = (CalendarTimePicker) findViewById(R.id.timepicker_start);
-        start.setCalendarTime(appointment.getStartTime());
+            start = (CalendarTimePicker) findViewById(R.id.timepicker_start);
+            start.setCalendarTime(appointment.getStartTime());
 
-        end = (CalendarTimePicker) findViewById(R.id.timepicker_end);
-        end.setCalendarTime(appointment.getEndTime());
+            end = (CalendarTimePicker) findViewById(R.id.timepicker_end);
+            end.setCalendarTime(appointment.getEndTime());
+
+        }
+
 
     }
     @Override
