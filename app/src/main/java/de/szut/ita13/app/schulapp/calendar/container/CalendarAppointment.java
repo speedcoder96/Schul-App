@@ -16,6 +16,8 @@ public class CalendarAppointment implements Serializable {
     private String subject;
     private String note;
 
+    private long refID;
+
 
     public CalendarAppointment(CalendarDate calendarDate) {
         this.calendarDate = calendarDate;
@@ -26,6 +28,13 @@ public class CalendarAppointment implements Serializable {
         this.endTime = startTime;
     }
 
+    public long getRefID() {
+        return refID;
+    }
+
+    public void setRefID(long refID) {
+       this.refID = refID;
+    }
 
     public void setEndTime(CalendarTime endTime) {
         this.endTime = endTime;

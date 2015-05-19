@@ -44,4 +44,25 @@ public class AppointmentUtil {
         }
 
     }
+
+    public static class Parser {
+
+        public static CalendarDate getCalendarDate(String calendarDateString) {
+            if(calendarDateString.contains(".")) {
+                String[] calendarDateParts = calendarDateString.split("\\.");
+                if(calendarDateParts.length == 3) {
+                    int day = Integer.parseInt(calendarDateParts[0]);
+                    int month = Integer.parseInt(calendarDateParts[1]);
+                    int year  = Integer.parseInt(calendarDateParts[2]);
+                    int[] weekDayIndex = DateUtil.getWeekdayIndex(day, month, year);
+                    boolean isActual = DateUtil.isActualDate(DateUtil.getActualDate(), day, month, year);
+                    CalendarDate date = new CalendarDate(day, month, year, weekDayIndex[DateUtil.WEEKDAY_INDEX], isActual);
+                    return date;
+                }
+            }
+            return null;
+        }
+
+
+    }
 }
