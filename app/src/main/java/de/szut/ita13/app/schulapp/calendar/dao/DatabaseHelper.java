@@ -6,9 +6,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 /**
- * Created by rama on 17.05.2015.
+ * Created by ramazan on 17.05.2015.
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
+
+
 
     public static enum Appointments {
 
