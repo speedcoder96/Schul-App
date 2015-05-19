@@ -1,7 +1,6 @@
 
 package de.szut.ita13.app.schulapp.timetable.views;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -18,6 +17,7 @@ import java.util.List;
 
 import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.views.CalendarActivity;
+import de.szut.ita13.app.schulapp.timetable.dao.DayDataSource;
 import de.szut.ita13.app.schulapp.timetable.dao.TimeDataSource;
 import de.szut.ita13.app.schulapp.timetable.entity.Time;
 import de.szut.ita13.app.schulapp.timetable.models.ITA13Model;
@@ -33,7 +33,8 @@ public class TimeTableActivity extends ActionBarActivity {
     public static final String TAG = TimeTableActivity.class.getSimpleName();
 
     private TimeTable timeTable;
-    private TimeDataSource datasource;
+    private DayDataSource dds;
+    private TimeDataSource tds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,22 +48,25 @@ public class TimeTableActivity extends ActionBarActivity {
             e.printStackTrace();
         }
 
+        dds = new DayDataSource(this);
+        dds.open();
+
         TimeTableColumnRange timeTableColumnRange  = timeTable.getTimeTableColumnRange(DateUtilities.DAY_FRIDAY, 0,3);
         timeTableColumnRange.setProperties("Mathe", "MAT", "202", "Engelke", R.color.yellow);
         timeTableColumnRange = timeTable.getTimeTableColumnRange(DateUtilities.DAY_THURSDAY, 0, 5);
         timeTableColumnRange.setProperties("Sport", "SPO", "TH", "Dünschede", R.color.red);
 
-        ListView lv = (ListView) findViewById(R.id.timetableDatabase);
-        datasource = new TimeDataSource(this);
-        datasource.open();
+        /*ListView lv = (ListView) findViewById(R.id.timetableDatabase);
+        tds = new TimeDataSource(this);
+        tds.open();
 
-        List<Time> values = datasource.getAllNames();
+        List<Time> values = tds.getAllNames();
 
         // use the SimpleCursorAdapter to show the
         // elements in a ListView
         ArrayAdapter<Time> adapter = new ArrayAdapter<Time>(this,
                 android.R.layout.simple_list_item_1, values);
-        lv.setAdapter(adapter);
+        lv.setAdapter(adapter);*/
 }
 
     @Override
@@ -75,11 +79,18 @@ public class TimeTableActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_new:
+                openNew();
+                return true;
+            case R.id.action_edit:
+                openEdit();
+                return true;
+            case R.id.action_overflow:
+                openOverflow();
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     public void clickedSubject(View view) {
@@ -90,5 +101,17 @@ public class TimeTableActivity extends ActionBarActivity {
 
         intent.setClass(this.getApplicationContext(), CalendarActivity.class);
         startActivity(intent);
+    }
+
+    public void openNew (){
+
+    }
+
+    public void openEdit () {
+
+    }
+
+    public void openOverflow () {
+
     }
 }
