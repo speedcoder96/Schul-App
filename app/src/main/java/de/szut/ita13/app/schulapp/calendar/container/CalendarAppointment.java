@@ -9,12 +9,17 @@ import java.util.ArrayList;
 public class CalendarAppointment implements Serializable {
 
     public static String SERIALIZABLE_KEY = "appointment";
+    public static String NONE = "appointment_none";
 
     private CalendarDate calendarDate;
     private CalendarTime startTime;
     private CalendarTime endTime;
     private String subject;
     private String note;
+
+    private boolean none;
+
+    private long refID;
 
 
     public CalendarAppointment(CalendarDate calendarDate) {
@@ -26,6 +31,13 @@ public class CalendarAppointment implements Serializable {
         this.endTime = startTime;
     }
 
+    public long getRefID() {
+        return refID;
+    }
+
+    public void setRefID(long refID) {
+       this.refID = refID;
+    }
 
     public void setEndTime(CalendarTime endTime) {
         this.endTime = endTime;

@@ -13,4 +13,5 @@
     <string name="appointment_status_part1">Es sind </string>
     <string name="appointment_status_part2"> Termine vorhanden!</string>
     <string name="no_appointments">Es sind keine Termine vorhanden!</string>
+    <string name="title_activity_add_date">AddDate</string>
 </resources>

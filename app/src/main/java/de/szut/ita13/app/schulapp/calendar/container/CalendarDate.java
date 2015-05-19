@@ -25,6 +25,8 @@ public class CalendarDate implements View.OnClickListener, Serializable {
     private boolean none;
     private boolean actualDate;
 
+    private long refID;
+
     private ArrayList<CalendarAppointment> calendarAppointments;
 
     public CalendarDate(int day, int month, int year, int weekday, boolean actualDate) {
@@ -35,6 +37,7 @@ public class CalendarDate implements View.OnClickListener, Serializable {
         calendarAppointments = new ArrayList<CalendarAppointment>();
         this.actualDate = actualDate;
         none = false;
+        refID = Long.parseLong(day + "" + month + "" + year);
 
         CalendarAppointment test = AppointmentUtil.Builder
                 .build(this, new CalendarTime(10, 0), "Ramazan", "Wir sind gut!");
@@ -88,12 +91,18 @@ public class CalendarDate implements View.OnClickListener, Serializable {
         return calendarAppointments.size() != 0;
     }
 
-
-
     public String getDateString() {
         String dayStr = (day < 10) ? "0" + day : String.valueOf(day);
         String monthStr = (month < 10) ? "0" + month : String.valueOf(month);
-        return dayStr + "." + monthStr + "." + year;
+        return year + "-" + monthStr + "-" + dayStr;
+    }
+
+    public void setRefID(long refID) {
+        this.refID = refID;
+    }
+
+    public long getRefID() {
+        return refID;
     }
 
     @Override
@@ -102,5 +111,8 @@ public class CalendarDate implements View.OnClickListener, Serializable {
         intent.putExtra(SERIALIZABLE_KEY, this);
         Calendar.getCalendarActivity().startActivity(intent);
     }
+
+
+
 
 }

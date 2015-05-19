@@ -24,14 +24,14 @@ public class DateUtil {
     public static int ACTUAL_DATE_YEAR = 2;
 
     public static int[] getWeekdayIndex(int day, int month, int year) {
-        int[] firstDay = new int[2];
+        int[] weekDayIndex = new int[2];
         int monthID = MONTHS_IDS[month - 1];
         int centuryDigit = ((3 - ((year / 100) % 4)) * 2);
         int yearDigit = (year % 100) + ((year % 100) / 4);
         int leapYearCorrection = (year % 4 == 0 && month < 3) ? -1 : 0;
-        firstDay[0] = (day + monthID + centuryDigit + yearDigit + leapYearCorrection) % 7;
-        firstDay[1] = leapYearCorrection;
-        return firstDay;
+        weekDayIndex[0] = (day + monthID + centuryDigit + yearDigit + leapYearCorrection) % 7;
+        weekDayIndex[1] = leapYearCorrection;
+        return weekDayIndex;
     }
 
     public static int getWeekNumber(int day, int month, int year) {

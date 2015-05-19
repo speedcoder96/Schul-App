@@ -22,6 +22,7 @@ import de.szut.ita13.app.schulapp.newutils.DateUtil;
  * Created by rama on 12.05.2015.
  */
 public class CalendarDateEditor extends ActionBarActivity {
+
     TextView date;
     TextView weekday;
     EditText title;
@@ -43,6 +44,10 @@ public class CalendarDateEditor extends ActionBarActivity {
 
         String dateString = calendarDate.getDateString();
         String weekdayString = DateUtil.WEEKDAYS[calendarDate.getWeekday()];
+        String titleString = appointment.getSubject();
+        String noteString = appointment.getNote();
+        CalendarTime startTime = appointment.getStartTime();
+        CalendarTime endTime = appointment.getEndTime();
 
         date = (TextView) findViewById(R.id.calendareditor_date);
         date.setText(dateString);
@@ -50,17 +55,22 @@ public class CalendarDateEditor extends ActionBarActivity {
         weekday = (TextView) findViewById(R.id.calendareditor_weekday);
         weekday.setText(weekdayString);
 
-        title = (EditText) findViewById(R.id.calendareditor_title);
-        title.setText(appointment.getSubject());
+        if(titleString != null) {
 
-        note = (EditText) findViewById(R.id.calendareditor_note);
-        note.setText(appointment.getNote());
+            title = (EditText) findViewById(R.id.calendareditor_title);
+            title.setText(titleString);
 
-        start = (CalendarTimePicker) findViewById(R.id.timepicker_start);
-        start.setCalendarTime(appointment.getStartTime());
+            note = (EditText) findViewById(R.id.calendareditor_note);
+            note.setText(noteString);
 
-        end = (CalendarTimePicker) findViewById(R.id.timepicker_end);
-        end.setCalendarTime(appointment.getEndTime());
+            start = (CalendarTimePicker) findViewById(R.id.timepicker_start);
+            start.setCalendarTime(appointment.getStartTime());
+
+            end = (CalendarTimePicker) findViewById(R.id.timepicker_end);
+            end.setCalendarTime(appointment.getEndTime());
+
+        }
+
 
     }
     @Override
@@ -74,9 +84,7 @@ public class CalendarDateEditor extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-
             case R.id.action_save:
-
                 CalendarTime timeStart = start.getCalendarTime();
                 CalendarTime timeEnd = end.getCalendarTime();
 
