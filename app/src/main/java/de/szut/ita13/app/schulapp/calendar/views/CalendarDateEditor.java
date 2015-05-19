@@ -49,12 +49,13 @@ public class CalendarDateEditor extends ActionBarActivity {
         CalendarTime startTime = appointment.getStartTime();
         CalendarTime endTime = appointment.getEndTime();
 
-        if(titleString != null) {
-            date = (TextView) findViewById(R.id.calendareditor_date);
-            date.setText(dateString);
+        date = (TextView) findViewById(R.id.calendareditor_date);
+        date.setText(dateString);
 
-            weekday = (TextView) findViewById(R.id.calendareditor_weekday);
-            weekday.setText(weekdayString);
+        weekday = (TextView) findViewById(R.id.calendareditor_weekday);
+        weekday.setText(weekdayString);
+
+        if(titleString != null) {
 
             title = (EditText) findViewById(R.id.calendareditor_title);
             title.setText(titleString);
@@ -83,9 +84,7 @@ public class CalendarDateEditor extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-
             case R.id.action_save:
-
                 CalendarTime timeStart = start.getCalendarTime();
                 CalendarTime timeEnd = end.getCalendarTime();
 
