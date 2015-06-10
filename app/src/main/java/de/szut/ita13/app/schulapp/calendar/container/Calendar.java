@@ -2,6 +2,9 @@ package de.szut.ita13.app.schulapp.calendar.container;
 
 import android.app.Activity;
 import android.widget.ListView;
+
+import java.util.HashMap;
+
 import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.adapter.CalendarAdapter;
 
@@ -10,12 +13,14 @@ import de.szut.ita13.app.schulapp.calendar.adapter.CalendarAdapter;
  */
 public class Calendar {
 
+    public static CalendarMap calendarMap;
     private static Activity calendarActivity;
     private ListView calendarView;
     private CalendarAdapter calendarAdapter;
     private CalendarMonth[] calendarMonths;
 
     public Calendar(Activity calendarActivity) {
+        this.calendarMap = new CalendarMap();
         this.calendarActivity = calendarActivity;
         this.calendarActivity.setContentView(R.layout.activity_calendar);
         this.calendarView = (ListView) calendarActivity.findViewById(R.id.calendar);

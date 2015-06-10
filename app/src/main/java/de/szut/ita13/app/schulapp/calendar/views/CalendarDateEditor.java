@@ -12,7 +12,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import de.szut.ita13.app.schulapp.R;
+import de.szut.ita13.app.schulapp.calendar.container.Calendar;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarAppointment;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarDate;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
@@ -23,14 +26,14 @@ import de.szut.ita13.app.schulapp.newutils.DateUtil;
  */
 public class CalendarDateEditor extends ActionBarActivity {
 
-    TextView date;
-    TextView weekday;
-    EditText title;
-    EditText note;
-    CalendarTimePicker start;
-    CalendarTimePicker end;
-    CalendarAppointment appointment;
-    CalendarDate calendarDate;
+    private TextView date;
+    private TextView weekday;
+    private EditText title;
+    private EditText note;
+    private CalendarTimePicker start;
+    private CalendarTimePicker end;
+    private CalendarAppointment appointment;
+    private CalendarDate calendarDate;
 
 
 
@@ -39,15 +42,14 @@ public class CalendarDateEditor extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendardate_editor);
         Intent intent = getIntent();
-        appointment = (CalendarAppointment) intent.getSerializableExtra(CalendarAppointment.SERIALIZABLE_KEY);
-        calendarDate = appointment.getCalendarDate();
+        calendarDate = Calendar.calendarMap.getCalendarDate(intent.getStringExtra(CalendarDate.DATE_FORMAT));
+        ArrayList<CalendarAppointment> calendarAppointments = calendarDate.getCalendarAppointments();
+        appointment = calendarAppointments.get(intent.getIntExtra(CalendarDateViewer.APPOINTMENT_INDEX, 0));
 
-        String dateString = calendarDate.getDateString();
+        String dateString = calendarDate.getDateString(CalendarDate.DEFAULT_DATE_FORMAT);
         String weekdayString = DateUtil.WEEKDAYS[calendarDate.getWeekday()];
         String titleString = appointment.getSubject();
         String noteString = appointment.getNote();
-        CalendarTime startTime = appointment.getStartTime();
-        CalendarTime endTime = appointment.getEndTime();
 
         date = (TextView) findViewById(R.id.calendareditor_date);
         date.setText(dateString);
@@ -55,27 +57,23 @@ public class CalendarDateEditor extends ActionBarActivity {
         weekday = (TextView) findViewById(R.id.calendareditor_weekday);
         weekday.setText(weekdayString);
 
+        title = (EditText) findViewById(R.id.calendareditor_title);
+        note = (EditText) findViewById(R.id.calendareditor_note);
+        start = (CalendarTimePicker) findViewById(R.id.timepicker_start);
+        end = (CalendarTimePicker) findViewById(R.id.timepicker_end);
+
         if(titleString != null) {
-
-            title = (EditText) findViewById(R.id.calendareditor_title);
             title.setText(titleString);
-
-            note = (EditText) findViewById(R.id.calendareditor_note);
             note.setText(noteString);
-
-            start = (CalendarTimePicker) findViewById(R.id.timepicker_start);
             start.setCalendarTime(appointment.getStartTime());
-
-            end = (CalendarTimePicker) findViewById(R.id.timepicker_end);
             end.setCalendarTime(appointment.getEndTime());
-
         }
 
 
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-// Inflate the menu items for use in the action bar
+        // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_calendareditor, menu);
         return super.onCreateOptionsMenu(menu);
@@ -83,7 +81,7 @@ public class CalendarDateEditor extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch(item.getItemId()) {
             case R.id.action_save:
                 CalendarTime timeStart = start.getCalendarTime();
                 CalendarTime timeEnd = end.getCalendarTime();
@@ -96,9 +94,12 @@ public class CalendarDateEditor extends ActionBarActivity {
                     appointment.setStartTime(timeStart);
                     appointment.setEndTime(timeEnd);
                     appointment.setNote(note.getText().toString());
+                    Toast.makeText(this.getApplicationContext(), "Termin wurde gespeichert!", Toast.LENGTH_LONG).show();
+                    CalendarAppointment.calendarAppointmentListAdapter.notifyDataSetChanged();
                 }
                 break;
             case R.id.action_cancel:
+                //TODO hier wieder auf den CalendarDateViewer zurück verweisen
                 break;
         }
         return true;

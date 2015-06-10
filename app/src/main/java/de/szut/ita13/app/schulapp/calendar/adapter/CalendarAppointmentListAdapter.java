@@ -57,6 +57,7 @@ public class CalendarAppointmentListAdapter extends BaseAdapter {
         TextView cTime = (TextView) view.findViewById(R.id.calendardate_time);
         TextView cSubject = (TextView) view.findViewById(R.id.calendardate_subject);
         CalendarAppointment appointment = calendarAppointments.get(position);
+        CalendarAppointment.calendarAppointmentListAdapter = this;
         CalendarTime time = appointment.getStartTime();
         String subject = appointment.getSubject();
         cTime.setText(time.getTimeString());

@@ -44,7 +44,7 @@ public class CalendarDataSource {
         values.put(DatabaseHelper.Appointments.ID.name(),"");
         values.put(DatabaseHelper.Appointments.TITLE.name(),appointment.getSubject());
         values.put(DatabaseHelper.Appointments.NOTE.name(),appointment.getNote());
-        values.put(DatabaseHelper.Appointments.DATE.name(), appointment.getCalendarDate().getDateString());
+        values.put(DatabaseHelper.Appointments.DATE.name(), appointment.getCalendarDate().getDateString(CalendarDate.DATABASE_DATE_FORMAT));
         values.put(DatabaseHelper.Appointments.START.name(), appointment.getStartTime().getTimeString());
         values.put(DatabaseHelper.Appointments.END.name(), appointment.getEndTime().getTimeString());
         database.insert(DatabaseHelper.Appointments.TABLE_NAME,null,values);
@@ -54,7 +54,7 @@ public class CalendarDataSource {
         values.put(DatabaseHelper.Appointments.ID.name(),"");
         values.put(DatabaseHelper.Appointments.TITLE.name(),appointment.getSubject());
         values.put(DatabaseHelper.Appointments.NOTE.name(),appointment.getNote());
-        values.put(DatabaseHelper.Appointments.DATE.name(), appointment.getCalendarDate().getDateString());
+        values.put(DatabaseHelper.Appointments.DATE.name(), appointment.getCalendarDate().getDateString(CalendarDate.DATABASE_DATE_FORMAT));
         values.put(DatabaseHelper.Appointments.START.name(), appointment.getStartTime().getTimeString());
         values.put(DatabaseHelper.Appointments.END.name(), appointment.getEndTime().getTimeString());
 

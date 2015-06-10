@@ -1,6 +1,7 @@
 package de.szut.ita13.app.schulapp.calendar.container;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
 import java.io.Serializable;
@@ -12,9 +13,11 @@ import de.szut.ita13.app.schulapp.newutils.AppointmentUtil;
 /**
  * Created by Rene on 29.04.2015.
  */
-public class CalendarDate implements View.OnClickListener, Serializable {
+public class CalendarDate implements View.OnClickListener {
 
-    public static String SERIALIZABLE_KEY = "calendardate";
+    public static final int DATABASE_DATE_FORMAT = 0;
+    public static final int DEFAULT_DATE_FORMAT = 1;
+    public static final String DATE_FORMAT = "date_format";
 
     public static boolean NONE = true;
 
@@ -45,18 +48,15 @@ public class CalendarDate implements View.OnClickListener, Serializable {
                 .build(this, new CalendarTime(8, 45), "Ramazan", "Wir sind gut!");
         calendarAppointments.add(test);
         calendarAppointments.add(test2);
+
+    }
+
+    public void addCalendarAppointment(CalendarAppointment calendarAppointment) {
+        calendarAppointments.add(calendarAppointment);
     }
 
     public CalendarDate(boolean none) {
         this.none = none;
-    }
-
-    public void addCalendarAppointment(CalendarAppointment appointment) {
-        calendarAppointments.add(appointment);
-    }
-
-    public void removeCalendarAppointment(CalendarAppointment appointment) {
-        calendarAppointments.remove(appointment);
     }
 
     public int getDay() {
@@ -91,10 +91,16 @@ public class CalendarDate implements View.OnClickListener, Serializable {
         return calendarAppointments.size() != 0;
     }
 
-    public String getDateString() {
-        String dayStr = (day < 10) ? "0" + day : String.valueOf(day);
-        String monthStr = (month < 10) ? "0" + month : String.valueOf(month);
-        return year + "-" + monthStr + "-" + dayStr;
+    public String getDateString(int format) {
+        if(format == DATABASE_DATE_FORMAT) {
+            String dayStr = (day < 10) ? "0" + day : String.valueOf(day);
+            String monthStr = (month < 10) ? "0" + month : String.valueOf(month);
+            return year + "-" + monthStr + "-" + dayStr;
+        } else {
+            String dayStr = (day < 10) ? "0" + day : String.valueOf(day);
+            String monthStr = (month < 10) ? "0" + month : String.valueOf(month);
+            return dayStr + "." + monthStr + "." + year;
+        }
     }
 
     public void setRefID(long refID) {
@@ -108,7 +114,7 @@ public class CalendarDate implements View.OnClickListener, Serializable {
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(Calendar.getCalendarActivity(), CalendarDateViewer.class);
-        intent.putExtra(SERIALIZABLE_KEY, this);
+        intent.putExtra(DATE_FORMAT, getDateString(DATABASE_DATE_FORMAT));
         Calendar.getCalendarActivity().startActivity(intent);
     }
 

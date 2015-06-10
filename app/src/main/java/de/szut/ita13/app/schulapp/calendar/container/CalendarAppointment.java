@@ -1,15 +1,16 @@
 package de.szut.ita13.app.schulapp.calendar.container;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import de.szut.ita13.app.schulapp.calendar.adapter.CalendarAppointmentListAdapter;
 
 /**
  * Created by Rene on 29.04.2015.
  */
-public class CalendarAppointment implements Serializable {
+public class CalendarAppointment {
 
     public static String SERIALIZABLE_KEY = "appointment";
     public static String NONE = "appointment_none";
+
+    public static CalendarAppointmentListAdapter calendarAppointmentListAdapter;
 
     private CalendarDate calendarDate;
     private CalendarTime startTime;

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.adapter.CalendarAppointmentListAdapter;
@@ -28,21 +29,27 @@ import de.szut.ita13.app.schulapp.newutils.DateUtil;
 public class CalendarDateViewer extends ActionBarActivity implements MenuItem.OnMenuItemClickListener,
     View.OnClickListener {
 
+    public static final String APPOINTMENT_INDEX = "appointment-index";
+
     private CalendarDate calendarDate;
+    private CalendarAppointmentListAdapter calendarAppointmentListAdapter;
+    private String dateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendardate_viewer);
         Intent intent = getIntent();
-        calendarDate = (CalendarDate)intent.getSerializableExtra(CalendarDate.SERIALIZABLE_KEY);
+        dateFormat = intent.getStringExtra(CalendarDate.DATE_FORMAT);
+        calendarDate = Calendar.calendarMap.getCalendarDate(dateFormat);
         ArrayList<CalendarAppointment> calendarAppointments = calendarDate.getCalendarAppointments();
 
         ListView calendarAppointmentList = (ListView)findViewById(R.id.calendardate_appointmentlist);
         TextView calendarDateStatus = (TextView)findViewById(R.id.calendardate_status);
         TextView calendarDateDate = (TextView)findViewById(R.id.calendardate_date);
         TextView calendarDateWeekday = (TextView)findViewById(R.id.calendardate_weekday);
-        calendarDateDate.setText(calendarDate.getDateString());
+        calendarDateDate.setText(calendarDate.getDateString(CalendarDate.DEFAULT_DATE_FORMAT));
         calendarDateWeekday.setText(DateUtil.WEEKDAYS[calendarDate.getWeekday()]);
 
 
@@ -50,8 +57,7 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
         calendarAppointments = AppointmentUtil.Sorter.sort(calendarAppointments);
 
         if(calendarDate.hasAppointments()) {
-            CalendarAppointmentListAdapter calendarAppointmentListAdapter =
-                    new CalendarAppointmentListAdapter(this);
+            calendarAppointmentListAdapter = new CalendarAppointmentListAdapter(this);
             calendarAppointmentList.setAdapter(calendarAppointmentListAdapter);
             calendarDateStatus.setText("Es ist/sind " + calendarAppointments.size() + " Termin(e) vorhanden!");
         } else  {
@@ -73,7 +79,12 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if(item.getItemId() == R.id.action_new_appointment) {
-            //TODO neuen Termin hinzufügen
+            Intent intent = new Intent(Calendar.getCalendarActivity(), CalendarDateEditor.class);
+            CalendarAppointment calendarAppointment = new CalendarAppointment(calendarDate);
+            calendarDate.addCalendarAppointment(calendarAppointment);
+            intent.putExtra(CalendarDate.DATE_FORMAT, calendarDate.getDateString(CalendarDate.DATABASE_DATE_FORMAT));
+            intent.putExtra(CalendarDateViewer.APPOINTMENT_INDEX, findAppointmentIndex(calendarAppointment));
+            Calendar.getCalendarActivity().startActivity(intent);
         }
         return true;
     }
@@ -86,7 +97,21 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
     public void onClick(View appointmentView) {
         CalendarAppointment appointment = (CalendarAppointment)appointmentView.getTag();
         Intent intent = new Intent(Calendar.getCalendarActivity(), CalendarDateEditor.class);
-        intent.putExtra(CalendarAppointment.SERIALIZABLE_KEY, appointment);
+        intent.putExtra(CalendarDate.DATE_FORMAT, dateFormat);
+        intent.putExtra(CalendarDateViewer.APPOINTMENT_INDEX, findAppointmentIndex(appointment));
         Calendar.getCalendarActivity().startActivity(intent);
+    }
+
+    private int findAppointmentIndex(CalendarAppointment targetAppointment) {
+        int index = 0;
+        ArrayList<CalendarAppointment> calendarAppointments = calendarDate.getCalendarAppointments();
+        for(int i = 0; i < calendarAppointments.size(); i++) {
+            CalendarAppointment calendarAppointment = calendarAppointments.get(i);
+            if(targetAppointment == calendarAppointment) {
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 }
