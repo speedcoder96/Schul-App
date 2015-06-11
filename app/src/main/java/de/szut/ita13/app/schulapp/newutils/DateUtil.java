@@ -12,12 +12,17 @@ import de.szut.ita13.app.schulapp.calendar.container.Calendar;
  */
 public class DateUtil {
 
+    public static final String[] MONTH_NAMES = {"Januar", "Februar", "März", "April", "Mai", "Juni", "Juli",
+        "August", "September", "Oktober", "November", "Dezember"};
     public static final int[] DAYS_IN_MONTH = {31,28,31,30,31,30,31,31,30,31,30,31};
     public static final int[] MONTHS_IDS = {0,3,3,6,1,4,6,2,5,0,3,5};
     public static final String[] WEEKDAYS = {"Montag", "Dienstag","Mittwoch","Donnerstag","Freitag","Samstag","Sonntag"};
 
     public static int WEEKDAY_INDEX = 0;
     public static int LEAPYEAR_CORRECTION = 1;
+
+    public static int PREVIOUS_MONTH = 0;
+    public static int NEXT_MONTH = 1;
 
     public static int ACTUAL_DATE_DAY = 0;
     public static int ACTUAL_DATE_MONTH = 1;
@@ -71,6 +76,26 @@ public class DateUtil {
         return currentDate[ACTUAL_DATE_DAY] == day &&
                currentDate[ACTUAL_DATE_MONTH] == month &&
                currentDate[ACTUAL_DATE_YEAR] == year;
+    }
+
+    public static String[] getRange(int currentMonth, int currentYear) {
+        String[] range = new String[2];
+        if(currentMonth == 1) {
+            range[0] = (currentYear - 1) + "-" + 12 + "-" + fillMissingDigit(1);
+        } else {
+            range[0] = currentYear + "-" + fillMissingDigit((currentMonth - 1)) + "-" + fillMissingDigit(1);
+        }
+
+        if(currentMonth == 12) {
+            range[1] = (currentYear + 1) + "-" + fillMissingDigit(1) + "-" + DAYS_IN_MONTH[0];
+        } else {
+            range[1] = currentYear + "-" + fillMissingDigit((currentMonth + 1)) + "-" + DAYS_IN_MONTH[currentMonth - 1];
+        }
+        return range;
+    }
+
+    private static String fillMissingDigit(int value) {
+        return (value < 10) ? "0" + value : String.valueOf(value);
     }
 
 

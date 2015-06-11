@@ -3,13 +3,12 @@ package de.szut.ita13.app.schulapp.calendar.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -33,6 +32,7 @@ public class CalendarDateEditor extends ActionBarActivity {
     private CalendarTimePicker start;
     private CalendarTimePicker end;
     private CalendarAppointment appointment;
+    private ArrayList<CalendarAppointment> calendarAppointments;
     private CalendarDate calendarDate;
 
 
@@ -43,7 +43,7 @@ public class CalendarDateEditor extends ActionBarActivity {
         setContentView(R.layout.calendardate_editor);
         Intent intent = getIntent();
         calendarDate = Calendar.calendarMap.getCalendarDate(intent.getStringExtra(CalendarDate.DATE_FORMAT));
-        ArrayList<CalendarAppointment> calendarAppointments = calendarDate.getCalendarAppointments();
+        calendarAppointments = calendarDate.getCalendarAppointments();
         appointment = calendarAppointments.get(intent.getIntExtra(CalendarDateViewer.APPOINTMENT_INDEX, 0));
 
         String dateString = calendarDate.getDateString(CalendarDate.DEFAULT_DATE_FORMAT);
@@ -73,7 +73,6 @@ public class CalendarDateEditor extends ActionBarActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_calendareditor, menu);
         return super.onCreateOptionsMenu(menu);
@@ -87,7 +86,7 @@ public class CalendarDateEditor extends ActionBarActivity {
                 CalendarTime timeEnd = end.getCalendarTime();
 
                 if(timeEnd.isBefore(timeStart)){
-                    Toast.makeText(this.getApplicationContext(),"check ma die Zeit DU Sucuk, ALTER",Toast.LENGTH_LONG).show();
+                    Toast.makeText(this.getApplicationContext(),"Zeitfehler! Die Endzeit darf nicht \n vor der Startzeit liegen!",Toast.LENGTH_LONG).show();
                 }
                 else{
                     appointment.setSubject(title.getText().toString());
@@ -96,13 +95,41 @@ public class CalendarDateEditor extends ActionBarActivity {
                     appointment.setNote(note.getText().toString());
                     Toast.makeText(this.getApplicationContext(), "Termin wurde gespeichert!", Toast.LENGTH_LONG).show();
                     CalendarAppointment.calendarAppointmentListAdapter.notifyDataSetChanged();
+                    Calendar.dataSource.open();
+                    if(appointment.getRefID() == CalendarAppointment.NOT_REGISTERED) {
+                        Calendar.dataSource.insertAppointment(appointment);
+                        Log.d("CalendarDateEditor", "Insert Appointment");
+                    } else {
+                        Calendar.dataSource.updateAppointment(appointment);
+                        Log.d("CalendarDateEditor", "Update Appointment");
+                    }
+                    Calendar.dataSource.close();
+                    returnToPrevious();
                 }
                 break;
             case R.id.action_cancel:
-                //TODO hier wieder auf den CalendarDateViewer zurück verweisen
+                Log.d("CalendarDateEditor", "Start Previous Intent");
+                returnToPrevious();
+                break;
+            case R.id.action_remove:
+                if(appointment.getRefID() != CalendarAppointment.NOT_REGISTERED) {
+                    Calendar.dataSource.open();
+                    Calendar.dataSource.deleteAppointment(appointment.getRefID());
+                    Calendar.dataSource.close();
+                    calendarAppointments.remove(appointment);
+                    Log.d("CalendarDateEditor", "Remove Appointment");
+                    returnToPrevious();
+                }
                 break;
         }
         return true;
+    }
+
+    private void returnToPrevious() {
+        Intent intent = new Intent(getApplicationContext(), CalendarDateViewer.class);
+        intent.putExtra(CalendarDate.DATE_FORMAT, calendarDate.getDateString(CalendarDate.DATABASE_DATE_FORMAT));
+        startActivity(intent);
+        finish();
     }
 }
 

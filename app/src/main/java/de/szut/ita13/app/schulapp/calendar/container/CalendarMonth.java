@@ -17,18 +17,29 @@ public class CalendarMonth {
 
     private Calendar calendar;
     private ArrayList<CalendarElement> calendarElements;
+    private int month, year;
 
-    public CalendarMonth(Calendar calendar) {
+    public CalendarMonth(Calendar calendar, int month, int year) {
         this.calendar = calendar;
+        this.month = month;
+        this.year = year;
         this.calendarElements = new ArrayList<CalendarElement>();
+    }
+
+    public String getTitleString() {
+        return DateUtil.MONTH_NAMES[month - 1] + " " + String.valueOf(year);
+    }
+
+    public int getMonthIndex() {
+        return month;
+    }
+
+    public int getYear() {
+        return year;
     }
 
     public void addCalendarElement(CalendarElement element) {
         calendarElements.add(element);
-    }
-
-    public void removeCalendarElement(CalendarElement element) {
-        calendarElements.remove(element);
     }
 
     public ArrayList<CalendarElement> getCalendarElements() {
@@ -41,12 +52,8 @@ public class CalendarMonth {
         }
     }
 
-    public int getNumberOfWeeks() {
-        return calendarElements.size() - 1;
-    }
-
     public static CalendarMonth generate(Calendar calendar, int month, int year) {
-        CalendarMonth calendarMonth = new CalendarMonth(calendar);
+        CalendarMonth calendarMonth = new CalendarMonth(calendar, month, year);
         calendarMonth.setCalendarHeader(new CalendarHeader());
         int[] currentDate = DateUtil.getActualDate();
         int[] firstOfMonth = DateUtil.getWeekdayIndex(1, month, year);
@@ -82,7 +89,7 @@ public class CalendarMonth {
     public static CalendarMonth[] generateDefaultMonths(Calendar calendar, int month, int year) {
         CalendarMonth[] calendarMonths = new CalendarMonth[DEFAULT_NUMBER_OF_MONTHS];
         for(int i = 0; i < calendarMonths.length; i++) {
-            int currentMonth = (month + MONTH_OPERATOR[i]);
+            int currentMonth = (month + MONTH_OPERATOR[i]); // -1 0 1
             int currentYear = year;
             if(currentMonth < 1) {
                 currentMonth = 12;

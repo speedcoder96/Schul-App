@@ -11,4 +11,9 @@
         android:title="Cancel"
         app:showAsAction="always"  />
 
+    <item android:id="@+id/action_remove"
+        android:icon="@drawable/ic_action_discard"
+        android:title="Remove"
+        app:showAsAction="always"  />
+
 </menu>

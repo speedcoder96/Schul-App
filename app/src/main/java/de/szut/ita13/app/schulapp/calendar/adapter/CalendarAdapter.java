@@ -1,8 +1,7 @@
 package de.szut.ita13.app.schulapp.calendar.adapter;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,19 +23,14 @@ import de.szut.ita13.app.schulapp.calendar.container.CalendarWeek;
  */
 public class CalendarAdapter extends BaseAdapter {
 
-    private Calendar calendar;
-    private Activity calendarActivity;
-    private CalendarMonth currentMonth;
+    private FragmentActivity calendarActivity;
     private ArrayList<CalendarElement> currentMonthElements;
     private final LayoutInflater calendarLayoutInflater;
 
-    public CalendarAdapter(Context context, Calendar calendar) {
-        this.calendar = calendar;
+    public CalendarAdapter(Context context, Calendar calendar, CalendarMonth currentMonth) {
         this.calendarActivity = calendar.getCalendarActivity();
-        this.currentMonth = calendar.getCalendarMonth(CalendarMonth.CURRENT_MONTH);
         this.currentMonthElements = currentMonth.getCalendarElements();
         this.calendarLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
     }
 
     @Override
@@ -66,7 +60,7 @@ public class CalendarAdapter extends BaseAdapter {
                 TextView textView = (TextView) view.findViewById(header.getLayoutID(i));
                 String weekday = String.valueOf(header.getItem(i));
                 textView.setText(weekday);
-                if(i == 0) {
+                if(i == header.getSize() - 1) {
                     textView.setTextColor(calendarActivity.getResources().getColor(R.color.red));
                 }
             }

@@ -1,15 +1,13 @@
 package de.szut.ita13.app.schulapp.calendar.container;
 
+import android.util.Log;
+
 import java.util.HashMap;
 
 /**
  * Created by Rene on 10.06.2015.
  */
 public class CalendarMap extends HashMap<String, HashMap<String, HashMap<String, CalendarDate>>> {
-
-    public CalendarMap() {
-
-    }
 
     public CalendarDate getCalendarDate(String yearString, String monthString, String dayString) {
         if(containsKey(yearString)) {
@@ -46,6 +44,16 @@ public class CalendarMap extends HashMap<String, HashMap<String, HashMap<String,
         String monthString = dateStringParts[1];
         String dayString = dateStringParts[2];
         putCalendarDate(calendarDate, yearString, monthString, dayString);
+    }
+
+    public void saveToDatabase() {
+        for(Entry<String, HashMap<String, HashMap<String, CalendarDate>>> calendarYear : this.entrySet()) {
+            for(Entry<String, HashMap<String, CalendarDate>> calendarMonth : calendarYear.getValue().entrySet()) {
+                for(Entry<String, CalendarDate> calendarDay : calendarMonth.getValue().entrySet()) {
+                    CalendarDate calendarDate = calendarDay.getValue();
+                }
+            }
+        }
     }
 
 

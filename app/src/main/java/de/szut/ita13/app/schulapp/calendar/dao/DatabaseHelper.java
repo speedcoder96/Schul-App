@@ -10,8 +10,6 @@ import android.util.Log;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-
-
     public static enum Appointments {
 
         ID, TITLE, DATE, START, END, NOTE;
@@ -20,9 +18,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         public static final int DATABASE_VERSION = 1;
 
         public static String TABLE_NAME = "appointments";
-        public static String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " " +
-                ID.name() + "," + TITLE.name() + "," + DATE.name() + "," + START.name() + "," +
-                END.name() + "," + NOTE.name();
+        public static String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ( " +
+                ID.name() + " integer primary key autoincrement," + TITLE.name() + " text not null," + DATE.name() + " text not null,"
+                + START.name() + " text not null," + END.name() + " text not null," + NOTE.name() + " text );";
 
         public static String[] names() {
             Appointments[] appointments = values();
@@ -41,10 +39,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
        sqLiteDatabase.execSQL(Appointments.CREATE_TABLE);
+       Log.d("DatabaseHelper", "OnCreate");
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        Log.d("DatabaseHelper", "OnOpen");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        Log.d("DatabaseHelper", "OnUpgrade");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Appointments.TABLE_NAME);
         onCreate(sqLiteDatabase);
     }

@@ -10,6 +10,8 @@ public class CalendarAppointment {
     public static String SERIALIZABLE_KEY = "appointment";
     public static String NONE = "appointment_none";
 
+    public static final int NOT_REGISTERED = -1;
+
     public static CalendarAppointmentListAdapter calendarAppointmentListAdapter;
 
     private CalendarDate calendarDate;
@@ -25,6 +27,7 @@ public class CalendarAppointment {
 
     public CalendarAppointment(CalendarDate calendarDate) {
         this.calendarDate = calendarDate;
+        this.refID = -1;
     }
 
     public void setStartTime(CalendarTime startTime) {

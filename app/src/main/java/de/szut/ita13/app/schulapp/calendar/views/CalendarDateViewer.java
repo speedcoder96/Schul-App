@@ -37,7 +37,6 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendardate_viewer);
         Intent intent = getIntent();
@@ -52,14 +51,14 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
         calendarDateDate.setText(calendarDate.getDateString(CalendarDate.DEFAULT_DATE_FORMAT));
         calendarDateWeekday.setText(DateUtil.WEEKDAYS[calendarDate.getWeekday()]);
 
-
-
-        calendarAppointments = AppointmentUtil.Sorter.sort(calendarAppointments);
-
         if(calendarDate.hasAppointments()) {
+            calendarAppointments = AppointmentUtil.Sorter.sort(calendarAppointments);
             calendarAppointmentListAdapter = new CalendarAppointmentListAdapter(this);
             calendarAppointmentList.setAdapter(calendarAppointmentListAdapter);
-            calendarDateStatus.setText("Es ist/sind " + calendarAppointments.size() + " Termin(e) vorhanden!");
+            calendarDateStatus.setText("Es ist 1 Termin vorhanden!");
+            if(calendarAppointments.size() > 1) {
+                calendarDateStatus.setText("Es sind " + calendarAppointments.size() + " Termine vorhanden!");
+            }
         } else  {
             calendarDateStatus.setText(R.string.no_appointments);
         }
@@ -79,12 +78,9 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if(item.getItemId() == R.id.action_new_appointment) {
-            Intent intent = new Intent(Calendar.getCalendarActivity(), CalendarDateEditor.class);
             CalendarAppointment calendarAppointment = new CalendarAppointment(calendarDate);
             calendarDate.addCalendarAppointment(calendarAppointment);
-            intent.putExtra(CalendarDate.DATE_FORMAT, calendarDate.getDateString(CalendarDate.DATABASE_DATE_FORMAT));
-            intent.putExtra(CalendarDateViewer.APPOINTMENT_INDEX, findAppointmentIndex(calendarAppointment));
-            Calendar.getCalendarActivity().startActivity(intent);
+            gotoNextActivity(calendarAppointment);
         }
         return true;
     }
@@ -96,10 +92,7 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
     @Override
     public void onClick(View appointmentView) {
         CalendarAppointment appointment = (CalendarAppointment)appointmentView.getTag();
-        Intent intent = new Intent(Calendar.getCalendarActivity(), CalendarDateEditor.class);
-        intent.putExtra(CalendarDate.DATE_FORMAT, dateFormat);
-        intent.putExtra(CalendarDateViewer.APPOINTMENT_INDEX, findAppointmentIndex(appointment));
-        Calendar.getCalendarActivity().startActivity(intent);
+        gotoNextActivity(appointment);
     }
 
     private int findAppointmentIndex(CalendarAppointment targetAppointment) {
@@ -113,5 +106,13 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
             }
         }
         return index;
+    }
+
+    private void gotoNextActivity(CalendarAppointment appointment) {
+        Intent intent = new Intent(getApplicationContext(), CalendarDateEditor.class);
+        intent.putExtra(CalendarDate.DATE_FORMAT, calendarDate.getDateString(CalendarDate.DATABASE_DATE_FORMAT));
+        intent.putExtra(CalendarDateViewer.APPOINTMENT_INDEX, findAppointmentIndex(appointment));
+        Calendar.getCalendarActivity().startActivity(intent);
+        finish();
     }
 }
