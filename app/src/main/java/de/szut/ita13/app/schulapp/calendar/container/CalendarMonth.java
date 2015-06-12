@@ -1,7 +1,6 @@
 package de.szut.ita13.app.schulapp.calendar.container;
 
 import java.util.ArrayList;
-
 import de.szut.ita13.app.schulapp.newutils.DateUtil;
 
 /**
@@ -103,5 +102,6 @@ public class CalendarMonth {
         }
         return calendarMonths;
     }
+
 
 }

@@ -1,12 +1,12 @@
 package de.szut.ita13.app.schulapp.calendar.container;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.adapter.CalendarAdapter;
@@ -23,7 +23,7 @@ import de.szut.ita13.app.schulapp.calendar.dao.CalendarDataSource;
 /**
  * Created by Rene on 29.04.2015.
  */
-public class Calendar implements ViewPager.OnPageChangeListener {
+public class Calendar  {
 
     public static CalendarMap calendarMap;
     public static CalendarDataSource dataSource;
@@ -39,25 +39,13 @@ public class Calendar implements ViewPager.OnPageChangeListener {
         dataSource = new CalendarDataSource(calendarActivity);
 
         Calendar.calendarActivity = calendarActivity;
-        Calendar.calendarActivity.setContentView(R.layout.activity_calendar);
-
-        calendarMonths = CalendarMonth.generateDefaultMonths(this, 6, 2015);
-
-        calendarViewPagerAdapter = new CalendarViewPagerAdapter(calendarActivity.getSupportFragmentManager(), this);
+        calendarActivity.setContentView(R.layout.activity_calendar);
 
         viewPager = (ViewPager)calendarActivity.findViewById(R.id.pager);
-        viewPager.setOnPageChangeListener(this);
 
-        viewPager.setAdapter(calendarViewPagerAdapter);
-        viewPager.setCurrentItem(1);
-    }
+        calendarMonths = CalendarMonth.generateDefaultMonths(this, 12, 2015);
 
-    public void generateNext(CalendarMonth calendarMonth) {
-        int month = calendarMonth.getMonthIndex();
-        int year = calendarMonth.getYear();
-        calendarMonths = CalendarMonth.generateDefaultMonths(this, month, year);
-        calendarViewPagerAdapter.notifyDataSetChanged();
-
+        setAdapter();
     }
 
     public static FragmentActivity getCalendarActivity() {
@@ -81,25 +69,39 @@ public class Calendar implements ViewPager.OnPageChangeListener {
         }
     }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    private void setAdapter() {
+        calendarViewPagerAdapter = new CalendarViewPagerAdapter(calendarActivity.getSupportFragmentManager(), this);
+        viewPager.setAdapter(calendarViewPagerAdapter);
+        Log.d("Calendar", "Child Count : " + viewPager.getChildCount());
+        viewPager.setCurrentItem(1);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    viewPager.setAdapter(null);
+                    setAdapter();
+                    calendarMonths = CalendarMonth.generateDefaultMonths(Calendar.this, calendarMonths[position].getMonthIndex(),
+                            calendarMonths[position].getYear());
+                } else if (position == 2) {
+                    viewPager.setAdapter(null);
+                    setAdapter();
+                    calendarMonths = CalendarMonth.generateDefaultMonths(Calendar.this, calendarMonths[position].getMonthIndex(),
+                            calendarMonths[position].getYear());
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
-    @Override
-    public void onPageSelected(int position) {
-        if(position == 2) {
-            generateNext(calendarMonths[position]);
-            viewPager.setCurrentItem(1);
-        }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
-
-    public static class CalendarViewPagerAdapter extends FragmentPagerAdapter {
+    public class CalendarViewPagerAdapter extends FragmentStatePagerAdapter {
 
         private Calendar calendar;
 
@@ -110,13 +112,14 @@ public class Calendar implements ViewPager.OnPageChangeListener {
 
         @Override
         public CharSequence getPageTitle(int position) {
+            Log.d("Calendar", calendar.getCalendarMonths()[position].getTitleString());
             return calendar.getCalendarMonths()[position].getTitleString();
         }
 
         @Override
         public Fragment getItem(int position) {
-            CalendarMonth calendarMonth = calendar.getCalendarMonth(position);
-            Fragment fragment = new CalendarViewPagerFragment(calendar, calendarMonth);
+            CalendarMonth calendarMonth = calendar.getCalendarMonths()[position];
+            CalendarViewPagerFragment fragment = new CalendarViewPagerFragment(calendar, calendarMonth);
             return fragment;
         }
 
@@ -126,14 +129,12 @@ public class Calendar implements ViewPager.OnPageChangeListener {
         }
     }
 
-    public static class CalendarViewPagerFragment extends Fragment {
+    public class CalendarViewPagerFragment extends Fragment {
 
-        private Calendar calendar;
-        private CalendarMonth calendarMonth;
+        public CalendarAdapter calendarAdapter;
 
         public CalendarViewPagerFragment(Calendar calendar, CalendarMonth calendarMonth) {
-            this.calendar = calendar;
-            this.calendarMonth = calendarMonth;
+            calendarAdapter = new CalendarAdapter(getCalendarActivity(), calendar, calendarMonth);
         }
 
         @Override
@@ -141,8 +142,8 @@ public class Calendar implements ViewPager.OnPageChangeListener {
             View rootView = inflater.inflate(R.layout.calendar_view_pager_fragment_layout, container, false);
 
             ListView listView = (ListView)rootView.findViewById(R.id.calendar);
-            listView.setAdapter(new CalendarAdapter(getCalendarActivity(), calendar, calendarMonth));
-            Log.d("Calendar", "Generate");
+            listView.setAdapter(calendarAdapter);
+
 
             return rootView;
         }

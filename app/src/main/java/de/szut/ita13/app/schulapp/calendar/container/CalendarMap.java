@@ -1,6 +1,5 @@
 package de.szut.ita13.app.schulapp.calendar.container;
 
-import android.util.Log;
 
 import java.util.HashMap;
 
