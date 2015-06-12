@@ -42,7 +42,8 @@ public class DateUtil {
 
     public static int getWeekNumber(int day, int month, int year) {
         int daysPast = daysPastSince(day, month, year);
-        int oneJanOffset = ((getWeekdayIndex(1,1,year)[0]) < 5) ? 1:0;
+        int weekdayIndex = getWeekdayIndex(1,1,year)[0];
+        int oneJanOffset = (((weekdayIndex == 0)? 6 :weekdayIndex )< 5) ? 1:0;
         return (((daysPast + (getWeekdayIndex(1,1,year)[0])) / 7) + oneJanOffset) ;
     }
 
