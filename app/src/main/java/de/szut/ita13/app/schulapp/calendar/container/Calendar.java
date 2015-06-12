@@ -70,6 +70,7 @@ public class Calendar  {
     }
 
     private void setAdapter() {
+        calendarViewPagerAdapter = null;
         calendarViewPagerAdapter = new CalendarViewPagerAdapter(calendarActivity.getSupportFragmentManager(), this);
         viewPager.setAdapter(calendarViewPagerAdapter);
         Log.d("Calendar", "Child Count : " + viewPager.getChildCount());
@@ -82,15 +83,17 @@ public class Calendar  {
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
-                    viewPager.setAdapter(null);
-                    setAdapter();
                     calendarMonths = CalendarMonth.generateDefaultMonths(Calendar.this, calendarMonths[position].getMonthIndex(),
                             calendarMonths[position].getYear());
+                    viewPager.setAdapter(null);
+                    setAdapter();
+                    calendarViewPagerAdapter.notifyDataSetChanged();
                 } else if (position == 2) {
-                    viewPager.setAdapter(null);
-                    setAdapter();
                     calendarMonths = CalendarMonth.generateDefaultMonths(Calendar.this, calendarMonths[position].getMonthIndex(),
                             calendarMonths[position].getYear());
+                    viewPager.setAdapter(null);
+                    setAdapter();
+                    calendarViewPagerAdapter.notifyDataSetChanged();
                 }
             }
 

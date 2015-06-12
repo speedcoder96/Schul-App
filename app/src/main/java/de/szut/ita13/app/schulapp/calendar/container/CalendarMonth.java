@@ -1,5 +1,7 @@
 package de.szut.ita13.app.schulapp.calendar.container;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import de.szut.ita13.app.schulapp.newutils.DateUtil;
 
@@ -58,6 +60,8 @@ public class CalendarMonth {
         int[] firstOfMonth = DateUtil.getWeekdayIndex(1, month, year);
         int leapYearCorrection = (firstOfMonth[1] == -1) ? 1 : 0;
         int firstOfMonthOffset = firstOfMonth[0] - 1;
+        if(firstOfMonthOffset == -1)
+            firstOfMonthOffset = 6;
         int firstWeekNumberOfMonth = DateUtil.getWeekNumber(1, month, year);
         boolean hasFilledBlanks = false;
         CalendarWeek week = new CalendarWeek(calendar);

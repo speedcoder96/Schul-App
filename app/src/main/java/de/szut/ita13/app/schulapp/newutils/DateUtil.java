@@ -1,5 +1,6 @@
 package de.szut.ita13.app.schulapp.newutils;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.Date;
@@ -35,15 +36,25 @@ public class DateUtil {
         int yearDigit = (year % 100) + ((year % 100) / 4);
         int leapYearCorrection = (year % 4 == 0 && month < 3) ? -1 : 0;
         weekDayIndex[0] = (day + monthID + centuryDigit + yearDigit + leapYearCorrection) % 7;
-        weekDayIndex[1] = leapYearCorrection;
+        weekDayIndex[1] = (month != 1)?leapYearCorrection:0;
         return weekDayIndex;
     }
 
     public static int getWeekNumber(int day, int month, int year) {
         int daysPast = daysPastSince(day, month, year);
+        int oneJanOffset = ((getWeekdayIndex(1,1,year)[0]) < 4) ? 0:1;
+
+        Log.d("weeknum ",(getWeekdayIndex(1,1,year)[0]) +"  dayspast "+daysPast+"date: " + day + "." + month + "." + year );
+
+        return ( month == 1)? oneJanOffset:((daysPast / 7) + oneJanOffset) ;
+    }
+    public static int getWeekNumber2(int day, int month, int year) {
+        int daysPast = daysPastSince(day, month, year);
         int weekdayIndex = getWeekdayIndex(day, month, year)[DateUtil.WEEKDAY_INDEX];
-        int differenceToMonday = Math.abs(1 - weekdayIndex);
-        return (daysPast / 7) + (((daysPast - differenceToMonday) % 7) / 4);
+        int firstOfTheYear = getWeekdayIndex(1, 1, year)[DateUtil.WEEKDAY_INDEX];
+        Log.d("weeknum",((daysPast / 7) + ((firstOfTheYear > 3) ? 1 : 0)) + "date: " + day + "." + month + "." + year );
+        return (daysPast / 7) + ((firstOfTheYear > 3) ? 1 : 0);
+
     }
 
     public static int daysPastSince(int day, int month, int year) {
