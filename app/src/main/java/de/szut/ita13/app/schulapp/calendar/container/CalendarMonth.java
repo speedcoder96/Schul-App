@@ -59,6 +59,7 @@ public class CalendarMonth {
         int[] currentDate = DateUtil.getActualDate();
         int[] firstOfMonth = DateUtil.getWeekdayIndex(1, month, year);
         int leapYearCorrection = (firstOfMonth[1] == -1) ? 1 : 0;
+
         int firstOfMonthOffset = firstOfMonth[0] - 1;
         if(firstOfMonthOffset == -1)
             firstOfMonthOffset = 6;

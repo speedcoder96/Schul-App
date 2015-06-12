@@ -42,23 +42,13 @@ public class DateUtil {
 
     public static int getWeekNumber(int day, int month, int year) {
         int daysPast = daysPastSince(day, month, year);
-        int oneJanOffset = ((getWeekdayIndex(1,1,year)[0]) < 4) ? 0:1;
-
-        Log.d("weeknum ",(getWeekdayIndex(1,1,year)[0]) +"  dayspast "+daysPast+"date: " + day + "." + month + "." + year );
-
-        return ( month == 1)? oneJanOffset:((daysPast / 7) + oneJanOffset) ;
+        int oneJanOffset = ((getWeekdayIndex(1,1,year)[0]) < 5) ? 1:0;
+        return (((daysPast + (getWeekdayIndex(1,1,year)[0])) / 7) + oneJanOffset) ;
     }
-    public static int getWeekNumber2(int day, int month, int year) {
-        int daysPast = daysPastSince(day, month, year);
-        int weekdayIndex = getWeekdayIndex(day, month, year)[DateUtil.WEEKDAY_INDEX];
-        int firstOfTheYear = getWeekdayIndex(1, 1, year)[DateUtil.WEEKDAY_INDEX];
-        Log.d("weeknum",((daysPast / 7) + ((firstOfTheYear > 3) ? 1 : 0)) + "date: " + day + "." + month + "." + year );
-        return (daysPast / 7) + ((firstOfTheYear > 3) ? 1 : 0);
 
-    }
 
     public static int daysPastSince(int day, int month, int year) {
-        int daysPast = 0;
+        int daysPast = -1;
         int leapYearCorrection = 0;
         if(year % 4 == 0 && month > 2) {
             leapYearCorrection = 1;
@@ -66,7 +56,6 @@ public class DateUtil {
         for(int i = 0; i < month - 1; i++) {
             daysPast += DAYS_IN_MONTH[i];
         }
-        daysPast += day;
         daysPast += leapYearCorrection;
         return daysPast;
     }
