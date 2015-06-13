@@ -1,12 +1,8 @@
 package de.szut.ita13.app.schulapp.newutils;
 
 import android.util.Log;
-import android.widget.Toast;
 
-import java.util.Date;
 import java.util.GregorianCalendar;
-
-import de.szut.ita13.app.schulapp.calendar.container.Calendar;
 
 /**
  * Created by Rene on 08.05.2015.
@@ -36,20 +32,18 @@ public class DateUtil {
         int yearDigit = (year % 100) + ((year % 100) / 4);
         int leapYearCorrection = (year % 4 == 0 && month < 3) ? -1 : 0;
         weekDayIndex[0] = (day + monthID + centuryDigit + yearDigit + leapYearCorrection) % 7;
-        weekDayIndex[1] = (month != 1)?leapYearCorrection:0;
+        weekDayIndex[1] = (month != 1) ? leapYearCorrection : 0;
         return weekDayIndex;
     }
 
-    public static int getWeekNumber(int day, int month, int year) {
-        int daysPast = daysPastSince(day, month, year);
-        int weekdayIndex = getWeekdayIndex(1,1,year)[0];
-        int oneJanOffset = (((weekdayIndex == 0)? 6 :weekdayIndex )< 5) ? 1:0;
-        return (((daysPast + (getWeekdayIndex(1,1,year)[0])) / 7) + oneJanOffset) ;
+    public static int getWeekOfYear(int day, int month, int year) {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.set(year, month - 1, day);
+        return calendar.get(GregorianCalendar.WEEK_OF_YEAR);
     }
 
-
     public static int daysPastSince(int day, int month, int year) {
-        int daysPast = -1;
+        int daysPast = 0;
         int leapYearCorrection = 0;
         if(year % 4 == 0 && month > 2) {
             leapYearCorrection = 1;
@@ -97,6 +91,23 @@ public class DateUtil {
 
     private static String fillMissingDigit(int value) {
         return (value < 10) ? "0" + value : String.valueOf(value);
+    }
+
+
+    public static class DateFormatter  {
+
+        private int day, month, year;
+
+        public DateFormatter(int day, int month, int year) {
+            this.day = day;
+            this.month = month;
+            this.year = year;
+        }
+
+        public String toString() {
+            return String.valueOf(day) + "." + String.valueOf(month) + "." + String.valueOf(year);
+        }
+
     }
 
 

@@ -1,7 +1,5 @@
 package de.szut.ita13.app.schulapp.calendar.container;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import de.szut.ita13.app.schulapp.newutils.DateUtil;
 
@@ -59,14 +57,12 @@ public class CalendarMonth {
         int[] currentDate = DateUtil.getActualDate();
         int[] firstOfMonth = DateUtil.getWeekdayIndex(1, month, year);
         int leapYearCorrection = (firstOfMonth[1] == -1) ? 1 : 0;
-
-        int firstOfMonthOffset = firstOfMonth[0] - 1;
-        if(firstOfMonthOffset == -1)
-            firstOfMonthOffset = 6;
-        int firstWeekNumberOfMonth = DateUtil.getWeekNumber(1, month, year);
+        int firstOfMonthOffset = (firstOfMonth[0] - 1 == - 1) ? 6 : firstOfMonth[0] - 1;
+        int firstWeekNumberOfMonth = DateUtil.getWeekOfYear(1, month, year);
         boolean hasFilledBlanks = false;
         CalendarWeek week = new CalendarWeek(calendar);
         week.setWeekNumber(firstWeekNumberOfMonth);
+        firstWeekNumberOfMonth = (firstWeekNumberOfMonth == 53) ? 0 : firstWeekNumberOfMonth;
         for(int i = 0; i < DateUtil.DAYS_IN_MONTH[month - 1] + leapYearCorrection; i++) {
             if((i + firstOfMonthOffset) % 7 == 0 && i != 0) {
                 calendarMonth.addCalendarElement(week);

@@ -35,10 +35,6 @@ public class CalendarDataSource {
                 " WHERE date(" + DatabaseHelper.Appointments.DATE.name() + ", YYYY-MM-DD) BETWEEN " +
                 "date(" + range[0] + ", YYYY-MM-DD) AND date(" + range[1] + ", YYYY-MM-DD);";
         Cursor cursor = database.rawQuery(selectQuery, null);
-        String dateString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.Appointments.DATE.name()));
-        String[] date = dateString.split("");
-
-
 
         return null;
     }
@@ -52,7 +48,6 @@ public class CalendarDataSource {
         values.put(DatabaseHelper.Appointments.END.name(), appointment.getEndTime().getTimeString());
         long id = database.insert(DatabaseHelper.Appointments.TABLE_NAME,null,values);
         appointment.setRefID(id);
-        Log.d("CalendarDataSource", "id:" + id);
     }
     public void updateAppointment(CalendarAppointment appointment){
         ContentValues values = new ContentValues();
@@ -66,9 +61,9 @@ public class CalendarDataSource {
 
     }
     public void deleteAppointment(long id){
-        int index = database.delete(DatabaseHelper.Appointments.TABLE_NAME, DatabaseHelper.Appointments.ID.name()
+        database.delete(DatabaseHelper.Appointments.TABLE_NAME, DatabaseHelper.Appointments.ID.name()
                 + " = " + id, null);
-        Log.d("CalendarDataSource", "int:" + index);
     }
+
 
 }

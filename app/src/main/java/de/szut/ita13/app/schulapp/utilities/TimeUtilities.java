@@ -110,17 +110,6 @@ public class TimeUtilities {
     }
 
     /**
-     * Returns the calculated totalMinutes out of the time object which is passed in
-     * @param time time object that provides the attributes hours and minutes
-     * @return returns the totalMinutes calculated by the hours and minutes
-     */
-    public static int getTotalMinutes(Time time) {
-        int hours = time.getHours();
-        int minutes = time.getMinutes();
-        return hours * MINUTES_PER_HOUR + minutes;
-    }
-
-    /**
      * Returns a time string which is built out of the time object
      * @param time the time object that provides hours and minutes
      * @return returns the string in the following format [HH:MM]
@@ -203,40 +192,6 @@ public class TimeUtilities {
             default:
                 return false;
         }
-    }
-
-    /**
-     * Creates a time object with random hours and minutes based on the maximum value totalMinutes
-     * @return returns a time object with random hours and minutes
-     * @throws InvalidTimeException throws InvalidTimeException if the time isn't valid
-     */
-    public static Time getRandomTime() throws InvalidTimeException {
-        return getTime(new Random().nextInt(DAY_IN_MINUTES));
-    }
-
-    /**
-     * Creates a random time string by calling the methods getRandomTime and getTimeString
-     * @return returns a random time string based on the total minutes
-     * @throws InvalidTimeException
-     */
-    public static String getRandomTimeString() throws InvalidTimeException {
-        return getTimeString(getRandomTime());
-    }
-
-    /**
-     * Creates a time object based on the given start time plus the minutes of an interval times
-     * the index of the actual hour
-     * @param startTime is the time object that is set as start time (index = 0)
-     * @param interval is given in minutes, is the length of an hour
-     * @param next is the index of the calculated time object
-     * @return returns the next time object based on the parameters
-     * @throws InvalidTimeException throws InvalidTimeException if the time object isn't valid
-     */
-    public static Time getNextTime(Time startTime, int interval, int next) throws InvalidTimeException {
-        int hours = startTime.getHours();
-        int minutes = startTime.getMinutes();
-        int totalMinutes = totalMinutesOf(hours, minutes) + (interval * next);
-        return getTime(totalMinutes);
     }
 
     /**
@@ -343,29 +298,11 @@ public class TimeUtilities {
             int totalMinutesNow = totalMinutesOf(rowNow.getTime());
             int totalMinutesNext = totalMinutesOf(rowNow.getNextTime());
             if(totalMinutesNow <= totalMinutesActual && totalMinutesActual < totalMinutesNext) {
-                Log.d(TAG, "row : " + position + " gesetzt!");
                 rowNow.setNow(true);
             } else {
-                Log.d(TAG, "row : " + position + " nicht gesetzt!");
                 rowNow.setNow(false);
             }
         }
-    }
-
-    /**
-     *
-     * @param day
-     * @param timeTable
-     * @return
-     */
-    public static Time getFirstLessonTimeOfDay(int day, TimeTable timeTable) {
-        TimeTableColumn timeTableColumn = timeTable.getTimeTableColumn(day);
-        for(TimeTableSubject timeTableSubject : timeTableColumn.getTimeTableSubjects()) {
-            if(timeTableSubject.isValidSubject()) {
-                return timeTableSubject.getTime();
-            }
-        }
-        return null;
     }
 
     /**
@@ -422,10 +359,6 @@ public class TimeUtilities {
         return (((time.getHours() * MINUTES_PER_HOUR + time.getMinutes()) * SECONDS_PER_MINUTE) + time.getSeconds()) * MILLISECOND_PER_SECOND;
     }
 
-    /**
-     *
-     * @return
-     */
     public static long totalMillisecondsOfADay() {
         return DAY_IN_MINUTES * SECONDS_PER_MINUTE * MILLISECOND_PER_SECOND;
     }

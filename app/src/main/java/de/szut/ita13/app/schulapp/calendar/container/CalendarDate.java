@@ -28,8 +28,6 @@ public class CalendarDate implements View.OnClickListener {
     private boolean none;
     private boolean actualDate;
 
-    private long refID;
-
     private ArrayList<CalendarAppointment> calendarAppointments;
 
     public CalendarDate(int day, int month, int year, int weekday, boolean actualDate) {
@@ -40,15 +38,6 @@ public class CalendarDate implements View.OnClickListener {
         calendarAppointments = new ArrayList<CalendarAppointment>();
         this.actualDate = actualDate;
         none = false;
-        refID = Long.parseLong(day + "" + month + "" + year);
-
-        CalendarAppointment test = AppointmentUtil.Builder
-                .build(this, new CalendarTime(10, 0), "Ramazan", "Wir sind gut!");
-        CalendarAppointment test2 = AppointmentUtil.Builder
-                .build(this, new CalendarTime(8, 45), "Ramazan", "Wir sind gut!");
-        calendarAppointments.add(test);
-        calendarAppointments.add(test2);
-
     }
 
     public void addCalendarAppointment(CalendarAppointment calendarAppointment) {
@@ -101,14 +90,6 @@ public class CalendarDate implements View.OnClickListener {
             String monthStr = (month < 10) ? "0" + month : String.valueOf(month);
             return dayStr + "." + monthStr + "." + year;
         }
-    }
-
-    public void setRefID(long refID) {
-        this.refID = refID;
-    }
-
-    public long getRefID() {
-        return refID;
     }
 
     @Override

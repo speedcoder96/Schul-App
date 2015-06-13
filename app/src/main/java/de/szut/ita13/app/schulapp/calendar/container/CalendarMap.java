@@ -1,7 +1,10 @@
 package de.szut.ita13.app.schulapp.calendar.container;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import de.szut.ita13.app.schulapp.calendar.dao.CalendarDataSource;
 
 /**
  * Created by Rene on 10.06.2015.
@@ -45,14 +48,26 @@ public class CalendarMap extends HashMap<String, HashMap<String, HashMap<String,
         putCalendarDate(calendarDate, yearString, monthString, dayString);
     }
 
-    public void saveToDatabase() {
+    public void saveToDatabase(CalendarDataSource dataSource) {
+        dataSource.open();
         for(Entry<String, HashMap<String, HashMap<String, CalendarDate>>> calendarYear : this.entrySet()) {
             for(Entry<String, HashMap<String, CalendarDate>> calendarMonth : calendarYear.getValue().entrySet()) {
                 for(Entry<String, CalendarDate> calendarDay : calendarMonth.getValue().entrySet()) {
                     CalendarDate calendarDate = calendarDay.getValue();
+                    if(calendarDate.hasAppointments()) {
+                        ArrayList<CalendarAppointment> appointments = calendarDate.getCalendarAppointments();
+                        for(CalendarAppointment appointment : appointments) {
+                            if(appointment.getRefID() == CalendarAppointment.NOT_REGISTERED) {
+                                dataSource.insertAppointment(appointment);
+                            } else {
+                                dataSource.updateAppointment(appointment);
+                            }
+                        }
+                    }
                 }
             }
         }
+        dataSource.close();
     }
 
 
