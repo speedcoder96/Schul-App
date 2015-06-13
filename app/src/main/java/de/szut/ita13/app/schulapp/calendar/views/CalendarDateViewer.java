@@ -51,9 +51,10 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
         calendarDateDate.setText(calendarDate.getDateString(CalendarDate.DEFAULT_DATE_FORMAT));
         calendarDateWeekday.setText(DateUtil.WEEKDAYS[calendarDate.getWeekday()]);
 
+        calendarAppointmentListAdapter = new CalendarAppointmentListAdapter(this);
+
         if(calendarDate.hasAppointments()) {
             calendarAppointments = AppointmentUtil.Sorter.sort(calendarAppointments);
-            calendarAppointmentListAdapter = new CalendarAppointmentListAdapter(this);
             calendarAppointmentList.setAdapter(calendarAppointmentListAdapter);
             calendarDateStatus.setText("Es ist 1 Termin vorhanden!");
             if(calendarAppointments.size() > 1) {
@@ -83,6 +84,13 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
             gotoNextActivity(calendarAppointment);
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this.getApplicationContext(), CalendarActivity.class);
+        Calendar.getCalendarActivity().startActivity(intent);
+        super.onBackPressed();
     }
 
     public CalendarDate getCalendarDate() {

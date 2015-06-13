@@ -20,16 +20,17 @@ import de.szut.ita13.app.schulapp.calendar.views.CalendarDateViewer;
  */
 public class CalendarAppointmentListAdapter extends BaseAdapter {
 
-    private CalendarDateViewer editor;
+    private CalendarDateViewer viewer;
     private CalendarDate calendarDate;
     private ArrayList<CalendarAppointment> calendarAppointments;
     private LayoutInflater calendarAppointmentListInflater;
 
-    public CalendarAppointmentListAdapter(CalendarDateViewer editor) {
-        this.editor = editor;
-        this.calendarDate = editor.getCalendarDate();
+    public CalendarAppointmentListAdapter(CalendarDateViewer viewer) {
+        CalendarAppointment.calendarAppointmentListAdapter = this;
+        this.viewer = viewer;
+        this.calendarDate = viewer.getCalendarDate();
         this.calendarAppointments = calendarDate.getCalendarAppointments();
-        this.calendarAppointmentListInflater = (LayoutInflater) editor.getApplicationContext()
+        this.calendarAppointmentListInflater = (LayoutInflater) viewer.getApplicationContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -52,12 +53,11 @@ public class CalendarAppointmentListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
         view = calendarAppointmentListInflater.inflate(R.layout.calendardate_appointmentlist_layout, parent, false);
-        view.setOnClickListener(editor);
+        view.setOnClickListener(viewer);
 
         TextView cTime = (TextView) view.findViewById(R.id.calendardate_time);
         TextView cSubject = (TextView) view.findViewById(R.id.calendardate_subject);
         CalendarAppointment appointment = calendarAppointments.get(position);
-        CalendarAppointment.calendarAppointmentListAdapter = this;
         CalendarTime time = appointment.getStartTime();
         String subject = appointment.getSubject();
         cTime.setText(time.getTimeString());

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.adapter.CalendarAdapter;
 import de.szut.ita13.app.schulapp.calendar.dao.CalendarDataSource;
+import de.szut.ita13.app.schulapp.newutils.DateUtil;
 
 /**
  * Created by Rene on 29.04.2015.
@@ -43,7 +44,9 @@ public class Calendar  {
 
         viewPager = (ViewPager)calendarActivity.findViewById(R.id.pager);
 
-        calendarMonths = CalendarMonth.generateDefaultMonths(this, 12, 2015);
+        int[] actualDate = DateUtil.getActualDate();
+        calendarMonths = CalendarMonth.generateDefaultMonths(this, actualDate[DateUtil.ACTUAL_DATE_MONTH],
+                actualDate[DateUtil.ACTUAL_DATE_YEAR]);
 
         setAdapter();
     }
