@@ -25,4 +25,10 @@ public class CalendarActivity extends FragmentActivity {
         super.onBackPressed();
     }
 
+    @Override
+    protected void onDestroy() {
+        Calendar.calendarMap.saveToDatabase(Calendar.dataSource);
+        super.onDestroy();
+    }
+
 }

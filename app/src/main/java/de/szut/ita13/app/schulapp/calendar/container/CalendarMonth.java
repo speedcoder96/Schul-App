@@ -87,6 +87,7 @@ public class CalendarMonth {
     }
 
     public static CalendarMonth[] generateDefaultMonths(Calendar calendar, int month, int year) {
+        Calendar.calendarMap = new CalendarMap();
         CalendarMonth[] calendarMonths = new CalendarMonth[DEFAULT_NUMBER_OF_MONTHS];
         for(int i = 0; i < calendarMonths.length; i++) {
             int currentMonth = (month + MONTH_OPERATOR[i]); // -1 0 1
@@ -101,6 +102,7 @@ public class CalendarMonth {
             }
             calendarMonths[i] = CalendarMonth.generate(calendar, currentMonth, currentYear);
         }
+        Calendar.calendarMap.load(Calendar.dataSource, month, year);
         return calendarMonths;
     }
 

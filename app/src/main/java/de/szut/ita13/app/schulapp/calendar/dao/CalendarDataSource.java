@@ -29,14 +29,14 @@ public class CalendarDataSource {
         database.close();
     }
 
-    public CalendarAppointment selectAppointmentRange(int currentMonth, int currentYear) {
+    public Cursor selectAppointmentRange(int currentMonth, int currentYear) {
         String[] range = DateUtil.getRange(currentMonth, currentYear);
         String selectQuery = "SELECT * FROM "+ DatabaseHelper.Appointments.TABLE_NAME +
-                " WHERE date(" + DatabaseHelper.Appointments.DATE.name() + ", YYYY-MM-DD) BETWEEN " +
-                "date(" + range[0] + ", YYYY-MM-DD) AND date(" + range[1] + ", YYYY-MM-DD);";
-        Cursor cursor = database.rawQuery(selectQuery, null);
-
-        return null;
+                " WHERE " + DatabaseHelper.Appointments.DATE.name() + " BETWEEN " +
+                "date('" + range[0] + "') AND date('" + range[1] + "');";
+        Log.d("CalendarDataSource", "Range : " + selectQuery);
+        Cursor cursor = database.rawQuery(selectQuery, new String[]{});
+        return cursor;
     }
 
     public void insertAppointment(CalendarAppointment appointment) {
@@ -60,10 +60,9 @@ public class CalendarDataSource {
                + " = " + appointment.getRefID(),null);
 
     }
-    public void deleteAppointment(long id){
+    public void deleteAppointment(long id) {
         database.delete(DatabaseHelper.Appointments.TABLE_NAME, DatabaseHelper.Appointments.ID.name()
                 + " = " + id, null);
     }
-
 
 }

@@ -1,14 +1,14 @@
 package de.szut.ita13.app.schulapp.calendar.container;
 
+import android.database.Cursor;
+
 import de.szut.ita13.app.schulapp.calendar.adapter.CalendarAppointmentListAdapter;
+import de.szut.ita13.app.schulapp.calendar.dao.DatabaseHelper;
 
 /**
  * Created by Rene on 29.04.2015.
  */
 public class CalendarAppointment {
-
-    public static String SERIALIZABLE_KEY = "appointment";
-    public static String NONE = "appointment_none";
 
     public static final int NOT_REGISTERED = -1;
 
@@ -76,6 +76,20 @@ public class CalendarAppointment {
     }
 
 
+    public static CalendarAppointment toCalendarAppointment(CalendarDate calendarDate, Cursor cursor) {
+        CalendarAppointment calendarAppointment = new CalendarAppointment(calendarDate);
+        calendarAppointment.setRefID(Long.parseLong(
+                cursor.getString(cursor.getColumnIndex(DatabaseHelper.Appointments.ID.name()))));
+        calendarAppointment.setSubject(
+                cursor.getString(cursor.getColumnIndex(DatabaseHelper.Appointments.TITLE.name())));
+        calendarAppointment.setStartTime(new CalendarTime(
+                cursor.getString(cursor.getColumnIndex(DatabaseHelper.Appointments.START.name()))));
+        calendarAppointment.setEndTime(new CalendarTime(
+                cursor.getString(cursor.getColumnIndex(DatabaseHelper.Appointments.END.name()))));
+        calendarAppointment.setNote(
+                cursor.getString(cursor.getColumnIndex(DatabaseHelper.Appointments.NOTE.name())));
+        return calendarAppointment;
+    }
 
 
 }

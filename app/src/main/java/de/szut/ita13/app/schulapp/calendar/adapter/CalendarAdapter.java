@@ -1,6 +1,8 @@
 package de.szut.ita13.app.schulapp.calendar.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.container.Calendar;
@@ -26,6 +29,7 @@ public class CalendarAdapter extends BaseAdapter {
     private FragmentActivity calendarActivity;
     private ArrayList<CalendarElement> currentMonthElements;
     private final LayoutInflater calendarLayoutInflater;
+    public Random random = new Random();
 
     public CalendarAdapter(Context context, Calendar calendar, CalendarMonth currentMonth) {
         this.calendarActivity = calendar.getCalendarActivity();
@@ -73,10 +77,17 @@ public class CalendarAdapter extends BaseAdapter {
                 TextView textView = (TextView) view.findViewById(week.getLayoutID(i));
                 CalendarDate calendarDate = (CalendarDate) week.getItem(i);
                 textView.setOnClickListener(calendarDate);
-                if(!calendarDate.isNone())
+                if (!calendarDate.isNone()) {
                     textView.setText(String.valueOf(calendarDate.getDay()));
-                if(calendarDate.isActualDate()) {
+                    if (calendarDate.hasAppointments()) {
+                        int red = 255 - calendarDate.getCalendarAppointments().size() * 16;
+                        red = (red < 128) ? 128 : red;
+                        textView.setBackgroundColor(Color.rgb(red, 0, 0));
+                    }
+                }
+                if (calendarDate.isActualDate()) {
                     textView.setBackgroundColor(calendarActivity.getResources().getColor(R.color.yellow));
+                    textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
                 }
             }
         }

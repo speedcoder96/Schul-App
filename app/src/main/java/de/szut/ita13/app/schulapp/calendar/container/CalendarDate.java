@@ -35,7 +35,7 @@ public class CalendarDate implements View.OnClickListener {
         this.month = month;
         this.year = year;
         this.weekday = weekday;
-        calendarAppointments = new ArrayList<CalendarAppointment>();
+        calendarAppointments = new ArrayList<>();
         this.actualDate = actualDate;
         none = false;
     }

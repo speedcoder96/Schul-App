@@ -1,10 +1,13 @@
 package de.szut.ita13.app.schulapp.calendar.container;
 
 
+import android.database.Cursor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.szut.ita13.app.schulapp.calendar.dao.CalendarDataSource;
+import de.szut.ita13.app.schulapp.calendar.dao.DatabaseHelper;
 
 /**
  * Created by Rene on 10.06.2015.
@@ -66,6 +69,20 @@ public class CalendarMap extends HashMap<String, HashMap<String, HashMap<String,
                     }
                 }
             }
+        }
+        dataSource.close();
+    }
+
+    public void load(CalendarDataSource dataSource, int month, int year) {
+        dataSource.open();
+        Cursor cursor = dataSource.selectAppointmentRange(month, year);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()) {
+            CalendarDate calendarDate = getCalendarDate(cursor.getString(
+                    cursor.getColumnIndex(DatabaseHelper.Appointments.DATE.name())));
+            CalendarAppointment appointment = CalendarAppointment.toCalendarAppointment(calendarDate, cursor);
+            calendarDate.addCalendarAppointment(appointment);
+            cursor.moveToNext();
         }
         dataSource.close();
     }

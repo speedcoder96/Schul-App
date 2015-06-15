@@ -79,6 +79,12 @@ public class CalendarDateEditor extends ActionBarActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        Calendar.calendarMap.saveToDatabase(Calendar.dataSource);
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_save:
