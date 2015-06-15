@@ -48,4 +48,15 @@ public class CalendarWeek implements CalendarElement {
     public int getLayoutID(int index) {
         return LAYOUT_IDS[index];
     }
+
+
+    public static CalendarWeek getActualWeek(CalendarMonth calendarMonth, int weekNumber) {
+        for(CalendarElement calendarElement : calendarMonth.getCalendarElements()) {
+            CalendarWeek week = (CalendarWeek) calendarElement;
+            if(weekNumber == week.getWeekNumber()) {
+                return week;
+            }
+        }
+        return null;
+    }
 }

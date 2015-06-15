@@ -99,6 +99,15 @@ public class CalendarDate implements View.OnClickListener {
         Calendar.getCalendarActivity().startActivity(intent);
     }
 
+    public static int getActualDateIndex(CalendarWeek calendarWeek) {
+        for(int i = 0; i < calendarWeek.getSize(); i++) {
+            CalendarDate calendarDate = (CalendarDate) calendarWeek.getItem(i);
+            if(calendarDate.isActualDate()) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
 
 

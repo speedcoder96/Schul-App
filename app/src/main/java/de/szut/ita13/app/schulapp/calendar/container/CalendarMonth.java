@@ -8,6 +8,8 @@ import de.szut.ita13.app.schulapp.newutils.DateUtil;
  */
 public class CalendarMonth {
 
+    public static final int HAS_NO_ACTUAL_WEEK = -1;
+
     public static final int[] MONTH_OPERATOR = {-1, 0, 1};
     public static final int DEFAULT_NUMBER_OF_MONTHS = 3;
     public static final int PREVIOUS_MONTH = 0;
@@ -104,6 +106,30 @@ public class CalendarMonth {
         }
         Calendar.calendarMap.load(Calendar.dataSource, month, year);
         return calendarMonths;
+    }
+
+    public static int getActualWeek(CalendarMonth calendarMonth) {
+        ArrayList<CalendarElement> calendarElements = calendarMonth.getCalendarElements();
+        for(int i = 1; i < calendarElements.size(); i++) {
+            CalendarWeek week = (CalendarWeek)calendarElements.get(i);
+            for(int j = 0; j < week.getSize(); j++) {
+                CalendarDate calendarDate = (CalendarDate)week.getItem(j);
+                if(calendarDate.isActualDate()) {
+                    return week.getWeekNumber();
+                }
+            }
+        }
+        return HAS_NO_ACTUAL_WEEK;
+    }
+
+    public static int[] getWeekRange(CalendarMonth calendarMonth) {
+        int[] range = new int[2];
+        ArrayList<CalendarElement> calendarElements = calendarMonth.getCalendarElements();
+        CalendarWeek firstWeek = (CalendarWeek)calendarElements.get(1);
+        CalendarWeek lastWeek = (CalendarWeek)calendarElements.get(calendarElements.size() - 1);
+        range[0] = firstWeek.getWeekNumber();
+        range[1] = lastWeek.getWeekNumber();
+        return range;
     }
 
 

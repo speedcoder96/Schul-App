@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -138,9 +139,11 @@ public class Calendar  {
     public class CalendarViewPagerFragment extends Fragment {
 
         public CalendarAdapter calendarAdapter;
+        private CalendarMonth calendarMonth;
 
         public CalendarViewPagerFragment(Calendar calendar, CalendarMonth calendarMonth) {
             calendarAdapter = new CalendarAdapter(getCalendarActivity(), calendar, calendarMonth);
+            this.calendarMonth = calendarMonth;
         }
 
         @Override
@@ -150,6 +153,22 @@ public class Calendar  {
             ListView listView = (ListView)rootView.findViewById(R.id.calendar);
             listView.setAdapter(calendarAdapter);
 
+            TextView previewTitle = (TextView)rootView.findViewById(R.id.appointments_preview_title);
+            previewTitle.setText("Die Termine der nächsten 7 Tage:");
+
+            /*int weekNumber = CalendarMonth.hasActualWeek(calendarMonth);
+            if(weekNumber != CalendarMonth.HAS_NO_ACTUAL_WEEK) {
+                ListView previewList = (ListView)rootView.findViewById(R.id.appointments_preview);
+                previewList.setAdapter(new PreviewListAdapter());
+            }*/
+
+
+
+           /* TextView textView = (TextView)rootView.findViewById(R.id.calendarweek);
+            int weekNumber = CalendarMonth.hasActualWeek(calendarMonth);
+            if(weekNumber != CalendarMonth.HAS_NO_ACTUAL_WEEK) {
+                textView.setText("Aktuelle KW: \t" + weekNumber + ((weekNumber % 2 == 0) ? " \t(gerade)" : "\t(ungerade)"));
+            }*/
 
             return rootView;
         }
