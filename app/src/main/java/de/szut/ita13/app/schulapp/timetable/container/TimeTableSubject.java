@@ -83,7 +83,7 @@ public class TimeTableSubject {
      */
     public TimeTableSubject(boolean validSubject) {
         this.validSubject = validSubject;
-        this.color = activity.getResources().getColor(R.color.light_gray);
+       // this.color = activity.getResources().getColor(R.color.light_gray);
     }
 
     /**
