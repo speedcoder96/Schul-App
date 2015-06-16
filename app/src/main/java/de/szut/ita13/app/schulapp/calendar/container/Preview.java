@@ -1,6 +1,4 @@
 package de.szut.ita13.app.schulapp.calendar.container;
-import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 

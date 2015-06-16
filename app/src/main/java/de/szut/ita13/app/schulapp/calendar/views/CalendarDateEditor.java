@@ -18,6 +18,7 @@ import de.szut.ita13.app.schulapp.calendar.container.Calendar;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarAppointment;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarDate;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
+import de.szut.ita13.app.schulapp.calendar.notification.CalendarNotificationFactory;
 import de.szut.ita13.app.schulapp.newutils.DateUtil;
 
 /**
@@ -104,10 +105,12 @@ public class CalendarDateEditor extends ActionBarActivity {
                     Calendar.dataSource.open();
                     if(appointment.getRefID() == CalendarAppointment.NOT_REGISTERED) {
                         Calendar.dataSource.insertAppointment(appointment);
-                        Log.d("CalendarDateEditor", "Insert Appointment");
+                        CalendarNotificationFactory.createNotification(
+                                Calendar.getCalendarActivity().getApplicationContext(),
+                                appointment, 5000);
+
                     } else {
                         Calendar.dataSource.updateAppointment(appointment);
-                        Log.d("CalendarDateEditor", "Update Appointment");
                     }
                     Calendar.dataSource.close();
                     returnToPrevious();
@@ -123,6 +126,8 @@ public class CalendarDateEditor extends ActionBarActivity {
                     Calendar.dataSource.deleteAppointment(appointment.getRefID());
                     Calendar.dataSource.close();
                     calendarAppointments.remove(appointment);
+                    CalendarNotificationFactory.removeNotification(Calendar.getCalendarActivity().getApplicationContext(),
+                            appointment);
                     Log.d("CalendarDateEditor", "Remove Appointment");
                     returnToPrevious();
                 }
