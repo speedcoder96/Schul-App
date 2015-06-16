@@ -37,6 +37,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <receiver
+            android:name=".calendar.notification.CalendarNotificationReceiver"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.NOTIFY" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name=".timetable.views.AddDate"
             android:label="@string/title_activity_add_date" >

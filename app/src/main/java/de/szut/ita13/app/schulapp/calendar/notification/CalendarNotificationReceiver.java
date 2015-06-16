@@ -5,6 +5,9 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.util.Log;
 
 /**
@@ -21,9 +24,8 @@ public class CalendarNotificationReceiver extends BroadcastReceiver {
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = intent.getParcelableExtra(SERIALIZABLE_KEY);
         int id = intent.getIntExtra(NOTIFICATION_ID, 0);
-        Log.d("NotificationReceiver", "id" + id);
         notificationManager.notify(id, notification);
-        Log.d("NotificationReceiver", "ID:" + id);
+        CalendarNotificationFactory.playNotificationSound(context);
     }
 
 }
