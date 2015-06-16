@@ -28,7 +28,9 @@ public class CalendarMonth {
     }
 
     public String getTitleString() {
-        return DateUtil.MONTH_NAMES[month - 1] + " " + String.valueOf(year);
+        int[] range = CalendarMonth.getWeekRange(this);
+        return DateUtil.MONTH_NAMES[month - 1] + " " + String.valueOf(year) +
+                " KW: " + range[0] + "-" + range[1];
     }
 
     public int getMonthIndex() {

@@ -12,7 +12,7 @@ import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.timetable.adapter.TimeTableSubjectAdapter;
 
 /**
- * Created by Michelé on 15.06.2015.
+ * Created by Michel on 15.06.2015.
  */
 public class TimeTableSubjectActivity extends ActionBarActivity {
     private TimeTableSubjectAdapter adapter;
@@ -27,15 +27,15 @@ public class TimeTableSubjectActivity extends ActionBarActivity {
         subjects = new ArrayList<TimeTableSubject>();
         TimeTableSubject subject = new TimeTableSubject(true);
         subject.setRoom("25b");
-        subject.setTeacher("DünnSCHÄDEL");
+        subject.setTeacher("Dï¿½nnSCHï¿½DEL");
         subject.setSubjectName("Sport");
         TimeTableSubject subject1 = new TimeTableSubject(true);
         subject1.setRoom("25b");
-        subject1.setTeacher("DünnSCHÄDEL");
+        subject1.setTeacher("Dï¿½nnSCHï¿½DEL");
         subject1.setSubjectName("Sport");
         TimeTableSubject subject2 = new TimeTableSubject(true);
         subject2.setRoom("25b");
-        subject2.setTeacher("DünnSCHÄDEL");
+        subject2.setTeacher("Dï¿½nnSCHï¿½DEL");
         subject2.setSubjectName("Sport");
         subjects.add(subject);
         subjects.add(subject1);
