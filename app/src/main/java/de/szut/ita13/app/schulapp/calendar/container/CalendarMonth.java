@@ -8,8 +8,6 @@ import de.szut.ita13.app.schulapp.newutils.DateUtil;
  */
 public class CalendarMonth {
 
-    public static final int HAS_NO_ACTUAL_WEEK = -1;
-
     public static final int[] MONTH_OPERATOR = {-1, 0, 1};
     public static final int DEFAULT_NUMBER_OF_MONTHS = 3;
     public static final int PREVIOUS_MONTH = 0;
@@ -28,9 +26,13 @@ public class CalendarMonth {
     }
 
     public String getTitleString() {
-        int[] range = CalendarMonth.getWeekRange(this);
+        int[] range = getWeekRange(this);
         return DateUtil.MONTH_NAMES[month - 1] + " " + String.valueOf(year) +
                 " KW: " + range[0] + "-" + range[1];
+    }
+
+    public CalendarWeek firstWeek() {
+        return (CalendarWeek)calendarElements.get(1);
     }
 
     public int getMonthIndex() {
@@ -110,18 +112,18 @@ public class CalendarMonth {
         return calendarMonths;
     }
 
-    public static int getActualWeek(CalendarMonth calendarMonth) {
+    public static CalendarWeek getActualWeek(CalendarMonth calendarMonth) {
         ArrayList<CalendarElement> calendarElements = calendarMonth.getCalendarElements();
         for(int i = 1; i < calendarElements.size(); i++) {
             CalendarWeek week = (CalendarWeek)calendarElements.get(i);
             for(int j = 0; j < week.getSize(); j++) {
                 CalendarDate calendarDate = (CalendarDate)week.getItem(j);
                 if(calendarDate.isActualDate()) {
-                    return week.getWeekNumber();
+                    return week;
                 }
             }
         }
-        return HAS_NO_ACTUAL_WEEK;
+        return null;
     }
 
     public static int[] getWeekRange(CalendarMonth calendarMonth) {

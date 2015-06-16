@@ -17,7 +17,7 @@ public class NotificationFactory {
 
     public static final int NOTIFICATION = 1;
 
-    public static void createNotification(long refID, Context context, long delay, String title, String message) {
+    public static void createNotification(Context context, long refID, long delay, String title, String message) {
         Intent intent = new Intent(context, CalendarActivity.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -26,8 +26,8 @@ public class NotificationFactory {
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
 
         Notification notification = new Notification.Builder(context)
-                .setContentTitle("Termin")
-                .setContentText("Test")
+                .setContentTitle(title)
+                .setContentText(message)
                 .setSmallIcon(R.drawable.ic_action_accept)
                 .setContentIntent(pendingIntent)
                 .build();

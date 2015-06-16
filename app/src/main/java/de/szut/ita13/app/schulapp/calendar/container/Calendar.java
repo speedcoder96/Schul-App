@@ -67,24 +67,10 @@ public class Calendar  {
         return calendarMonths;
     }
 
-    public CalendarMonth getCalendarMonth(int pointer) {
-        switch(pointer) {
-            case CalendarMonth.PREVIOUS_MONTH:
-                return calendarMonths[CalendarMonth.PREVIOUS_MONTH];
-            case CalendarMonth.CURRENT_MONTH:
-                return calendarMonths[CalendarMonth.CURRENT_MONTH];
-            case CalendarMonth.NEXT_MONTH:
-                return calendarMonths[CalendarMonth.NEXT_MONTH];
-            default:
-                return null;
-        }
-    }
-
     private void setAdapter() {
         calendarViewPagerAdapter = null;
         calendarViewPagerAdapter = new CalendarViewPagerAdapter(calendarActivity.getSupportFragmentManager(), this);
         viewPager.setAdapter(calendarViewPagerAdapter);
-        Log.d("Calendar", "Child Count : " + viewPager.getChildCount());
         viewPager.setCurrentItem(1);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
