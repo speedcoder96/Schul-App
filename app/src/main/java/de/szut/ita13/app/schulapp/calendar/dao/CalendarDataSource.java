@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
+
+import de.szut.ita13.app.schulapp.calendar.container.Calendar;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarAppointment;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarDate;
 import de.szut.ita13.app.schulapp.newutils.DateUtil;
@@ -46,7 +49,7 @@ public class CalendarDataSource {
         values.put(DatabaseHelper.Appointments.DATE.name(), appointment.getCalendarDate().getDateString(CalendarDate.DATABASE_DATE_FORMAT));
         values.put(DatabaseHelper.Appointments.START.name(), appointment.getStartTime().getTimeString());
         values.put(DatabaseHelper.Appointments.END.name(), appointment.getEndTime().getTimeString());
-        long id = database.insert(DatabaseHelper.Appointments.TABLE_NAME,null,values);
+        long id = database.insert(DatabaseHelper.Appointments.TABLE_NAME, null, values);
         appointment.setRefID(id);
     }
     public void updateAppointment(CalendarAppointment appointment){
@@ -56,13 +59,21 @@ public class CalendarDataSource {
         values.put(DatabaseHelper.Appointments.DATE.name(), appointment.getCalendarDate().getDateString(CalendarDate.DATABASE_DATE_FORMAT));
         values.put(DatabaseHelper.Appointments.START.name(), appointment.getStartTime().getTimeString());
         values.put(DatabaseHelper.Appointments.END.name(), appointment.getEndTime().getTimeString());
-        database.update(DatabaseHelper.Appointments.TABLE_NAME,values,DatabaseHelper.Appointments.ID.name()
-               + " = " + appointment.getRefID(),null);
+        database.update(DatabaseHelper.Appointments.TABLE_NAME, values, DatabaseHelper.Appointments.ID.name()
+                + " = " + appointment.getRefID(), null);
 
     }
     public void deleteAppointment(long id) {
         database.delete(DatabaseHelper.Appointments.TABLE_NAME, DatabaseHelper.Appointments.ID.name()
                 + " = " + id, null);
+    }
+
+    public void deleteAll(CalendarDate calendarDate) {
+        ArrayList<CalendarAppointment> appointments = calendarDate.getCalendarAppointments();
+        for(int i = appointments.size() - 1; i >= 0; i--) {
+            deleteAppointment(appointments.get(i).getRefID());
+            appointments.remove(appointments.get(i));
+        }
     }
 
 }

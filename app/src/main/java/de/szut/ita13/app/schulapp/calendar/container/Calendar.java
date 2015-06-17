@@ -17,6 +17,7 @@ import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.adapter.CalendarAdapter;
 import de.szut.ita13.app.schulapp.calendar.adapter.PreviewListAdapter;
 import de.szut.ita13.app.schulapp.calendar.dao.CalendarDataSource;
+import de.szut.ita13.app.schulapp.calendar.progress.CalendarProgressDialog;
 import de.szut.ita13.app.schulapp.newutils.DateUtil;
 
 /**
@@ -26,6 +27,7 @@ public class Calendar  {
 
     public static CalendarMap calendarMap;
     public static CalendarDataSource dataSource;
+    public static CalendarProgressDialog progressDialog;
 
     private static FragmentActivity calendarActivity;
     private CalendarMonth[] calendarMonths;

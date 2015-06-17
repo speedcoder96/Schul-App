@@ -14,6 +14,7 @@ import android.os.SystemClock;
 
 import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarAppointment;
+import de.szut.ita13.app.schulapp.calendar.container.CalendarDate;
 
 /**
  * Created by Rene on 16.06.2015.
@@ -52,5 +53,6 @@ public class CalendarNotificationFactory {
         Ringtone ringtone = RingtoneManager.getRingtone(context.getApplicationContext(), uri);
         ringtone.play();
     }
+
 
 }

@@ -7,4 +7,9 @@
         android:title="@string/action_new"
         app:showAsAction="always"  />
 
+    <item android:id="@+id/action_remove_all_appointment"
+        android:icon="@drawable/ic_action_discard"
+        android:title="Remove"
+        app:showAsAction="always" />
+
 </menu>
