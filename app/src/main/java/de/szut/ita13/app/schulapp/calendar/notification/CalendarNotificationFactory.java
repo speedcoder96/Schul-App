@@ -25,6 +25,8 @@ import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
  */
 public class CalendarNotificationFactory {
 
+    public static final String TAG = CalendarNotificationFactory.class.getSimpleName();
+
     public static long DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
     public static long HALF_DAY_IN_MILLIS = DAY_IN_MILLIS / 2;
     public static long QUARTER_DAY_IN_MILLIS = DAY_IN_MILLIS / 4;
@@ -37,17 +39,21 @@ public class CalendarNotificationFactory {
         builder.setContentTitle(appointment.getSubject());
         builder.setContentText(appointment.getNote());
         builder.setSmallIcon(R.drawable.ic_launcher);
+        builder.setAutoCancel(true);
         Notification notification = builder.build();
 
         Intent notificationIntent = new Intent(context, CalendarNotificationReceiver.class);
-        notificationIntent.putExtra(CalendarNotificationReceiver.NOTIFICATION_ID, appointment.getRefID());
+        notificationIntent.putExtra(CalendarNotificationReceiver.NOTIFICATION_ID, (int)appointment.getRefID());
         notificationIntent.putExtra(CalendarNotificationReceiver.SERIALIZABLE_KEY, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                (int) appointment.getRefID(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         notification.contentIntent = pendingIntent;
 
-        long futureInMillis = futureMillis(System.currentTimeMillis(), appointment);
-        Log.d("Factory", "Current:" + System.currentTimeMillis() + " Target: " + futureInMillis);
+
+        long currentMillis = System.currentTimeMillis();
+        long futureInMillis = futureMillis(currentMillis, appointment);
+
+        Log.d(TAG, "Delay: " + (futureInMillis - currentMillis) + " ms");
         if(futureInMillis != NO_NOTIFICATION_REQUIRED) {
             AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
             alarmManager.set(AlarmManager.RTC_WAKEUP, futureInMillis, pendingIntent);
@@ -59,35 +65,42 @@ public class CalendarNotificationFactory {
         CalendarDate targetDate = calendarAppointment.getCalendarDate();
         CalendarTime targetTime = calendarAppointment.getStartTime();
         target.set(targetDate.getYear(), targetDate.getMonth() - 1, targetDate.getDay(),
-                targetTime.getHours(), targetTime.getMinutes());
-        GregorianCalendar current = new GregorianCalendar();
-        current.setTimeInMillis(currentMillis);
-        Log.d("Factory", "Date: " + current.toString());
-
+                targetTime.getHours(), targetTime.getMinutes(), 0);
         long targetMillis = target.getTimeInMillis();
         long difference = targetMillis - currentMillis;
-        Log.d("Factory", "Difference: " + difference);
         if(difference > DAY_IN_MILLIS) {
+            Log.d(TAG, "Set over 1 Day Notification Delay");
             return targetMillis - DAY_IN_MILLIS;
         } else if(difference > HALF_DAY_IN_MILLIS) {
+            Log.d(TAG, "Set over 12 Hours Notification Delay");
             return targetMillis - HALF_DAY_IN_MILLIS;
         } else if(difference > QUARTER_DAY_IN_MILLIS) {
+            Log.d(TAG, "Set over 6 Hours Notification Delay");
             return targetMillis - QUARTER_DAY_IN_MILLIS;
         } else if(difference > ONE_HOUR_IN_MILLIS) {
+            Log.d(TAG, "Set over 1 Hour Notification Delay");
             return targetMillis - ONE_HOUR_IN_MILLIS;
         }
+        Log.d(TAG, "Set no Notification");
         return -1;
     }
 
     public static void removeNotification(Context context, CalendarAppointment calendarAppointment) {
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel("Remove", (int)calendarAppointment.getRefID());
+        notificationManager.cancel((int) calendarAppointment.getRefID());
+        Intent intent = new Intent(context, CalendarNotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int)calendarAppointment.getRefID(),
+                intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+        Log.d(TAG, "Notification " + (int) calendarAppointment.getRefID() + " removed!");
     }
 
     public static void playNotificationSound(Context context) {
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Ringtone ringtone = RingtoneManager.getRingtone(context.getApplicationContext(), uri);
         ringtone.play();
+        Log.d(TAG, "Play Notification Sound");
     }
 
 

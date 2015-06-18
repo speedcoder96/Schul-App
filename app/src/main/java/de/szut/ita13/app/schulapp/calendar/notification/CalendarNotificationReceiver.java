@@ -12,16 +12,18 @@ import android.util.Log;
  */
 public class CalendarNotificationReceiver extends BroadcastReceiver {
 
+    public static final String TAG = CalendarNotificationReceiver.class.getSimpleName();
+
     public static final String SERIALIZABLE_KEY = "calendarnotification";
     public static final String NOTIFICATION_ID = "calendarnotificationid";
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("Receiver", "Received Notification!");
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = intent.getParcelableExtra(SERIALIZABLE_KEY);
         int id = intent.getIntExtra(NOTIFICATION_ID, 0);
         notificationManager.notify(id, notification);
+        Log.d(TAG, "Notification " + id + " received!");
         CalendarNotificationFactory.playNotificationSound(context);
     }
 

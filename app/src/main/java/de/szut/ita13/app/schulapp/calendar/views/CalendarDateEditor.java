@@ -127,9 +127,9 @@ public class CalendarDateEditor extends ActionBarActivity {
                     Calendar.dataSource.open();
                     Calendar.dataSource.deleteAppointment(appointment.getRefID());
                     Calendar.dataSource.close();
-                    calendarAppointments.remove(appointment);
                     CalendarNotificationFactory.removeNotification(Calendar.getCalendarActivity().getApplicationContext(),
                             appointment);
+                    calendarAppointments.remove(appointment);
                     Log.d("CalendarDateEditor", "Remove Appointment");
                     returnToPrevious();
                 }

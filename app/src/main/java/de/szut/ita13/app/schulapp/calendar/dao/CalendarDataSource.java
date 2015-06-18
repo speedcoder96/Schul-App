@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import de.szut.ita13.app.schulapp.calendar.container.Calendar;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarAppointment;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarDate;
+import de.szut.ita13.app.schulapp.calendar.notification.CalendarNotificationFactory;
 import de.szut.ita13.app.schulapp.newutils.DateUtil;
 
 /**
@@ -71,6 +72,8 @@ public class CalendarDataSource {
     public void deleteAll(CalendarDate calendarDate) {
         ArrayList<CalendarAppointment> appointments = calendarDate.getCalendarAppointments();
         for(int i = appointments.size() - 1; i >= 0; i--) {
+            CalendarNotificationFactory.removeNotification(Calendar.getCalendarActivity().getApplicationContext(),
+                    appointments.get(i));
             deleteAppointment(appointments.get(i).getRefID());
             appointments.remove(appointments.get(i));
         }
