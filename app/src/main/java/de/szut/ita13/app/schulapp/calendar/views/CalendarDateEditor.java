@@ -107,7 +107,7 @@ public class CalendarDateEditor extends ActionBarActivity {
                         Calendar.dataSource.insertAppointment(appointment);
                         CalendarNotificationFactory.createNotification(
                                 Calendar.getCalendarActivity().getApplicationContext(),
-                                appointment, 5000);
+                                appointment);
 
                     } else {
                         Calendar.dataSource.updateAppointment(appointment);
@@ -117,7 +117,9 @@ public class CalendarDateEditor extends ActionBarActivity {
                 }
                 break;
             case R.id.action_cancel:
-                Log.d("CalendarDateEditor", "Start Previous Intent");
+                if(appointment.getStartTime() == null || appointment.getEndTime() == null) {
+                    calendarAppointments.remove(appointment);
+                }
                 returnToPrevious();
                 break;
             case R.id.action_remove:

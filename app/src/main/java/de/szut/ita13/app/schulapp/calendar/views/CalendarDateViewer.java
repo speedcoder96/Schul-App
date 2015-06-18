@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -67,15 +68,11 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_calendardate_viewer, menu);
-
         for(int i = 0; i < menu.size(); i++) {
             menu.getItem(i).setOnMenuItemClickListener(this);
         }
-
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -90,6 +87,8 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
             case R.id.action_remove_all_appointment:
                 if(calendarDate.hasAppointments()) {
                     showConfirmDialog();
+                } else {
+                    Toast.makeText(this, "Es sind keine Termine zum Loeschen vorhanden!", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
