@@ -1,8 +1,11 @@
 package de.szut.ita13.app.schulapp.calendar.views;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,14 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.adapter.CalendarAppointmentListAdapter;
 import de.szut.ita13.app.schulapp.calendar.container.Calendar;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarAppointment;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarDate;
-import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
 import de.szut.ita13.app.schulapp.newutils.AppointmentUtil;
 import de.szut.ita13.app.schulapp.newutils.DateUtil;
 
@@ -29,11 +30,14 @@ import de.szut.ita13.app.schulapp.newutils.DateUtil;
 public class CalendarDateViewer extends ActionBarActivity implements MenuItem.OnMenuItemClickListener,
     View.OnClickListener {
 
+    public static final String TAG = CalendarDateViewer.class.getSimpleName();
+
     public static final String APPOINTMENT_INDEX = "appointment-index";
 
     private CalendarDate calendarDate;
     private CalendarAppointmentListAdapter calendarAppointmentListAdapter;
     private String dateFormat;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,7 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
         TextView calendarDateDate = (TextView)findViewById(R.id.calendardate_date);
         TextView calendarDateWeekday = (TextView)findViewById(R.id.calendardate_weekday);
         calendarDateDate.setText(calendarDate.getDateString(CalendarDate.DEFAULT_DATE_FORMAT));
+
         calendarDateWeekday.setText(DateUtil.WEEKDAYS[calendarDate.getWeekday()]);
 
         calendarAppointmentListAdapter = new CalendarAppointmentListAdapter(this);
@@ -67,29 +72,39 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_calendardate_viewer, menu);
-
-        menu.getItem(0).setOnMenuItemClickListener(this);
-
+        for(int i = 0; i < menu.size(); i++) {
+            menu.getItem(i).setOnMenuItemClickListener(this);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        if(item.getItemId() == R.id.action_new_appointment) {
-            CalendarAppointment calendarAppointment = new CalendarAppointment(calendarDate);
-            calendarDate.addCalendarAppointment(calendarAppointment);
-            gotoNextActivity(calendarAppointment);
+        switch(item.getItemId()) {
+            case R.id.action_new_appointment:
+                Log.d(TAG, "New Appointment");
+                CalendarAppointment calendarAppointment = new CalendarAppointment(calendarDate);
+                calendarDate.addCalendarAppointment(calendarAppointment);
+                gotoNextActivity(calendarAppointment);
+                break;
+            case R.id.action_remove_all_appointment:
+                Log.d(TAG, "Remove All Appointments");
+                if(calendarDate.hasAppointments()) {
+                    showConfirmDialog();
+                } else {
+                    Toast.makeText(this, "Es sind keine Termine zum Loeschen vorhanden!", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this.getApplicationContext(), CalendarActivity.class);
-        Calendar.getCalendarActivity().startActivity(intent);
+        Log.d(TAG, "Back Pressed");
+        gotoPreviousActivity();
         super.onBackPressed();
     }
 
@@ -121,6 +136,35 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
         intent.putExtra(CalendarDate.DATE_FORMAT, calendarDate.getDateString(CalendarDate.DATABASE_DATE_FORMAT));
         intent.putExtra(CalendarDateViewer.APPOINTMENT_INDEX, findAppointmentIndex(appointment));
         Calendar.getCalendarActivity().startActivity(intent);
+        Log.d(TAG, "Go To Next Activity");
         finish();
     }
+
+    private void showConfirmDialog() {
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Termine löschen");
+        alertDialogBuilder.setMessage("Wollen Sie alle Termine löschen?");
+        alertDialogBuilder.setIcon(android.R.drawable.ic_dialog_alert);
+        alertDialogBuilder.setPositiveButton("Ja, alle löschen!", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                alertDialog.cancel();
+                Calendar.dataSource.open();
+                Calendar.dataSource.deleteAll(calendarDate);
+                Calendar.dataSource.close();
+                calendarAppointmentListAdapter.notifyDataSetChanged();
+                gotoPreviousActivity();
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Nein", null);
+        alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private void gotoPreviousActivity() {
+        Intent intent = new Intent(CalendarDateViewer.this.getApplicationContext(), CalendarActivity.class);
+        Calendar.getCalendarActivity().startActivity(intent);
+        Log.d(TAG, "Go To Previous Activity");
+        finish();
+    }
+
 }

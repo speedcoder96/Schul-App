@@ -5,20 +5,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.adapter.CalendarAdapter;
+import de.szut.ita13.app.schulapp.calendar.adapter.PreviewListAdapter;
 import de.szut.ita13.app.schulapp.calendar.dao.CalendarDataSource;
 import de.szut.ita13.app.schulapp.newutils.DateUtil;
 
@@ -36,7 +33,10 @@ public class Calendar  {
     private CalendarViewPagerAdapter calendarViewPagerAdapter;
     private ViewPager viewPager;
 
+    private PreviewListAdapter previewListAdapter;
+
     public Calendar(FragmentActivity calendarActivity) {
+
         this.calendarMap = new CalendarMap();
         dataSource = new CalendarDataSource(calendarActivity);
 
@@ -46,8 +46,12 @@ public class Calendar  {
         viewPager = (ViewPager)calendarActivity.findViewById(R.id.pager);
 
         int[] actualDate = DateUtil.getActualDate();
+
         calendarMonths = CalendarMonth.generateDefaultMonths(this, actualDate[DateUtil.ACTUAL_DATE_MONTH],
                 actualDate[DateUtil.ACTUAL_DATE_YEAR]);
+
+        Preview preview = Preview.createPreview(calendarMonths);
+        previewListAdapter = new PreviewListAdapter(calendarActivity.getApplicationContext(), preview);
 
         setAdapter();
     }
@@ -60,24 +64,10 @@ public class Calendar  {
         return calendarMonths;
     }
 
-    public CalendarMonth getCalendarMonth(int pointer) {
-        switch(pointer) {
-            case CalendarMonth.PREVIOUS_MONTH:
-                return calendarMonths[CalendarMonth.PREVIOUS_MONTH];
-            case CalendarMonth.CURRENT_MONTH:
-                return calendarMonths[CalendarMonth.CURRENT_MONTH];
-            case CalendarMonth.NEXT_MONTH:
-                return calendarMonths[CalendarMonth.NEXT_MONTH];
-            default:
-                return null;
-        }
-    }
-
     private void setAdapter() {
         calendarViewPagerAdapter = null;
         calendarViewPagerAdapter = new CalendarViewPagerAdapter(calendarActivity.getSupportFragmentManager(), this);
         viewPager.setAdapter(calendarViewPagerAdapter);
-        Log.d("Calendar", "Child Count : " + viewPager.getChildCount());
         viewPager.setCurrentItem(1);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -119,7 +109,6 @@ public class Calendar  {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            Log.d("Calendar", calendar.getCalendarMonths()[position].getTitleString());
             return calendar.getCalendarMonths()[position].getTitleString();
         }
 
@@ -139,11 +128,9 @@ public class Calendar  {
     public class CalendarViewPagerFragment extends Fragment {
 
         public CalendarAdapter calendarAdapter;
-        private CalendarMonth calendarMonth;
 
         public CalendarViewPagerFragment(Calendar calendar, CalendarMonth calendarMonth) {
             calendarAdapter = new CalendarAdapter(getCalendarActivity(), calendar, calendarMonth);
-            this.calendarMonth = calendarMonth;
         }
 
         @Override
@@ -154,21 +141,13 @@ public class Calendar  {
             listView.setAdapter(calendarAdapter);
 
             TextView previewTitle = (TextView)rootView.findViewById(R.id.appointments_preview_title);
-            previewTitle.setText("Die Termine der nächsten 7 Tage:");
-
-            /*int weekNumber = CalendarMonth.hasActualWeek(calendarMonth);
-            if(weekNumber != CalendarMonth.HAS_NO_ACTUAL_WEEK) {
+            int pCount = previewListAdapter.getCount();
+            if(pCount != 0) {
+                previewTitle.setText("Sie haben " + pCount + ((pCount == 1) ? " Termin" : " Termine") + " in den nächsten 7 Tagen:");
                 ListView previewList = (ListView)rootView.findViewById(R.id.appointments_preview);
-                previewList.setAdapter(new PreviewListAdapter());
-            }*/
-
-
-
-           /* TextView textView = (TextView)rootView.findViewById(R.id.calendarweek);
-            int weekNumber = CalendarMonth.hasActualWeek(calendarMonth);
-            if(weekNumber != CalendarMonth.HAS_NO_ACTUAL_WEEK) {
-                textView.setText("Aktuelle KW: \t" + weekNumber + ((weekNumber % 2 == 0) ? " \t(gerade)" : "\t(ungerade)"));
-            }*/
+                previewList.setAdapter(previewListAdapter);
+            }
+            previewListAdapter.notifyDataSetChanged();
 
             return rootView;
         }

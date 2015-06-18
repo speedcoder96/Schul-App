@@ -42,19 +42,6 @@ public class DateUtil {
         return calendar.get(GregorianCalendar.WEEK_OF_YEAR);
     }
 
-    public static int daysPastSince(int day, int month, int year) {
-        int daysPast = 0;
-        int leapYearCorrection = 0;
-        if(year % 4 == 0 && month > 2) {
-            leapYearCorrection = 1;
-        }
-        for(int i = 0; i < month - 1; i++) {
-            daysPast += DAYS_IN_MONTH[i];
-        }
-        daysPast += leapYearCorrection;
-        return daysPast;
-    }
-
     public static int[] getActualDate() {
         GregorianCalendar calendar = new GregorianCalendar();
         int day = calendar.get(GregorianCalendar.DAY_OF_MONTH);
@@ -92,23 +79,5 @@ public class DateUtil {
     private static String fillMissingDigit(int value) {
         return (value < 10) ? "0" + value : String.valueOf(value);
     }
-
-
-    public static class DateFormatter  {
-
-        private int day, month, year;
-
-        public DateFormatter(int day, int month, int year) {
-            this.day = day;
-            this.month = month;
-            this.year = year;
-        }
-
-        public String toString() {
-            return String.valueOf(day) + "." + String.valueOf(month) + "." + String.valueOf(year);
-        }
-
-    }
-
 
 }

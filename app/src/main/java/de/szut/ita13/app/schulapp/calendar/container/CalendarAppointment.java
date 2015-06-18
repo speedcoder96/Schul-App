@@ -1,5 +1,6 @@
 package de.szut.ita13.app.schulapp.calendar.container;
 
+import android.app.PendingIntent;
 import android.database.Cursor;
 
 import de.szut.ita13.app.schulapp.calendar.adapter.CalendarAppointmentListAdapter;
@@ -74,7 +75,6 @@ public class CalendarAppointment {
     public String getNote() {
         return note;
     }
-
 
     public static CalendarAppointment toCalendarAppointment(CalendarDate calendarDate, Cursor cursor) {
         CalendarAppointment calendarAppointment = new CalendarAppointment(calendarDate);

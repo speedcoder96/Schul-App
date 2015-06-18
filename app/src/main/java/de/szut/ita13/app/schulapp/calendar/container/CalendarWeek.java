@@ -52,9 +52,11 @@ public class CalendarWeek implements CalendarElement {
 
     public static CalendarWeek getActualWeek(CalendarMonth calendarMonth, int weekNumber) {
         for(CalendarElement calendarElement : calendarMonth.getCalendarElements()) {
-            CalendarWeek week = (CalendarWeek) calendarElement;
-            if(weekNumber == week.getWeekNumber()) {
-                return week;
+            if(calendarElement instanceof CalendarWeek) {
+                CalendarWeek week = (CalendarWeek) calendarElement;
+                if(weekNumber == week.getWeekNumber()) {
+                    return week;
+                }
             }
         }
         return null;

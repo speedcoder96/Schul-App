@@ -18,6 +18,7 @@ import de.szut.ita13.app.schulapp.calendar.container.Calendar;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarAppointment;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarDate;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
+import de.szut.ita13.app.schulapp.calendar.notification.CalendarNotificationFactory;
 import de.szut.ita13.app.schulapp.newutils.DateUtil;
 
 /**
@@ -104,17 +105,21 @@ public class CalendarDateEditor extends ActionBarActivity {
                     Calendar.dataSource.open();
                     if(appointment.getRefID() == CalendarAppointment.NOT_REGISTERED) {
                         Calendar.dataSource.insertAppointment(appointment);
-                        Log.d("CalendarDateEditor", "Insert Appointment");
+                        CalendarNotificationFactory.createNotification(
+                                Calendar.getCalendarActivity().getApplicationContext(),
+                                appointment);
+
                     } else {
                         Calendar.dataSource.updateAppointment(appointment);
-                        Log.d("CalendarDateEditor", "Update Appointment");
                     }
                     Calendar.dataSource.close();
                     returnToPrevious();
                 }
                 break;
             case R.id.action_cancel:
-                Log.d("CalendarDateEditor", "Start Previous Intent");
+                if(appointment.getStartTime() == null || appointment.getEndTime() == null) {
+                    calendarAppointments.remove(appointment);
+                }
                 returnToPrevious();
                 break;
             case R.id.action_remove:
@@ -122,6 +127,8 @@ public class CalendarDateEditor extends ActionBarActivity {
                     Calendar.dataSource.open();
                     Calendar.dataSource.deleteAppointment(appointment.getRefID());
                     Calendar.dataSource.close();
+                    CalendarNotificationFactory.removeNotification(Calendar.getCalendarActivity().getApplicationContext(),
+                            appointment);
                     calendarAppointments.remove(appointment);
                     Log.d("CalendarDateEditor", "Remove Appointment");
                     returnToPrevious();

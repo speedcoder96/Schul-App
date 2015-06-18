@@ -1,12 +1,12 @@
 package de.szut.ita13.app.schulapp.timetable.container;
+
 import android.os.Bundle;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
+import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.timetable.adapter.TimeTableSubjectAdapter;
@@ -15,26 +15,33 @@ import de.szut.ita13.app.schulapp.timetable.adapter.TimeTableSubjectAdapter;
  * Created by Michel� on 15.06.2015.
  */
 public class TimeTableSubjectActivity extends ActionBarActivity {
-
-    Button dfragbutton;
-    FragmentManager fm = getSupportFragmentManager();
+    private TimeTableSubjectAdapter adapter;
+    private ArrayList<TimeTableSubject> subjects;
+    private ListView listView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Get the view from activity_main.xml
-        setContentView(R.layout.activity_main);
-
-        // Locate the button in activity_main.xml
-        dfragbutton = (Button) findViewById(R.id.dfragbutton);
-
-        // Capture button clicks
-        dfragbutton.setOnClickListener(new OnClickListener() {
-            public void onClick(View arg0) {
-                DFragment dFragment = new DFragment(TimeTableSubjectActivity.this);
-                // Show DialogFragment
-                dFragment.show(fm, "Dialog Fragment");
-            }
-        });
+        setContentView(R.layout.timetable_subject_list_layout);
+        listView = (ListView) findViewById(R.id.subjectList);
+        subjects = new ArrayList<TimeTableSubject>();
+        TimeTableSubject subject = new TimeTableSubject(true);
+        subject.setRoom("25b");
+        subject.setTeacher("D�nnSCH�DEL");
+        subject.setSubjectName("Sport");
+        TimeTableSubject subject1 = new TimeTableSubject(true);
+        subject1.setRoom("25b");
+        subject1.setTeacher("D�nnSCH�DEL");
+        subject1.setSubjectName("Sport");
+        TimeTableSubject subject2 = new TimeTableSubject(true);
+        subject2.setRoom("25b");
+        subject2.setTeacher("D�nnSCH�DEL");
+        subject2.setSubjectName("Sport");
+        subjects.add(subject);
+        subjects.add(subject1);
+        subjects.add(subject2);
+        adapter  = new TimeTableSubjectAdapter(subjects, this.getApplicationContext());
+        listView.setAdapter(adapter);
     }
+
 }

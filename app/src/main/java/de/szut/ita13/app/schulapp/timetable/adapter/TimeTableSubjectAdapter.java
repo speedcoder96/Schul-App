@@ -16,7 +16,7 @@ import de.szut.ita13.app.schulapp.timetable.container.DFragment;
 import de.szut.ita13.app.schulapp.timetable.container.TimeTableSubject;
 
 /**
- * Created by Michelé on 15.06.2015.
+ * Created by Michelï¿½ on 15.06.2015.
  */
 public class TimeTableSubjectAdapter extends BaseAdapter {
     private ArrayList<TimeTableSubject> subjects;

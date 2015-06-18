@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import de.szut.ita13.app.schulapp.calendar.views.CalendarDateViewer;
 import de.szut.ita13.app.schulapp.newutils.AppointmentUtil;
+import de.szut.ita13.app.schulapp.newutils.DateUtil;
 
 /**
  * Created by Rene on 29.04.2015.
@@ -107,6 +108,12 @@ public class CalendarDate implements View.OnClickListener {
             }
         }
         return -1;
+    }
+
+    public static String convertToString(int[] actualDate) {
+        return String.valueOf(actualDate[DateUtil.ACTUAL_DATE_DAY]) + "." +
+                String.valueOf(actualDate[DateUtil.ACTUAL_DATE_MONTH]) + "." +
+                String.valueOf(actualDate[DateUtil.ACTUAL_DATE_YEAR]);
     }
 
 

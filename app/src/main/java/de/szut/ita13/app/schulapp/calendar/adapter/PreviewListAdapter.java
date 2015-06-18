@@ -5,8 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import de.szut.ita13.app.schulapp.R;
+import de.szut.ita13.app.schulapp.calendar.container.CalendarAppointment;
+import de.szut.ita13.app.schulapp.calendar.container.CalendarDate;
 import de.szut.ita13.app.schulapp.calendar.container.Preview;
 
 /**
@@ -41,7 +44,17 @@ public class PreviewListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         convertView = layoutInflater.inflate(R.layout.calendar_preview_entry_layout, parent, false);
+        TextView subjectTextView = (TextView)convertView.findViewById(R.id.subject);
+        TextView startTimeTextView = (TextView)convertView.findViewById(R.id.start_time);
+        TextView endTimeTextView = (TextView)convertView.findViewById(R.id.end_time);
+        TextView subjectDateTextView = (TextView)convertView.findViewById(R.id.subjectDate);
 
+        CalendarAppointment appointment = (CalendarAppointment)getItem(position);
+        subjectTextView.setText(appointment.getSubject());
+        startTimeTextView.setText(appointment.getStartTime().getTimeString());
+        endTimeTextView.setText(appointment.getEndTime().getTimeString());
+        subjectDateTextView.setText(appointment.getCalendarDate().
+                getDateString(CalendarDate.DEFAULT_DATE_FORMAT));
 
 
         return convertView;
