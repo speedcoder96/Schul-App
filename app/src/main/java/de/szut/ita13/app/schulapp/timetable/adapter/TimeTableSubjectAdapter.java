@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.security.auth.Subject;
 
 import de.szut.ita13.app.schulapp.R;
+import de.szut.ita13.app.schulapp.timetable.container.DFragment;
 import de.szut.ita13.app.schulapp.timetable.container.TimeTableSubject;
 
 /**
@@ -20,10 +21,11 @@ import de.szut.ita13.app.schulapp.timetable.container.TimeTableSubject;
 public class TimeTableSubjectAdapter extends BaseAdapter {
     private ArrayList<TimeTableSubject> subjects;
     private LayoutInflater inflator;
-
-    public TimeTableSubjectAdapter(ArrayList<TimeTableSubject> subjects, Context context){
+    private DFragment dialog;
+    public TimeTableSubjectAdapter(ArrayList<TimeTableSubject> subjects, DFragment dialog){
         this.subjects = subjects;
-        inflator = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflator = (LayoutInflater) dialog.getActivity().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.dialog = dialog;
     }
 
     @Override
@@ -44,6 +46,8 @@ public class TimeTableSubjectAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflator.inflate(R.layout.timetable_subject_layout, viewGroup, false);
+        view.setTag(getItem(i));
+        view.setOnClickListener(dialog);
         TextView tw = (TextView) view.findViewById(R.id.room);
         TextView tw1 = (TextView) view.findViewById(R.id.name);
         TextView tw2 = (TextView) view.findViewById(R.id.teacher);
