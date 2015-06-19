@@ -2,14 +2,7 @@ package de.szut.ita13.app.schulapp.utilities;
 
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-
-import de.szut.ita13.app.schulapp.timetable.container.TimeTable;
-import de.szut.ita13.app.schulapp.timetable.container.TimeTableColumn;
-import de.szut.ita13.app.schulapp.timetable.container.TimeTableElement;
-import de.szut.ita13.app.schulapp.timetable.container.TimeTableRow;
-import de.szut.ita13.app.schulapp.timetable.container.TimeTableSubject;
 
 
 /**
@@ -280,43 +273,6 @@ public class TimeUtilities {
             return -1;
         }
         return nextMilliSeconds - actualMilliSeconds;
-    }
-
-    /**
-     * Sets the now value to true for the row that hour is currently running and
-     * false for the row that isn't running
-     * @param timeTableElements contains all the elements of the time table
-     * @param position the current hour position in the time table
-     */
-    public static void isNow(ArrayList<TimeTableElement> timeTableElements, int position) {
-        int totalMinutesActual = totalMinutesOf(getActualTimeStamp());
-        if(position < timeTableElements.size()) {
-            TimeTableRow rowNow = (TimeTableRow) timeTableElements.get(position);
-            int totalMinutesNow = totalMinutesOf(rowNow.getTime());
-            int totalMinutesNext = totalMinutesOf(rowNow.getNextTime());
-            if(totalMinutesNow <= totalMinutesActual && totalMinutesActual < totalMinutesNext) {
-                rowNow.setNow(true);
-            } else {
-                rowNow.setNow(false);
-            }
-        }
-    }
-
-    /**
-     * Retrieves the next time object which is followed by the actual selected time
-     * @param timeTableElements contains all the elements of the time table
-     * @return returns the next time object
-     */
-    public static Time getNextUpdateTime(ArrayList<TimeTableElement> timeTableElements) {
-        Time resultTime = null;
-        for(int i = 1; i < timeTableElements.size(); i++) {
-            TimeTableRow timeTableRow = (TimeTableRow) timeTableElements.get(i);
-            if(timeTableRow.isNow()) {
-               resultTime = timeTableRow.getNextTime();
-               break;
-            }
-        }
-        return resultTime;
     }
 
     /**

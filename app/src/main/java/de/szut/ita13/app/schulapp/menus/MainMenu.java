@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.views.CalendarActivity;
-import de.szut.ita13.app.schulapp.timetable.views.TimeTableSetupActivity;
+import de.szut.ita13.app.schulapp.TimeTableSetupActivity;
 
 /**
  * Created by Rene on 06.05.2015.

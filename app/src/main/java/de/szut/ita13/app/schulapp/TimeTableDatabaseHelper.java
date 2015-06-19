@@ -1,0 +1,97 @@
+package de.szut.ita13.app.schulapp;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+/**
+ * Created by ramazan on 17.05.2015.
+ */
+public class TimeTableDatabaseHelper extends SQLiteOpenHelper {
+
+    public static final String DATABASE_NAME = "database.db";
+    public static final int DATABASE_VERSION = 1;
+
+    public static final String TABLE_SUBJECT = "Subjects";
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_COLORID = "colorId";
+    public static final String COLUMN_TEACHER = "teacher";
+    public static final String COLUMN_ROOM = "room";
+    public static final String[] SUBJECT_ALL_COLUMNS = {
+            COLUMN_ID, COLUMN_NAME, COLUMN_COLORID, COLUMN_TEACHER, COLUMN_ROOM
+    };
+
+    public static final String CREATE_TABLE_SUBJECT = "CREATE TABLE " + TABLE_SUBJECT + " ( " +
+            COLUMN_ID + "primary key auto increment integer," +
+            COLUMN_NAME + "text null," +
+            COLUMN_COLORID + "text not null," +
+            COLUMN_TEACHER + "text not null," +
+            COLUMN_ROOM + " integer not null );";
+
+
+    public static final String TABLE_TIMETABLE = "TimeTable";
+    public static final String COLUMN_ID2 = "id";
+    public static final String COLUMN_ROW = "row";
+    public static final String COLUMN_COLUMN = "row";
+    public static final String COLUMN_SUBJECTID = "subjectId";
+    public static final String[] TIMETABLE_ALL_COLUMNS = {
+            COLUMN_ID2, COLUMN_ROW, COLUMN_COLUMN, COLUMN_SUBJECTID
+    };
+
+    public static final String CREATE_TABLE_TIMETABLE = "CREATE TABLE " + TABLE_TIMETABLE + " ( " +
+            COLUMN_ID2 + " primary key auto increment double," +
+            COLUMN_ROW + " integer not null," +
+            COLUMN_COLUMN + " integer not null," +
+            COLUMN_SUBJECTID + " integer not null );";
+
+
+    public static final String TABLE_SETTINGS = "Settings";
+    public static final String COLUMN_START_TIME = "starttime";
+    public static final String COLUMN_LESSON_COUNT = "lessoncount";
+    public static final String COLUMN_LESSON_LENGTH = "lessonlength";
+    public static final String COLUMN_BREAK_LENGTH = "breaklength";
+    public static final String COLUMN_BREAK_INTERVAL = "breakinterval";
+    public static final String COLUMN_TWO_WEEKS = "twoweeks";
+    public static final String[] SETTINGS_ALL_COLUMNS = {
+            COLUMN_START_TIME, COLUMN_LESSON_COUNT, COLUMN_LESSON_LENGTH,
+            COLUMN_BREAK_LENGTH, COLUMN_BREAK_INTERVAL, COLUMN_TWO_WEEKS
+    };
+
+    public static final String CREATE_TABLE_SETTINGS = "CREATE TABLE " + TABLE_SETTINGS + " ( " +
+            COLUMN_START_TIME + " text not null," +
+            COLUMN_LESSON_COUNT + " integer not null," +
+            COLUMN_LESSON_LENGTH + " integer not null," +
+            COLUMN_BREAK_LENGTH + " integer not null," +
+            COLUMN_BREAK_INTERVAL + " integer not null," +
+            COLUMN_TWO_WEEKS + " integer not null );";
+
+
+    public TimeTableDatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL(CREATE_TABLE_SUBJECT);
+        sqLiteDatabase.execSQL(CREATE_TABLE_TIMETABLE);
+        sqLiteDatabase.execSQL(CREATE_TABLE_SETTINGS);
+        Log.d("DatabaseHelper", "OnCreate");
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        Log.d("DatabaseHelper", "OnOpen");
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        Log.d("DatabaseHelper", "OnUpgrade");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_SUBJECT);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_TIMETABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_SETTINGS);
+        onCreate(sqLiteDatabase);
+    }
+}

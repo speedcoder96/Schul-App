@@ -9,8 +9,8 @@
         android:id="@+id/setup_title"
         android:text="Setup"
         android:gravity="left"
-        android:textSize="25sp"
-        android:layout_marginBottom="5dp"
+        android:textSize="20sp"
+        android:layout_marginBottom="3dp"
         android:layout_marginLeft="10dp"
         android:textStyle="bold"
         android:layout_width="match_parent"
@@ -21,15 +21,15 @@
         android:layout_below="@id/setup_title"
         android:text="Anfangszeit der ersten Stunde"
         android:layout_gravity="center_horizontal"
-        android:textSize="15sp"
-        android:layout_margin="5dp"
+        android:textSize="12sp"
+        android:layout_margin="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <de.szut.ita13.app.schulapp.picker.CalendarTimePicker
         android:id="@+id/setup_firstlesson_picker"
         android:layout_below="@id/setup_firstlesson_title"
-        android:layout_margin="5dp"
+        android:layout_margin="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </de.szut.ita13.app.schulapp.picker.CalendarTimePicker>
@@ -39,15 +39,15 @@
         android:layout_below="@id/setup_firstlesson_picker"
         android:text="Maximale Stundenanzahl"
         android:layout_gravity="center_horizontal"
-        android:textSize="15sp"
-        android:layout_margin="5dp"
+        android:textSize="12sp"
+        android:layout_margin="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <de.szut.ita13.app.schulapp.picker.ValuePicker
         android:id="@+id/setup_lessonamount_picker"
         android:layout_below="@id/setup_lessonamount_title"
-        android:layout_margin="5dp"
+        android:layout_margin="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         picker:value_maximum="15"
@@ -57,12 +57,34 @@
     </de.szut.ita13.app.schulapp.picker.ValuePicker>
 
     <TextView
-        android:id="@+id/setup_breaklength_title"
+        android:id="@+id/setup_lessonlength_title"
         android:layout_below="@id/setup_lessonamount_picker"
+        android:text="Länge der einzelnen Stunden in Minuten"
+        android:layout_gravity="center_horizontal"
+        android:textSize="12sp"
+        android:layout_margin="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <de.szut.ita13.app.schulapp.picker.ValuePicker
+        android:id="@+id/setup_lessonlength_picker"
+        android:layout_below="@id/setup_lessonlength_title"
+        android:layout_margin="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        picker:value_maximum="120"
+        picker:value_minimum="0"
+        picker:value_steps_increment="5"
+        picker:value_steps_decrement="-5">>
+    </de.szut.ita13.app.schulapp.picker.ValuePicker>
+
+    <TextView
+        android:id="@+id/setup_breaklength_title"
+        android:layout_below="@id/setup_lessonlength_picker"
         android:text="Länge der Pausen in Minuten"
         android:layout_gravity="center_horizontal"
-        android:textSize="15sp"
-        android:layout_margin="5dp"
+        android:textSize="12sp"
+        android:layout_margin="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -83,8 +105,8 @@
         android:layout_below="@id/setup_breaklength_picker"
         android:text="Interval der Pausen (alle x-Stunden)"
         android:layout_gravity="center_horizontal"
-        android:textSize="15sp"
-        android:layout_margin="5dp"
+        android:textSize="12sp"
+        android:layout_margin="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
@@ -106,8 +128,8 @@
         android:layout_below="@id/setup_breakinterval_picker"
         android:text="1 oder 2 Wochen Rhythmus"
         android:layout_gravity="center_horizontal"
-        android:textSize="15sp"
-        android:layout_margin="5dp"
+        android:textSize="12sp"
+        android:layout_margin="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
