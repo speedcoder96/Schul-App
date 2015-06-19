@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:picker="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/setup_title"
+        android:text="Setup"
+        android:gravity="left"
+        android:textSize="25sp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/setup_firstlesson_title"
+        android:layout_below="@id/setup_title"
+        android:text="Anfangszeit der ersten Stunde"
+        android:layout_gravity="center_horizontal"
+        android:textSize="15sp"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <de.szut.ita13.app.schulapp.picker.CalendarTimePicker
+        android:id="@+id/setup_firstlesson_picker"
+        android:layout_below="@id/setup_firstlesson_title"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </de.szut.ita13.app.schulapp.picker.CalendarTimePicker>
+
+    <TextView
+        android:id="@+id/setup_lessonamount_title"
+        android:layout_below="@id/setup_firstlesson_picker"
+        android:text="Maximale Stundenanzahl"
+        android:layout_gravity="center_horizontal"
+        android:textSize="15sp"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <de.szut.ita13.app.schulapp.picker.ValuePicker
+        android:id="@+id/setup_lessonamount_picker"
+        android:layout_below="@id/setup_lessonamount_title"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        picker:value_maximum="15"
+        picker:value_minimum="0"
+        picker:value_steps_increment="1"
+        picker:value_steps_decrement="-1">>
+    </de.szut.ita13.app.schulapp.picker.ValuePicker>
+
+    <TextView
+        android:id="@+id/setup_breaklength_title"
+        android:layout_below="@id/setup_lessonamount_picker"
+        android:text="Länge der Pausen in Minuten"
+        android:layout_gravity="center_horizontal"
+        android:textSize="15sp"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <de.szut.ita13.app.schulapp.picker.ValuePicker
+        android:id="@+id/setup_breaklength_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/setup_breaklength_title"
+        picker:value_maximum="180"
+        picker:value_minimum="0"
+        picker:value_steps_increment="5"
+        picker:value_steps_decrement="-5">
+
+    </de.szut.ita13.app.schulapp.picker.ValuePicker>
+
+    <TextView
+        android:id="@+id/setup_breakinterval_title"
+        android:layout_below="@id/setup_breaklength_picker"
+        android:text="Interval der Pausen (alle x-Stunden)"
+        android:layout_gravity="center_horizontal"
+        android:textSize="15sp"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <de.szut.ita13.app.schulapp.picker.ValuePicker
+        android:id="@+id/setup_breakinterval_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/setup_breakinterval_title"
+        picker:value_maximum="10"
+        picker:value_minimum="0"
+        picker:value_steps_increment="1"
+        picker:value_steps_decrement="-1">
+
+    </de.szut.ita13.app.schulapp.picker.ValuePicker>
+
+    <TextView
+        android:id="@+id/setup_twoweekrhythm_title"
+        android:layout_below="@id/setup_breakinterval_picker"
+        android:text="1 oder 2 Wochen Rhythmus"
+        android:layout_gravity="center_horizontal"
+        android:textSize="15sp"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+
+    <CheckBox
+        android:id="@+id/setup_twoweekrhythm_picker"
+        android:layout_below="@id/setup_twoweekrhythm_title"
+        android:gravity="center_horizontal"
+        android:text="2 Wochen Rhythmus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

@@ -9,13 +9,12 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.SystemClock;
 import android.util.Log;
-
-
+import android.widget.Toast;
 import java.util.GregorianCalendar;
 
 import de.szut.ita13.app.schulapp.R;
+import de.szut.ita13.app.schulapp.calendar.container.Calendar;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarAppointment;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarDate;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
@@ -70,15 +69,19 @@ public class CalendarNotificationFactory {
         long difference = targetMillis - currentMillis;
         if(difference > DAY_IN_MILLIS) {
             Log.d(TAG, "Set over 1 Day Notification Delay");
+            createNotificationDelayToast(difference, DAY_IN_MILLIS).show();
             return targetMillis - DAY_IN_MILLIS;
         } else if(difference > HALF_DAY_IN_MILLIS) {
             Log.d(TAG, "Set over 12 Hours Notification Delay");
+            createNotificationDelayToast(difference, HALF_DAY_IN_MILLIS).show();
             return targetMillis - HALF_DAY_IN_MILLIS;
         } else if(difference > QUARTER_DAY_IN_MILLIS) {
             Log.d(TAG, "Set over 6 Hours Notification Delay");
+            createNotificationDelayToast(difference, QUARTER_DAY_IN_MILLIS).show();
             return targetMillis - QUARTER_DAY_IN_MILLIS;
         } else if(difference > ONE_HOUR_IN_MILLIS) {
             Log.d(TAG, "Set over 1 Hour Notification Delay");
+            createNotificationDelayToast(difference, ONE_HOUR_IN_MILLIS).show();
             return targetMillis - ONE_HOUR_IN_MILLIS;
         }
         Log.d(TAG, "Set no Notification");
@@ -89,7 +92,7 @@ public class CalendarNotificationFactory {
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel((int) calendarAppointment.getRefID());
         Intent intent = new Intent(context, CalendarNotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int)calendarAppointment.getRefID(),
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) calendarAppointment.getRefID(),
                 intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
@@ -101,6 +104,30 @@ public class CalendarNotificationFactory {
         Ringtone ringtone = RingtoneManager.getRingtone(context.getApplicationContext(), uri);
         ringtone.play();
         Log.d(TAG, "Play Notification Sound");
+    }
+
+    private static Toast createNotificationDelayToast(long difference, long delay) {
+        return Toast.makeText(Calendar.getCalendarActivity().getApplicationContext(),
+                "Sie werden in " + inDayFormatString(difference - ONE_HOUR_IN_MILLIS) + " Tagen benachrichtigt!",
+                Toast.LENGTH_LONG);
+    }
+
+    private static String inDayFormatString(long milliseconds) {
+        long seconds = milliseconds / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        long days = hours / 24;
+        long currentSeconds = seconds % 60;
+        long currentMinutes = minutes % 60;
+        long currentHours = hours % 24;
+        return fillMissingDigit(days) + ":" +
+                fillMissingDigit(currentHours) + ":" +
+                fillMissingDigit(currentMinutes) + ":" +
+                fillMissingDigit(currentSeconds);
+    }
+
+    private static String fillMissingDigit(long value) {
+        return (value < 10) ? "0" + value : String.valueOf(value);
     }
 
 

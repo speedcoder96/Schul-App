@@ -54,12 +54,12 @@
         android:id="@+id/text_starttime"
          />
 
-    <de.szut.ita13.app.schulapp.calendar.views.CalendarTimePicker
+    <de.szut.ita13.app.schulapp.picker.CalendarTimePicker
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/text_starttime"
         android:id="@+id/timepicker_start">
-        </de.szut.ita13.app.schulapp.calendar.views.CalendarTimePicker>
+        </de.szut.ita13.app.schulapp.picker.CalendarTimePicker>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
         android:text="Ende"
         android:id="@+id/text_endtime"
         />
-    <de.szut.ita13.app.schulapp.calendar.views.CalendarTimePicker
+    <de.szut.ita13.app.schulapp.picker.CalendarTimePicker
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/timepicker_end"
@@ -76,7 +76,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="20dp"
         android:layout_alignParentStart="true">
-    </de.szut.ita13.app.schulapp.calendar.views.CalendarTimePicker>
+    </de.szut.ita13.app.schulapp.picker.CalendarTimePicker>
 
     <TextView
         android:layout_width="wrap_content"

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ValuePicker">
+        <attr name="value_steps_increment" format="integer" />
+        <attr name="value_steps_decrement" format="integer" />
+        <attr name="value_minimum" format="integer" />
+        <attr name="value_maximum" format="integer" />
+    </declare-styleable>
+
+</resources>

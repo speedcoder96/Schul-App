@@ -8,8 +8,7 @@ import android.widget.Button;
 
 import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.views.CalendarActivity;
-import de.szut.ita13.app.schulapp.timetable.container.TimeTableSubjectActivity;
-import de.szut.ita13.app.schulapp.timetable.views.TimeTableActivity;
+import de.szut.ita13.app.schulapp.timetable.views.TimeTableSetupActivity;
 
 /**
  * Created by Rene on 06.05.2015.
@@ -17,7 +16,7 @@ import de.szut.ita13.app.schulapp.timetable.views.TimeTableActivity;
 public class MainMenu extends Activity implements View.OnClickListener {
 
     private static Class<?>[] MENU_ACTIVITY_CLASSES = {
-            TimeTableSubjectActivity.class, CalendarActivity.class
+            TimeTableSetupActivity.class, CalendarActivity.class
     };
 
     private static int[] MENU_NAME_ID = {

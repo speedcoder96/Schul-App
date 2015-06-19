@@ -1,4 +1,4 @@
-package de.szut.ita13.app.schulapp.calendar.views;
+package de.szut.ita13.app.schulapp.picker;
 
 import android.content.Context;
 
@@ -24,7 +24,8 @@ import de.szut.ita13.app.schulapp.utilities.Date;
 /**
  * Created by ramazan and rene on 12.05.2015.
  */
-public class CalendarTimePicker extends RelativeLayout implements View.OnClickListener, View.OnFocusChangeListener {
+public class CalendarTimePicker extends RelativeLayout implements
+        View.OnClickListener, View.OnFocusChangeListener {
 
     public static final int HOURS_PER_DAY = 24;
     public static final int MINUTES_PER_HOUR = 60;
@@ -34,13 +35,10 @@ public class CalendarTimePicker extends RelativeLayout implements View.OnClickLi
     private EditText minute;
     private Button hoursIncrement, hoursDecrement;
     private Button minutesIncrement, minutesDecrement;
-    private LinearLayout linearlayout;
 
     public CalendarTimePicker(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         inflate(getContext(), R.layout.calendar_timepicker, this);
-
-
 
         Calendar c = Calendar.getInstance();
         int hourValue = c.get(Calendar.HOUR_OF_DAY);

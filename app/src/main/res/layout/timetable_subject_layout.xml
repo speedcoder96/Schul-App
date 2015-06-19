@@ -22,15 +22,6 @@
         android:text="Fachname"
         android:paddingLeft="15dp"/>
 
-    <Button
-        android:id="@+id/colorChooserButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="5dp"
-        android:layout_below="@+id/room"
-        android:layout_above="@+id/teacher"
-        android:layout_alignRight="@+id/name"/>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

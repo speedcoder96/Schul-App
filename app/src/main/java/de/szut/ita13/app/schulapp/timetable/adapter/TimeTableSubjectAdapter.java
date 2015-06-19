@@ -1,7 +1,6 @@
 package de.szut.ita13.app.schulapp.timetable.adapter;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import de.szut.ita13.app.schulapp.timetable.dialogs.TimeTableSubjectDialog;
 /**
  * Created by Michel� on 15.06.2015.
  */
-public class TimeTableSubjectAdapter extends BaseAdapter implements View.OnClickListener {
+public class TimeTableSubjectAdapter extends BaseAdapter {
 
     private ArrayList<TimeTableSubject> subjects;
     private final LayoutInflater inflator;
@@ -51,7 +50,7 @@ public class TimeTableSubjectAdapter extends BaseAdapter implements View.OnClick
         view = inflator.inflate(R.layout.timetable_subject_layout, viewGroup, false);
         TimeTableSubject timeTableSubject = (TimeTableSubject) getItem(i);
         view.setTag(timeTableSubject);
-        view.setOnClickListener(this);
+        view.setOnClickListener(dialog);
 
         TextView tw = (TextView) view.findViewById(R.id.room);
         TextView tw1 = (TextView) view.findViewById(R.id.name);
@@ -63,10 +62,5 @@ public class TimeTableSubjectAdapter extends BaseAdapter implements View.OnClick
         tw2.setText(timeTableSubject.getTeacher());
 
         return view;
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 }

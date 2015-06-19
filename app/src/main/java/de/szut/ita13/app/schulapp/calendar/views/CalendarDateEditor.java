@@ -20,6 +20,7 @@ import de.szut.ita13.app.schulapp.calendar.container.CalendarDate;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
 import de.szut.ita13.app.schulapp.calendar.notification.CalendarNotificationFactory;
 import de.szut.ita13.app.schulapp.newutils.DateUtil;
+import de.szut.ita13.app.schulapp.picker.CalendarTimePicker;
 
 /**
  * Created by rama on 12.05.2015.

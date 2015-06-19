@@ -1,4 +1,4 @@
-package de.szut.ita13.app.schulapp.timetable.container;
+package de.szut.ita13.app.schulapp.timetable.views;
 
 import android.os.Bundle;
 import android.app.FragmentManager;

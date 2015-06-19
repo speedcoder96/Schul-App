@@ -1,12 +1,9 @@
 package de.szut.ita13.app.schulapp.utilities;
 
 
-import android.util.Log;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 
 import de.szut.ita13.app.schulapp.timetable.container.TimeTable;
 import de.szut.ita13.app.schulapp.timetable.container.TimeTableColumn;

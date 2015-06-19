@@ -30,6 +30,7 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:id="@+id/hour"
+            android:gravity="center"
             android:inputType="number" />
 
         <TextView
@@ -44,6 +45,7 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:id="@+id/minute"
+            android:gravity="center"
             android:inputType="number" />
 
         <Button
