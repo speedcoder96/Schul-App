@@ -1,6 +1,7 @@
 package de.szut.ita13.app.schulapp.timetable.adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,22 +10,24 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import javax.security.auth.Subject;
-
 import de.szut.ita13.app.schulapp.R;
-import de.szut.ita13.app.schulapp.timetable.container.DFragment;
 import de.szut.ita13.app.schulapp.timetable.container.TimeTableSubject;
+import de.szut.ita13.app.schulapp.timetable.dialogs.TimeTableSubjectDialog;
 
 /**
  * Created by Michel� on 15.06.2015.
  */
-public class TimeTableSubjectAdapter extends BaseAdapter {
+public class TimeTableSubjectAdapter extends BaseAdapter implements View.OnClickListener {
+
     private ArrayList<TimeTableSubject> subjects;
-    private LayoutInflater inflator;
-    private DFragment dialog;
-    public TimeTableSubjectAdapter(ArrayList<TimeTableSubject> subjects, DFragment dialog){
+    private final LayoutInflater inflator;
+    private TimeTableSubjectDialog dialog;
+    private Context context;
+
+    public TimeTableSubjectAdapter(ArrayList<TimeTableSubject> subjects, TimeTableSubjectDialog dialog){
         this.subjects = subjects;
-        inflator = (LayoutInflater) dialog.getActivity().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        context = dialog.getActivity().getApplicationContext();
+        inflator = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.dialog = dialog;
     }
 
@@ -46,17 +49,24 @@ public class TimeTableSubjectAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflator.inflate(R.layout.timetable_subject_layout, viewGroup, false);
-        view.setTag(getItem(i));
-        view.setOnClickListener(dialog);
+        TimeTableSubject timeTableSubject = (TimeTableSubject) getItem(i);
+        view.setTag(timeTableSubject);
+        view.setOnClickListener(this);
+
         TextView tw = (TextView) view.findViewById(R.id.room);
         TextView tw1 = (TextView) view.findViewById(R.id.name);
         TextView tw2 = (TextView) view.findViewById(R.id.teacher);
 
-        TimeTableSubject tts = (TimeTableSubject) getItem(i);
-        tw.setText(tts.getRoom());
-        tw1.setText(tts.getSubjectName());
-        tw2.setText(tts.getTeacher());
+        view.setBackgroundColor(timeTableSubject.getColor());
+        tw.setText(timeTableSubject.getRoom());
+        tw1.setText(timeTableSubject.getSubjectName());
+        tw2.setText(timeTableSubject.getTeacher());
 
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

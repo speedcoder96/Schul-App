@@ -142,10 +142,10 @@ public class CalendarDateViewer extends ActionBarActivity implements MenuItem.On
 
     private void showConfirmDialog() {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Termine löschen");
-        alertDialogBuilder.setMessage("Wollen Sie alle Termine löschen?");
+        alertDialogBuilder.setTitle("Termine lï¿½schen");
+        alertDialogBuilder.setMessage("Wollen Sie alle Termine lÃ¶schen?");
         alertDialogBuilder.setIcon(android.R.drawable.ic_dialog_alert);
-        alertDialogBuilder.setPositiveButton("Ja, alle löschen!", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setPositiveButton("Ja, alle lï¿½schen!", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 alertDialog.cancel();
                 Calendar.dataSource.open();
