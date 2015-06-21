@@ -6,6 +6,8 @@ package de.szut.ita13.app.schulapp.calendar.container;
 public class CalendarTime {
 
     public static final int MINUTES_PER_HOURS = 60;
+    public static final int HOURS_PER_DAY = 24;
+    public static final int MINUTES_PER_DAY = MINUTES_PER_HOURS * HOURS_PER_DAY;
 
     private int hours;
     private int minutes;
@@ -15,15 +17,16 @@ public class CalendarTime {
         this.minutes = minutes;
     }
 
-    public CalendarTime(int minutes){
+    public CalendarTime(int minutes) {
+        minutes = minutes % MINUTES_PER_DAY;
         this.hours = minutes / MINUTES_PER_HOURS;
         this.minutes = minutes % MINUTES_PER_HOURS;
     }
 
     public CalendarTime(String timeString) {
         if(timeString.length() == 5) {
-            this.hours = Integer.parseInt(timeString.split(":")[0]);
-            this.minutes = Integer.parseInt(timeString.split(":")[1]);
+            this.hours = Integer.parseInt(timeString.split(":")[0]) % HOURS_PER_DAY;
+            this.minutes = Integer.parseInt(timeString.split(":")[1]) % MINUTES_PER_HOURS;
         }
     }
 

@@ -1,9 +1,6 @@
 package de.szut.ita13.app.schulapp;
 
-import android.content.Context;
-import android.database.Cursor;
-
-import java.util.ArrayList;
+import android.content.Intent;
 
 import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
 
@@ -12,8 +9,6 @@ import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
  */
 public class TimeTableSetupBundle {
 
-    private Context context;
-
     private CalendarTime startTime;
     private int lessonLength;
     private int lessonCount;
@@ -21,8 +16,7 @@ public class TimeTableSetupBundle {
     private int breakInterval;
     private boolean twoWeeksRhythm;
 
-    public TimeTableSetupBundle(Context context) {
-        this.context = context;
+    public TimeTableSetupBundle() {
     }
 
     public CalendarTime getStartTime() {
@@ -45,7 +39,7 @@ public class TimeTableSetupBundle {
         return breakInterval;
     }
 
-    public boolean getTwoWeeksRhythm() {
+    public boolean isTwoWeeksRhythm() {
         return twoWeeksRhythm;
     }
 
@@ -53,8 +47,18 @@ public class TimeTableSetupBundle {
 
         private TimeTableSetupBundle timeTableSetupBundle;
 
-        public Builder(Context context) {
-            timeTableSetupBundle = new TimeTableSetupBundle(context);
+        public Builder() {
+            timeTableSetupBundle = new TimeTableSetupBundle();
+        }
+
+        public Builder(Intent setupIntent) {
+            timeTableSetupBundle = new TimeTableSetupBundle();
+            setStartTime(new CalendarTime(setupIntent.getStringExtra(TimeTableSetupActivity.START_TIME_KEY)));
+            setBreakLength(setupIntent.getIntExtra(TimeTableSetupActivity.BREAK_LENGTH_KEY, 0));
+            setBreakInterval(setupIntent.getIntExtra(TimeTableSetupActivity.BREAK_INTERVAL_KEY, 0));
+            setTwoWeeksRhythm(setupIntent.getBooleanExtra(TimeTableSetupActivity.TWO_WEEKS_RHYTHM_KEY, true));
+            setLessonLength(setupIntent.getIntExtra(TimeTableSetupActivity.LESSON_LENGTH_KEY, 0));
+            setLessonCount(setupIntent.getIntExtra(TimeTableSetupActivity.LESSON_COUNT_KEY, 0));
         }
 
         public Builder setStartTime(CalendarTime startTime) {

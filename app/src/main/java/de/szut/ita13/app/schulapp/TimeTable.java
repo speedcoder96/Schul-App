@@ -1,167 +1,54 @@
 package de.szut.ita13.app.schulapp;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
-import de.szut.ita13.app.schulapp.newutils.DateUtil;
 
 /**
- * Created by Michelé on 21.06.2015.
+ * Created by Michele on 21.06.2015.
  */
-public class TimeTable {
+public class TimeTable implements TimeTableMatrix {
 
-    private ArrayList<RowItem> rowItems;
+    public static final int DAYS_IN_WEEK = 5;
+
+    private String name;
+    private ArrayList<TimeTableRowItem> rowItems;
     private TimeTableSetupBundle timeTableSetupBundle;
 
-    public TimeTable(TimeTableSetupBundle timeTableSetupBundle){
+    public TimeTable(TimeTableSetupBundle timeTableSetupBundle, String name){
         this.rowItems = new ArrayList<>();
+        this.name = name;
         this.timeTableSetupBundle = timeTableSetupBundle;
         new TimeTable.Builder(this).build();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getRowCount(){
         return rowItems.size();
     }
 
-    public RowItem getRowItem(int index){
+    public int getColumnCount(int row) {
+        return rowItems.get(row).getItems().size();
+    }
+
+    public TimeTableRowItem getRowAt(int index) {
         return rowItems.get(index);
     }
 
-    public static class RowItem{
-
-        public final static int[] IDS = {
-                R.id.time, R.id.monday, R.id.tuesday, R.id.wednesday, R.id.thursday, R.id.friday
-        };
-        public final static String[] LABELS = {
-                "Zeit", "Mo", "Di", "Mi", "Do", "Fr"
-        };
-
-        private ArrayList<Item> items;
-        private TimeTable timeTable;
-        private CalendarTime startTime;
-        private CalendarTime endTime;
-        private boolean header;
-        private boolean now;
-
-        public RowItem(TimeTable timeTable){
-            this.timeTable = timeTable;
-            items = new ArrayList<>();
-        }
-
-        public ArrayList<Item> getItems() {
-            return items;
-        }
-
-        public void setItems(ArrayList<Item> items) {
-            this.items = items;
-        }
-
-        public TimeTable getTimeTable() {
-            return timeTable;
-        }
-
-        public void setTimeTable(TimeTable timeTable) {
-            this.timeTable = timeTable;
-        }
-
-        public CalendarTime getStartTime() {
-            return startTime;
-        }
-
-        public void setStartTime(CalendarTime startTime) {
-            this.startTime = startTime;
-        }
-
-        public CalendarTime getEndTime() {
-            return endTime;
-        }
-
-        public void setEndTime(CalendarTime endTime) {
-            this.endTime = endTime;
-        }
-
-        public boolean isHeader() {
-            return header;
-        }
-
-        public void setHeader(boolean header) {
-            this.header = header;
-        }
-
-        public boolean isNow() {
-            return now;
-        }
-
-        public void setNow(boolean now) {
-            this.now = now;
-        }
+    public TimeTableItem getItemAt(int row, int column) {
+        return rowItems.get(row).getItems().get(column);
     }
 
-    public static class Item{
+    public void setItemAt(int row, int column, TimeTableItem item) {
+        rowItems.get(row).getItems().set(column, item);
+    }
 
-        private int id;
-        private RowItem rowItem;
-        private String subject;
-        private String room;
-        private String teacher;
-        private int colorId;
-
-
-        public Item(RowItem rowItem){
-            this.rowItem = rowItem;
-        }
-
-        public String getInformation(){
-            return subject + "\n" + room;
-        }
-
-        public int getID() {
-            return id;
-        }
-
-        public void setID(int id) {
-            this.id = id;
-        }
-
-        public RowItem getRowItem() {
-            return rowItem;
-        }
-
-        public void setRowItem(RowItem rowItem) {
-            this.rowItem = rowItem;
-        }
-
-        public String getSubject() {
-            return subject;
-        }
-
-        public void setSubject(String subject) {
-            this.subject = subject;
-        }
-
-        public String getRoom() {
-            return room;
-        }
-
-        public void setRoom(String room) {
-            this.room = room;
-        }
-
-        public String getTeacher() {
-            return teacher;
-        }
-
-        public void setTeacher(String teacher) {
-            this.teacher = teacher;
-        }
-
-        public int getColorId() {
-            return colorId;
-        }
-
-        public void setColorId(int colorId) {
-            this.colorId = colorId;
-        }
+    public void setRowAt(int row, TimeTableRowItem rowItem) {
+        rowItems.set(row, rowItem);
     }
 
     public static class Builder{
@@ -174,27 +61,37 @@ public class TimeTable {
 
         public void build(){
 
-            RowItem header = new RowItem(timeTable);
+            TimeTableRowItem header = new TimeTableRowItem(timeTable);
             header.setHeader(true);
             timeTable.rowItems.add(header);
 
             for (int i = 0; i < timeTable.timeTableSetupBundle.getLessonCount(); i++){
-                CalendarTime currentTime = next(i);
-                RowItem rowItem = new RowItem(timeTable);
+                CalendarTime currentTime = nextTime(i);
+                TimeTableRowItem rowItem = new TimeTableRowItem(timeTable);
                 rowItem.setStartTime(currentTime);
-                for(int j = 0; j < 5; j++){
-                    Item item = new Item(rowItem);
-                    rowItem.items.add(item);
+                for(int j = 0; j < DAYS_IN_WEEK; j++){
+                    TimeTableItem item = new TimeTableItem(rowItem);
+                    item.setSubject(randomString(5));
+                    rowItem.getItems().add(item);
                 }
                 timeTable.rowItems.add(rowItem);
             }
         }
 
-        private CalendarTime next(int index){
+        private CalendarTime nextTime(int index) {
             int totalMinutes = timeTable.timeTableSetupBundle.getStartTime().totalMinutes();
             int nextTotalMinutes = totalMinutes + (timeTable.timeTableSetupBundle.getLessonLength() * index) +
                     (timeTable.timeTableSetupBundle.getBreakLength() * (index / timeTable.timeTableSetupBundle.getBreakInterval()));
             return new CalendarTime(nextTotalMinutes);
+        }
+
+        private String randomString(int length) {
+            Random random = new Random();
+            StringBuilder builder = new StringBuilder();
+            for(int i = 0; i < length; i++) {
+                builder.append((char)(random.nextInt(26) + 65));
+            }
+            return builder.toString();
         }
     }
 

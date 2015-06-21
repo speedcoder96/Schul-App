@@ -1,7 +1,9 @@
 package de.szut.ita13.app.schulapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
@@ -15,6 +17,13 @@ import de.szut.ita13.app.schulapp.TimeTableSetupBundle;
  * Created by Rene on 19.06.2015.
  */
 public class TimeTableSetupActivity extends ActionBarActivity {
+
+    public static final String START_TIME_KEY =  "starttime";
+    public static final String BREAK_LENGTH_KEY = "breaklength";
+    public static final String BREAK_INTERVAL_KEY = "breakinterval";
+    public static final String TWO_WEEKS_RHYTHM_KEY = "twoweeksrhythm";
+    public static final String LESSON_LENGTH_KEY = "lessonlength";
+    public static final String LESSON_COUNT_KEY = "lessoncount";
 
     private CalendarTimePicker startTimePicker;
     private ValuePicker lessonCountPicker;
@@ -47,15 +56,16 @@ public class TimeTableSetupActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_set:
-                TimeTableSetupBundle bundle = new TimeTableSetupBundle.Builder(this)
-                        .setStartTime(startTimePicker.getCalendarTime())
-                        .setBreakLength(breakLengthPicker.getCurrentValue())
-                        .setBreakInterval(breakIntervalPicker.getCurrentValue())
-                        .setTwoWeeksRhythm(twoWeekRhythmCheckBox.isActivated())
-                        .setLessonLength(lessonLengthPicker.getCurrentValue())
-                        .setLessonCount(lessonCountPicker.getCurrentValue())
-                        .build();
-                //Calendar Aufbauen!
+                //TODO vorher noch ueberpruefung der einzelnen Werte
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra(START_TIME_KEY, startTimePicker.getCalendarTime().getTimeString());
+                resultIntent.putExtra(BREAK_LENGTH_KEY, breakLengthPicker.getCurrentValue());
+                resultIntent.putExtra(BREAK_INTERVAL_KEY, breakIntervalPicker.getCurrentValue());
+                resultIntent.putExtra(TWO_WEEKS_RHYTHM_KEY, twoWeekRhythmCheckBox.isChecked());
+                resultIntent.putExtra(LESSON_LENGTH_KEY, lessonLengthPicker.getCurrentValue());
+                resultIntent.putExtra(LESSON_COUNT_KEY, lessonCountPicker.getCurrentValue());
+                setResult(RESULT_OK, resultIntent);
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

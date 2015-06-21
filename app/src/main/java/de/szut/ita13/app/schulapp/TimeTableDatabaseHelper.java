@@ -10,7 +10,7 @@ import android.util.Log;
  */
 public class TimeTableDatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "database.db";
+    public static final String DATABASE_NAME = "timetable.db";
     public static final int DATABASE_VERSION = 1;
 
     public static final String TABLE_SUBJECT = "Subjects";
@@ -28,7 +28,7 @@ public class TimeTableDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_NAME + "text null," +
             COLUMN_COLORID + "text not null," +
             COLUMN_TEACHER + "text not null," +
-            COLUMN_ROOM + " integer not null );";
+            COLUMN_ROOM + " integer not null ) ;";
 
 
     public static final String TABLE_TIMETABLE = "TimeTable";
@@ -46,7 +46,7 @@ public class TimeTableDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_ROW + " integer not null," +
             COLUMN_COLUMN + " integer not null," +
             COLUMN_WEEK + " integer not null," +
-            COLUMN_SUBJECTID + " integer not null );";
+            COLUMN_SUBJECTID + " integer not null ); ";
 
 
     public static final String TABLE_SETTINGS = "Settings";
@@ -67,7 +67,7 @@ public class TimeTableDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_LESSON_LENGTH + " integer not null," +
             COLUMN_BREAK_LENGTH + " integer not null," +
             COLUMN_BREAK_INTERVAL + " integer not null," +
-            COLUMN_TWO_WEEKS + " integer not null );";
+            COLUMN_TWO_WEEKS + " integer not null ); ";
 
 
     public TimeTableDatabaseHelper(Context context) {
@@ -76,16 +76,14 @@ public class TimeTableDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(CREATE_TABLE_SUBJECT);
-        sqLiteDatabase.execSQL(CREATE_TABLE_TIMETABLE);
-        sqLiteDatabase.execSQL(CREATE_TABLE_SETTINGS);
+        sqLiteDatabase.execSQL(CREATE_TABLE_SUBJECT + CREATE_TABLE_SETTINGS + CREATE_TABLE_TIMETABLE);
         Log.d("DatabaseHelper", "OnCreate");
     }
 
     @Override
     public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
-        Log.d("DatabaseHelper", "OnOpen");
+        Log.d("DatabaseHelper", "OnOpen" + db);
     }
 
     @Override

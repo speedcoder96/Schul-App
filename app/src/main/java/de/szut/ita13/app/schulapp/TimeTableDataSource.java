@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import de.szut.ita13.app.schulapp.calendar.dao.DatabaseHelper;
 
@@ -39,16 +40,18 @@ public class TimeTableDataSource {
             contentValues.put(TimeTableDatabaseHelper.COLUMN_LESSON_LENGTH, bundle.getLessonLength());
             contentValues.put(TimeTableDatabaseHelper.COLUMN_BREAK_LENGTH, bundle.getBreakLength());
             contentValues.put(TimeTableDatabaseHelper.COLUMN_BREAK_INTERVAL, bundle.getBreakInterval());
-            contentValues.put(TimeTableDatabaseHelper.COLUMN_TWO_WEEKS, (bundle.getTwoWeeksRhythm()) ? 1 : 0);
-            database.insert(TimeTableDatabaseHelper.TABLE_SETTINGS, null, contentValues);
+            contentValues.put(TimeTableDatabaseHelper.COLUMN_TWO_WEEKS, (bundle.isTwoWeeksRhythm()) ? 2 : 1);
+            long id = database.insert(TimeTableDatabaseHelper.TABLE_SETTINGS, null, contentValues);
             close();
         }
         return settingsInDatabase;
     }
 
-    private boolean isSettingsInDatabase() {
-        String selectQuery = "SELECT * FROM " + TimeTableDatabaseHelper.TABLE_SETTINGS + " LIMIT 1;";
+    public boolean isSettingsInDatabase() {
+        open();
+        String selectQuery = "SELECT * FROM " + TimeTableDatabaseHelper.TABLE_SETTINGS + ";";
         Cursor cursor = database.rawQuery(selectQuery, new String[]{});
+        close();
         return cursor.getCount() == 1;
     }
 

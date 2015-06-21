@@ -8,26 +8,26 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 /**
- * Created by Michelé on 21.06.2015.
+ * Created by Michele on 21.06.2015.
  */
 public class TimeTableAdapter extends BaseAdapter {
 
-    private TimeTable timeTable;
+    private TimeTableMatrix timeTableMatrix;
     private LayoutInflater layoutInflater;
 
-    public TimeTableAdapter(Context context, TimeTable timeTable){
-        this.timeTable = timeTable;
+    public TimeTableAdapter(Context context, TimeTableMatrix timeTableMatrix){
+        this.timeTableMatrix = timeTableMatrix;
         layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return timeTable.getRowCount();
+        return timeTableMatrix.getRowCount();
     }
 
     @Override
     public Object getItem(int i) {
-        return timeTable.getRowItem(i);
+        return timeTableMatrix.getRowAt(i);
     }
 
     @Override
@@ -41,20 +41,20 @@ public class TimeTableAdapter extends BaseAdapter {
 
             view = layoutInflater.inflate(R.layout.timetable_header_layout, viewGroup, false);
 
-            for(int i = 0; i < TimeTable.RowItem.IDS.length; i++){
-                TextView textView = (TextView) view.findViewById(TimeTable.RowItem.IDS[i]);
-                textView.setText(TimeTable.RowItem.LABELS[i]);
+            for(int i = 0; i < TimeTableRowItem.IDS.length; i++){
+                TextView textView = (TextView) view.findViewById(TimeTableRowItem.IDS[i]);
+                textView.setText(TimeTableRowItem.LABELS[i]);
             }
         } else{
 
             view = layoutInflater.inflate(R.layout.timetable_row_layout, viewGroup, false);
-            TimeTable.RowItem rowItem = (TimeTable.RowItem) getItem(position);
-            TextView timeTextView = (TextView) view.findViewById(TimeTable.RowItem.IDS[0]);
+            TimeTableRowItem rowItem = timeTableMatrix.getRowAt(position);
+            TextView timeTextView = (TextView) view.findViewById(TimeTableRowItem.IDS[0]);
             timeTextView.setText(rowItem.getStartTime().getTimeString());
 
-            for(int i = 0; i < rowItem.getItems().size(); i++){
-                TextView itemTextView = (TextView) view.findViewById(TimeTable.RowItem.IDS[i + 1]);
-                itemTextView.setText(rowItem.getItems().get(i).getInformation());
+            for(int i = 0; i < timeTableMatrix.getColumnCount(position); i++){
+                TextView itemTextView = (TextView) view.findViewById(TimeTableRowItem.IDS[i + 1]);
+                itemTextView.setText(timeTableMatrix.getItemAt(position, i).getInformation());
             }
         }
         return view;
