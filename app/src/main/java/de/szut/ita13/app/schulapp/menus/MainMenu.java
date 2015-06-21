@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.TimeTableActivity;
@@ -32,7 +33,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.menu_activity_layout);
         for(int i = 0; i < BUTTON_IDS.length; i++) {
-            Button button = (Button)findViewById(BUTTON_IDS[i]);
+            ImageButton button = (ImageButton)findViewById(BUTTON_IDS[i]);
             button.setOnClickListener(this);
         }
 
@@ -42,7 +43,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         for(int i = 0; i < MENU_ACTIVITY_CLASSES.length; i++) {
-            Button button = (Button)findViewById(BUTTON_IDS[i]);
+            ImageButton button = (ImageButton)findViewById(BUTTON_IDS[i]);
             if(v == button) {
                 Intent intent = new Intent();
                 intent.setClass(this, MENU_ACTIVITY_CLASSES[i]);
