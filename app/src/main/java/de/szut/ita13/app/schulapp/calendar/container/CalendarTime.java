@@ -15,6 +15,11 @@ public class CalendarTime {
         this.minutes = minutes;
     }
 
+    public CalendarTime(int minutes){
+        this.hours = minutes / MINUTES_PER_HOURS;
+        this.minutes = minutes % MINUTES_PER_HOURS;
+    }
+
     public CalendarTime(String timeString) {
         if(timeString.length() == 5) {
             this.hours = Integer.parseInt(timeString.split(":")[0]);
@@ -46,6 +51,10 @@ public class CalendarTime {
         String hourStr = (hours < 10) ? "0" + hours : String.valueOf(hours);
         String minuteStr = (minutes < 10) ? "0" + minutes : String.valueOf(minutes);
         return hourStr + ":" + minuteStr;
+    }
+
+    public int totalMinutes(){
+        return (hours * MINUTES_PER_HOURS) + minutes;
     }
 
 }

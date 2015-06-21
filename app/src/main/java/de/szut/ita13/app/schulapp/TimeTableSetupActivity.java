@@ -55,6 +55,7 @@ public class TimeTableSetupActivity extends ActionBarActivity {
                         .setLessonLength(lessonLengthPicker.getCurrentValue())
                         .setLessonCount(lessonCountPicker.getCurrentValue())
                         .build();
+                //Calendar Aufbauen!
                 break;
         }
         return super.onOptionsItemSelected(item);

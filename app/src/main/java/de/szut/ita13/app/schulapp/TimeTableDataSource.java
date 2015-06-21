@@ -40,7 +40,7 @@ public class TimeTableDataSource {
             contentValues.put(TimeTableDatabaseHelper.COLUMN_BREAK_LENGTH, bundle.getBreakLength());
             contentValues.put(TimeTableDatabaseHelper.COLUMN_BREAK_INTERVAL, bundle.getBreakInterval());
             contentValues.put(TimeTableDatabaseHelper.COLUMN_TWO_WEEKS, (bundle.getTwoWeeksRhythm()) ? 1 : 0);
-            database.insert(DatabaseHelper.Appointments.TABLE_NAME, null, contentValues);
+            database.insert(TimeTableDatabaseHelper.TABLE_SETTINGS, null, contentValues);
             close();
         }
         return settingsInDatabase;

@@ -1,6 +1,9 @@
 package de.szut.ita13.app.schulapp;
 
 import android.content.Context;
+import android.database.Cursor;
+
+import java.util.ArrayList;
 
 import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
 

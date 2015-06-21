@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import de.szut.ita13.app.schulapp.R;
+import de.szut.ita13.app.schulapp.TimeTableActivity;
 import de.szut.ita13.app.schulapp.calendar.views.CalendarActivity;
 import de.szut.ita13.app.schulapp.TimeTableSetupActivity;
 
@@ -16,7 +17,7 @@ import de.szut.ita13.app.schulapp.TimeTableSetupActivity;
 public class MainMenu extends Activity implements View.OnClickListener {
 
     private static Class<?>[] MENU_ACTIVITY_CLASSES = {
-            TimeTableSetupActivity.class, CalendarActivity.class
+            TimeTableActivity.class, CalendarActivity.class
     };
 
     private static int[] MENU_NAME_ID = {

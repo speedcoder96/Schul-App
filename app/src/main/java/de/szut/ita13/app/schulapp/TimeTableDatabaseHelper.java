@@ -34,16 +34,18 @@ public class TimeTableDatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_TIMETABLE = "TimeTable";
     public static final String COLUMN_ID2 = "id";
     public static final String COLUMN_ROW = "row";
-    public static final String COLUMN_COLUMN = "row";
+    public static final String COLUMN_COLUMN = "column";
     public static final String COLUMN_SUBJECTID = "subjectId";
+    public static final String COLUMN_WEEK = "week";
     public static final String[] TIMETABLE_ALL_COLUMNS = {
-            COLUMN_ID2, COLUMN_ROW, COLUMN_COLUMN, COLUMN_SUBJECTID
+            COLUMN_ID2, COLUMN_ROW, COLUMN_COLUMN, COLUMN_SUBJECTID, COLUMN_WEEK
     };
 
     public static final String CREATE_TABLE_TIMETABLE = "CREATE TABLE " + TABLE_TIMETABLE + " ( " +
             COLUMN_ID2 + " primary key auto increment double," +
             COLUMN_ROW + " integer not null," +
             COLUMN_COLUMN + " integer not null," +
+            COLUMN_WEEK + " integer not null," +
             COLUMN_SUBJECTID + " integer not null );";
 
 
