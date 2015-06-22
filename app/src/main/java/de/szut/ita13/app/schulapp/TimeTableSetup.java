@@ -30,7 +30,7 @@ public class TimeTableSetup {
 
     public void onReceiveSetupBundle(TimeTableSetupBundle timeTableSetupBundle) {
         generateTimetables(timeTableSetupBundle);
-        //dataSource.saveSettings(timeTableSetupBundle);
+        dataSource.saveSettings(timeTableSetupBundle);
     }
 
     private void generateTimetables(TimeTableSetupBundle timeTableSetupBundle) {

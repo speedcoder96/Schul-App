@@ -66,8 +66,6 @@ public class Calendar  {
     }
 
     private void setAdapter() {
-        long start = System.currentTimeMillis();
-        Log.d("Calendar", "Start"  + start);
         calendarViewPagerAdapter = null;
         calendarViewPagerAdapter = new CalendarViewPagerAdapter(calendarActivity.getSupportFragmentManager(), this);
         viewPager.setAdapter(calendarViewPagerAdapter);
@@ -99,7 +97,6 @@ public class Calendar  {
                 Log.d("Calendar", "State:" + state);
             }
         });
-        Log.d("Calendar", "End: " + (System.currentTimeMillis() - start));
     }
 
     public class CalendarViewPagerAdapter extends FragmentStatePagerAdapter {

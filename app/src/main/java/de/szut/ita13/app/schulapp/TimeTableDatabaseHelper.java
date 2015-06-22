@@ -76,7 +76,7 @@ public class TimeTableDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(CREATE_TABLE_SUBJECT + CREATE_TABLE_SETTINGS + CREATE_TABLE_TIMETABLE);
+        sqLiteDatabase.execSQL(CREATE_TABLE_SETTINGS);
         Log.d("DatabaseHelper", "OnCreate");
     }
 
