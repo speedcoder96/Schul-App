@@ -35,17 +35,15 @@ public class Preview {
         actualWeek.add(cw);
         if (actualWeek.size() != 0) {
             int actualDateIndex = CalendarDate.getActualDateIndex(actualWeek.get(0));
-            if (actualDateIndex != 0) {
-                int previewCounter = DEFAULT_PREVIEW_DAYS;
-                while(previewCounter > 0) {
-                    int weekNumber = actualWeek.get(0).getWeekNumber();
-                    for(int i = 0; i < actualWeek.size(); i++) {
-                        int attachedItems = attachAppointments(preview, actualWeek.get(i), actualDateIndex, previewCounter);
-                        previewCounter -= attachedItems;
-                        actualDateIndex = 0;
-                    }
-                    actualWeek = nextWeek(calendarMonths, weekNumber + 1);
+            int previewCounter = DEFAULT_PREVIEW_DAYS;
+            while(previewCounter > 0) {
+                int weekNumber = actualWeek.get(0).getWeekNumber();
+                for(int i = 0; i < actualWeek.size(); i++) {
+                    int attachedItems = attachAppointments(preview, actualWeek.get(i), actualDateIndex, previewCounter);
+                    previewCounter -= attachedItems;
+                    actualDateIndex = 0;
                 }
+                actualWeek = nextWeek(calendarMonths, weekNumber + 1);
             }
         }
         return preview;

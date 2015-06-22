@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,8 @@ public class Calendar  {
     }
 
     private void setAdapter() {
+        long start = System.currentTimeMillis();
+        Log.d("Calendar", "Start"  + start);
         calendarViewPagerAdapter = null;
         calendarViewPagerAdapter = new CalendarViewPagerAdapter(calendarActivity.getSupportFragmentManager(), this);
         viewPager.setAdapter(calendarViewPagerAdapter);
@@ -93,9 +96,10 @@ public class Calendar  {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                Log.d("Calendar", "State:" + state);
             }
         });
+        Log.d("Calendar", "End: " + (System.currentTimeMillis() - start));
     }
 
     public class CalendarViewPagerAdapter extends FragmentStatePagerAdapter {

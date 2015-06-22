@@ -1,5 +1,7 @@
 package de.szut.ita13.app.schulapp.calendar.container;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import de.szut.ita13.app.schulapp.newutils.DateUtil;
 
