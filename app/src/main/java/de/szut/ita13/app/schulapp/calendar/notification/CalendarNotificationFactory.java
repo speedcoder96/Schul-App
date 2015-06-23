@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.preference.RingtonePreference;
 import android.util.Log;
 import android.widget.Toast;
 import java.util.GregorianCalendar;
@@ -35,8 +36,10 @@ public class CalendarNotificationFactory {
 
     public static void createNotification(Context context, CalendarAppointment appointment) {
         Notification.Builder builder = new Notification.Builder(context);
-        builder.setContentTitle(appointment.getSubject());
-        builder.setContentText(appointment.getNote());
+        builder.setContentTitle(
+                appointment.getCalendarDate().getDateString(CalendarDate.DEFAULT_DATE_FORMAT) + " " +
+                appointment.getStartTime().getTimeString());
+        builder.setContentText(appointment.getSubject());
         builder.setSmallIcon(R.drawable.ic_launcher);
         builder.setAutoCancel(true);
         Notification notification = builder.build();
@@ -48,11 +51,8 @@ public class CalendarNotificationFactory {
                 (int) appointment.getRefID(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         notification.contentIntent = pendingIntent;
 
-
         long currentMillis = System.currentTimeMillis();
         long futureInMillis = futureMillis(currentMillis, appointment);
-
-        Log.d(TAG, "Delay: " + (futureInMillis - currentMillis) + " ms");
         if(futureInMillis != NO_NOTIFICATION_REQUIRED) {
             AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
             alarmManager.set(AlarmManager.RTC_WAKEUP, futureInMillis, pendingIntent);
@@ -84,7 +84,7 @@ public class CalendarNotificationFactory {
             createNotificationDelayToast(difference, ONE_HOUR_IN_MILLIS).show();
             return targetMillis - ONE_HOUR_IN_MILLIS;
         }
-        Log.d(TAG, "Set no Notification");
+        Log.d(TAG, "No Notification set");
         return -1;
     }
 
@@ -108,7 +108,7 @@ public class CalendarNotificationFactory {
 
     private static Toast createNotificationDelayToast(long difference, long delay) {
         return Toast.makeText(Calendar.getCalendarActivity().getApplicationContext(),
-                "Sie werden in " + inDayFormatString(difference - ONE_HOUR_IN_MILLIS) + " Tagen benachrichtigt!",
+                "Sie werden in " + inDayFormatString(difference - delay) + " Tagen benachrichtigt!",
                 Toast.LENGTH_LONG);
     }
 

@@ -26,6 +26,7 @@
         android:layout_below="@+id/calendareditor_date"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
