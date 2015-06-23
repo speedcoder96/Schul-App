@@ -1,6 +1,8 @@
-package de.szut.ita13.app.schulapp;
+package de.szut.ita13.app.schulapp.timetable;
 
 import java.util.ArrayList;
+
+import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
 
 /**

@@ -81,6 +81,11 @@ public class CalendarDateEditor extends ActionBarActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        //TODO leer lassen
+    }
+
+    @Override
     protected void onDestroy() {
         Calendar.calendarMap.saveToDatabase(Calendar.dataSource);
         super.onDestroy();

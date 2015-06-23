@@ -1,4 +1,4 @@
-package de.szut.ita13.app.schulapp;
+package de.szut.ita13.app.schulapp.timetable;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
-import de.szut.ita13.app.schulapp.calendar.dao.DatabaseHelper;
 
 
 /**

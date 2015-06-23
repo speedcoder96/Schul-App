@@ -1,4 +1,4 @@
-package de.szut.ita13.app.schulapp;
+package de.szut.ita13.app.schulapp.timetable;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import de.szut.ita13.app.schulapp.R;
 
 /**
  * Created by Michele on 21.06.2015.

@@ -22,7 +22,6 @@ public class CalendarActivity extends FragmentActivity {
         Intent intent = new Intent(this.getApplicationContext(), MainMenu.class);
         startActivity(intent);
         finish();
-        super.onBackPressed();
     }
 
     @Override

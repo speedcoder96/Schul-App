@@ -1,4 +1,4 @@
-package de.szut.ita13.app.schulapp;
+package de.szut.ita13.app.schulapp.timetable;
 
 /**
  * Created by Rene on 21.06.2015.

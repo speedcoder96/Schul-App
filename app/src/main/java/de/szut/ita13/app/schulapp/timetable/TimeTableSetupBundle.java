@@ -1,4 +1,4 @@
-package de.szut.ita13.app.schulapp;
+package de.szut.ita13.app.schulapp.timetable;
 
 import android.content.Intent;
 

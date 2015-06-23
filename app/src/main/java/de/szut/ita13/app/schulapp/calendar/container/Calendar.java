@@ -25,6 +25,8 @@ import de.szut.ita13.app.schulapp.newutils.DateUtil;
  */
 public class Calendar  {
 
+    public static final int VIEW_PAGER_STATE_LOCKED = 0;
+
     public static CalendarMap calendarMap;
     public static CalendarDataSource dataSource;
 
@@ -77,24 +79,27 @@ public class Calendar  {
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 0) {
-                    calendarMonths = CalendarMonth.generateDefaultMonths(Calendar.this, calendarMonths[position].getMonthIndex(),
-                            calendarMonths[position].getYear());
-                    viewPager.setAdapter(null);
-                    setAdapter();
-                    calendarViewPagerAdapter.notifyDataSetChanged();
-                } else if (position == 2) {
-                    calendarMonths = CalendarMonth.generateDefaultMonths(Calendar.this, calendarMonths[position].getMonthIndex(),
-                            calendarMonths[position].getYear());
-                    viewPager.setAdapter(null);
-                    setAdapter();
-                    calendarViewPagerAdapter.notifyDataSetChanged();
-                }
+
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                Log.d("Calendar", "State:" + state);
+                if(state == VIEW_PAGER_STATE_LOCKED) {
+                    int position = viewPager.getCurrentItem();
+                    if (position == 0) {
+                        calendarMonths = CalendarMonth.generateDefaultMonths(Calendar.this, calendarMonths[position].getMonthIndex(),
+                                calendarMonths[position].getYear());
+                        viewPager.setAdapter(null);
+                        setAdapter();
+                        calendarViewPagerAdapter.notifyDataSetChanged();
+                    } else if (position == 2) {
+                        calendarMonths = CalendarMonth.generateDefaultMonths(Calendar.this, calendarMonths[position].getMonthIndex(),
+                                calendarMonths[position].getYear());
+                        viewPager.setAdapter(null);
+                        setAdapter();
+                        calendarViewPagerAdapter.notifyDataSetChanged();
+                    }
+                }
             }
         });
     }

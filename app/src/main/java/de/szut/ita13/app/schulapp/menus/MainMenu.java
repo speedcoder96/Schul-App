@@ -1,16 +1,18 @@
 package de.szut.ita13.app.schulapp.menus;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.*;
+import android.os.Process;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import de.szut.ita13.app.schulapp.R;
-import de.szut.ita13.app.schulapp.TimeTableActivity;
+import de.szut.ita13.app.schulapp.calendar.container.Calendar;
+import de.szut.ita13.app.schulapp.timetable.TimeTableActivity;
 import de.szut.ita13.app.schulapp.calendar.views.CalendarActivity;
-import de.szut.ita13.app.schulapp.TimeTableSetupActivity;
 
 /**
  * Created by Rene on 06.05.2015.
@@ -38,6 +40,25 @@ public class MainMenu extends Activity implements View.OnClickListener {
         }
 
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onBackPressed() {
+        showConfirmDialog();
+    }
+
+    private void showConfirmDialog() {
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Beenden");
+        alertDialogBuilder.setMessage("Wollen Sie die App wirklich beenden?");
+        alertDialogBuilder.setIcon(android.R.drawable.ic_dialog_alert);
+        alertDialogBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Process.killProcess(Process.myPid());
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Nein", null);
+        alertDialogBuilder.create().show();
     }
 
     @Override
