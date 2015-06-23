@@ -14,10 +14,13 @@ public class TimeTableAdapter extends BaseAdapter {
 
     private TimeTableMatrix timeTableMatrix;
     private LayoutInflater layoutInflater;
+    private TimeTableActivity timeTableActivity;
 
-    public TimeTableAdapter(Context context, TimeTableMatrix timeTableMatrix){
+    public TimeTableAdapter(TimeTableActivity timeTableActivity, TimeTableMatrix timeTableMatrix) {
+        this.timeTableActivity = timeTableActivity;
         this.timeTableMatrix = timeTableMatrix;
-        layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = (LayoutInflater)timeTableActivity.getApplicationContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -54,6 +57,8 @@ public class TimeTableAdapter extends BaseAdapter {
 
             for(int i = 0; i < timeTableMatrix.getColumnCount(position); i++){
                 TextView itemTextView = (TextView) view.findViewById(TimeTableRowItem.IDS[i + 1]);
+                itemTextView.setOnClickListener(timeTableActivity);
+                itemTextView.setTag(timeTableMatrix.getItemAt(position, i));
                 itemTextView.setText(timeTableMatrix.getItemAt(position, i).getInformation());
             }
         }

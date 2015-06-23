@@ -14,32 +14,41 @@ public class TimeTableSetup {
 
     private TimeTableActivity timeTableActivity;
     private ViewPager viewPager;
-    private PagerTitleStrip pagerTitleStrap;
     private TimeTablePagerAdapter timeTablePagerAdapter;
     private TimeTableDataSource dataSource;
+    private TimeTableModifier timeTableModifier;
 
-    public TimeTableSetup(TimeTableActivity timeTableActivity) {
+    public TimeTableSetup(TimeTableActivity timeTableActivity, TimeTableModifier timeTableModifier) {
         this.timeTableActivity = timeTableActivity;
+        this.timeTableModifier = timeTableModifier;
         timeTableActivity.setContentView(R.layout.timetable_activity_layout);
         viewPager = (ViewPager) timeTableActivity.findViewById(R.id.pager);
-        pagerTitleStrap = (PagerTitleStrip) timeTableActivity.findViewById(R.id.pager_title_strip);
         dataSource = new TimeTableDataSource(timeTableActivity);
-        Intent intent = new Intent(timeTableActivity, TimeTableSetupActivity.class);
-        timeTableActivity.startActivityForResult(intent, REQUEST_CODE_SETUP);
+        dataSource.open();
+        if(!dataSource.areSettingsInDatabase()) {
+            Intent intent = new Intent(timeTableActivity, TimeTableSetupActivity.class);
+            timeTableActivity.startActivityForResult(intent, REQUEST_CODE_SETUP);
+        } else {
+            TimeTableSetupBundle bundle = dataSource.getSettings();
+            generateTimetables(bundle);
+        }
+        dataSource.close();
     }
 
     public void onReceiveSetupBundle(TimeTableSetupBundle timeTableSetupBundle) {
         generateTimetables(timeTableSetupBundle);
+        dataSource.open();
         dataSource.saveSettings(timeTableSetupBundle);
+        dataSource.close();
     }
 
     private void generateTimetables(TimeTableSetupBundle timeTableSetupBundle) {
         int timeTableCount = (timeTableSetupBundle.isTwoWeeksRhythm()) ? 2 : 1;
-        ArrayList<TimeTable> timeTables = new ArrayList<>();
         for(int i = 0; i < timeTableCount; i++) {
-            timeTables.add(new TimeTable(timeTableSetupBundle, "Woche " + (char)(65 + i)));
+            timeTableModifier.addTimeTable(new TimeTable(timeTableSetupBundle, "Woche " + (char)(65 + i)));
         }
-        timeTablePagerAdapter = new TimeTablePagerAdapter(timeTableActivity.getSupportFragmentManager(), timeTableActivity, timeTables);
+        timeTablePagerAdapter = new TimeTablePagerAdapter(timeTableActivity.getSupportFragmentManager(),
+                timeTableActivity, timeTableModifier);
         viewPager.setAdapter(timeTablePagerAdapter);
     }
 

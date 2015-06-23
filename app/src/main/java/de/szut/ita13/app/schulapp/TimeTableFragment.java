@@ -12,10 +12,11 @@ import android.widget.ListView;
  * Created by Rene on 21.06.2015.
  */
 public class TimeTableFragment extends Fragment {
+
     private TimeTableAdapter timeTableAdapter;
 
-    public TimeTableFragment(Context context, TimeTable timeTable){
-        timeTableAdapter = new TimeTableAdapter(context, timeTable);
+    public TimeTableFragment(TimeTableActivity timeTableActivity, TimeTable timeTable){
+        timeTableAdapter = new TimeTableAdapter(timeTableActivity, timeTable);
     }
 
     @Override

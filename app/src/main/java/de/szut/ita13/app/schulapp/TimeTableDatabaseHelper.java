@@ -24,10 +24,10 @@ public class TimeTableDatabaseHelper extends SQLiteOpenHelper {
     };
 
     public static final String CREATE_TABLE_SUBJECT = "CREATE TABLE " + TABLE_SUBJECT + " ( " +
-            COLUMN_ID + "primary key auto increment integer," +
-            COLUMN_NAME + "text null," +
-            COLUMN_COLORID + "text not null," +
-            COLUMN_TEACHER + "text not null," +
+            COLUMN_ID + " primary key autoincrement integer," +
+            COLUMN_NAME + " text null," +
+            COLUMN_COLORID + " text not null," +
+            COLUMN_TEACHER + " text not null," +
             COLUMN_ROOM + " integer not null ) ;";
 
 
@@ -42,7 +42,7 @@ public class TimeTableDatabaseHelper extends SQLiteOpenHelper {
     };
 
     public static final String CREATE_TABLE_TIMETABLE = "CREATE TABLE " + TABLE_TIMETABLE + " ( " +
-            COLUMN_ID2 + " primary key auto increment double," +
+            COLUMN_ID2 + " primary key autoincrement double," +
             COLUMN_ROW + " integer not null," +
             COLUMN_COLUMN + " integer not null," +
             COLUMN_WEEK + " integer not null," +
@@ -76,7 +76,7 @@ public class TimeTableDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(CREATE_TABLE_SETTINGS);
+        sqLiteDatabase.execSQL(CREATE_TABLE_SETTINGS + CREATE_TABLE_TIMETABLE + CREATE_TABLE_SUBJECT);
         Log.d("DatabaseHelper", "OnCreate");
     }
 

@@ -1,38 +1,34 @@
 package de.szut.ita13.app.schulapp;
-
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-
-import java.util.ArrayList;
 
 /**
  * Created by Rene on 21.06.2015.
  */
 public class TimeTablePagerAdapter extends FragmentStatePagerAdapter {
 
-    private ArrayList<TimeTable> timeTables;
-    private Context context;
+    private TimeTableModifier timeTableModifier;
+    private TimeTableActivity timeTableActivity;
 
-    public TimeTablePagerAdapter(FragmentManager fm, Context context, ArrayList<TimeTable> timeTables) {
+    public TimeTablePagerAdapter(FragmentManager fm, TimeTableActivity timeTableActivity, TimeTableModifier timeTableModifier) {
         super(fm);
-        this.context = context;
-        this.timeTables = timeTables;
+        this.timeTableActivity = timeTableActivity;
+        this.timeTableModifier = timeTableModifier;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return timeTables.get(position).getName();
+        return timeTableModifier.getTimeTable(position).getName();
     }
 
     @Override
     public Fragment getItem(int i) {
-        return new TimeTableFragment(context, timeTables.get(i));
+        return new TimeTableFragment(timeTableActivity, timeTableModifier.getTimeTable(i));
     }
 
     @Override
     public int getCount() {
-        return timeTables.size();
+        return timeTableModifier.getTimeTableCount();
     }
 }
