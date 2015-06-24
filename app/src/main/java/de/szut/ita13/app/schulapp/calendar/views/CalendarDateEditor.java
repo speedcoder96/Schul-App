@@ -102,6 +102,7 @@ public class CalendarDateEditor extends ActionBarActivity {
                     Toast.makeText(this.getApplicationContext(),"Zeitfehler! Die Endzeit darf nicht \n vor der Startzeit liegen!",Toast.LENGTH_LONG).show();
                 }
                 else{
+//TODO Termin darf nicht in der Vergangenheit liegen!
                     appointment.setSubject(title.getText().toString());
                     appointment.setStartTime(timeStart);
                     appointment.setEndTime(timeEnd);
