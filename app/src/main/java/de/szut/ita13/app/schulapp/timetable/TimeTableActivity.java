@@ -47,7 +47,12 @@ public class TimeTableActivity extends FragmentActivity implements View.OnClickL
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-
+            case R.id.action_subjects:
+                break;
+            case R.id.action_edit:
+                timeTableModifier.editMode = !timeTableModifier.editMode;
+                item.setChecked(timeTableModifier.editMode);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

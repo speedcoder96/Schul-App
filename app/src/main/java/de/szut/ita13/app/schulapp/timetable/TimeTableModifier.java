@@ -9,12 +9,14 @@ public class TimeTableModifier {
 
     private TimeTableActivity timeTableActivity;
     public TimeTableDataSource dataSource;
+    public boolean editMode;
     private ArrayList<TimeTable> timeTables;
 
     public TimeTableModifier(TimeTableActivity timeTableActivity) {
         this.timeTableActivity = timeTableActivity;
         dataSource = new TimeTableDataSource(timeTableActivity);
         this.timeTables = new ArrayList<>();
+        editMode = false;
     }
 
     public void addTimeTable(TimeTable timeTable) {

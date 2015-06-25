@@ -1,6 +1,7 @@
 package de.szut.ita13.app.schulapp.timetable;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -24,11 +25,11 @@ public class TimeTableDatabaseHelper extends SQLiteOpenHelper {
     };
 
     public static final String CREATE_TABLE_SUBJECT = "CREATE TABLE " + TABLE_SUBJECT + " ( " +
-            COLUMN_ID + " primary key autoincrement integer," +
-            COLUMN_NAME + " text null," +
-            COLUMN_COLORID + " text not null," +
+            COLUMN_ID + " integer primary key autoincrement," +
+            COLUMN_NAME + " text not null," +
+            COLUMN_COLORID + " integer not null," +
             COLUMN_TEACHER + " text not null," +
-            COLUMN_ROOM + " integer not null ) ;";
+            COLUMN_ROOM + " text not null ); ";
 
 
     public static final String TABLE_TIMETABLE = "TimeTable";
@@ -42,7 +43,7 @@ public class TimeTableDatabaseHelper extends SQLiteOpenHelper {
     };
 
     public static final String CREATE_TABLE_TIMETABLE = "CREATE TABLE " + TABLE_TIMETABLE + " ( " +
-            COLUMN_ID2 + " primary key autoincrement double," +
+            COLUMN_ID2 + " integer primary key autoincrement," +
             COLUMN_ROW + " integer not null," +
             COLUMN_COLUMN + " integer not null," +
             COLUMN_WEEK + " integer not null," +
@@ -69,14 +70,25 @@ public class TimeTableDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_BREAK_INTERVAL + " integer not null," +
             COLUMN_TWO_WEEKS + " integer not null ); ";
 
-
+    private Context context;
     public TimeTableDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(CREATE_TABLE_SETTINGS + CREATE_TABLE_TIMETABLE + CREATE_TABLE_SUBJECT);
+        sqLiteDatabase.execSQL(CREATE_TABLE_SETTINGS);
+        sqLiteDatabase.execSQL(CREATE_TABLE_TIMETABLE);
+        sqLiteDatabase.execSQL(CREATE_TABLE_SUBJECT);
+        Cursor c = sqLiteDatabase.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
+
+        if (c.moveToFirst()) {
+            while ( !c.isAfterLast() ) {
+                Log.d("DatabaseHelper", "Table Name=> "+c.getString(0));
+                c.moveToNext();
+            }
+        }
         Log.d("DatabaseHelper", "OnCreate");
     }
 

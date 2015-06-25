@@ -9,6 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
+import de.szut.ita13.app.schulapp.calendar.dao.DatabaseHelper;
 
 
 /**
@@ -87,6 +88,31 @@ public class TimeTableDataSource {
         Cursor cursor = database.rawQuery(selectQuery, new String[]{});
         TimeTableItem.ArrayListBuilder builder = new TimeTableItem.ArrayListBuilder(cursor);
         return builder.build();
+    }
+
+
+    public void insertTimetableItem(TimeTableItem item) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TimeTableDatabaseHelper.COLUMN_NAME, item.getSubject());
+        contentValues.put(TimeTableDatabaseHelper.COLUMN_COLORID, item.getColorId());
+        contentValues.put(TimeTableDatabaseHelper.COLUMN_TEACHER, item.getTeacher());
+        contentValues.put(TimeTableDatabaseHelper.COLUMN_ROOM, item.getRoom());
+        long id = database.insert(TimeTableDatabaseHelper.TABLE_SUBJECT, null, contentValues);
+    }
+
+    public void updateTimetableItem(TimeTableItem item) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TimeTableDatabaseHelper.COLUMN_NAME, item.getSubject());
+        contentValues.put(TimeTableDatabaseHelper.COLUMN_COLORID, item.getColorId());
+        contentValues.put(TimeTableDatabaseHelper.COLUMN_TEACHER, item.getTeacher());
+        contentValues.put(TimeTableDatabaseHelper.COLUMN_ROOM, item.getRoom());
+        database.update(TimeTableDatabaseHelper.TABLE_SUBJECT, contentValues,
+                TimeTableDatabaseHelper.COLUMN_ID + " = " + item.getID(), null);
+    }
+
+    public void deleteTimeTableItem(TimeTableItem item) {
+        database.delete(TimeTableDatabaseHelper.TABLE_SUBJECT, TimeTableDatabaseHelper.COLUMN_ID
+                + " = " + item.getID(), null);
     }
 
 
