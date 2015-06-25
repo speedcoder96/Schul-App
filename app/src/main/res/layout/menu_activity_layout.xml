@@ -4,6 +4,16 @@
     android:clickable="false"
     android:background="@drawable/mm_background">
 
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton"
+        android:background="@drawable/mm_schulplaner"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,17 +27,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/menu_button_calendar"
         android:background="@drawable/mm_kalendar"
-        android:layout_marginTop="30dp"
         android:layout_below="@+id/menu_button_timetable"
         android:layout_alignRight="@+id/menu_button_timetable"
-        android:layout_alignEnd="@+id/menu_button_timetable" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
-        android:background="@drawable/mm_schulplaner"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
+        android:layout_alignEnd="@+id/menu_button_timetable"
+        android:layout_marginTop="38dp" />
 </RelativeLayout>
