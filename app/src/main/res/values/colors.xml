@@ -2,6 +2,7 @@
 <resources>
     <item type="color" name="yellow">#FFFF00</item>
     <item type="color" name="white">#FFFFFF</item>
+    <item type="color" name="black">#000000</item>
     <item type="color" name="green">#00FF00</item>
     <item type="color" name="blue">#0000FF</item>
     <item type="color" name="orange">#FFAA00</item>
