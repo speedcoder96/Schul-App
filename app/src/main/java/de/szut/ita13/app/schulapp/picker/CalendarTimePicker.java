@@ -2,23 +2,17 @@ package de.szut.ita13.app.schulapp.picker;
 
 import android.content.Context;
 
-import android.text.Editable;
 import android.text.InputFilter;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import de.szut.ita13.app.schulapp.R;
 import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
-import de.szut.ita13.app.schulapp.utilities.Date;
 
 
 /**

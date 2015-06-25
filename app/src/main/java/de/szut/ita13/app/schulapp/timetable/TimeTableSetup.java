@@ -15,7 +15,6 @@ public class TimeTableSetup {
     private TimeTableActivity timeTableActivity;
     private ViewPager viewPager;
     private TimeTablePagerAdapter timeTablePagerAdapter;
-    private TimeTableDataSource dataSource;
     private TimeTableModifier timeTableModifier;
 
     public TimeTableSetup(TimeTableActivity timeTableActivity, TimeTableModifier timeTableModifier) {
@@ -23,23 +22,23 @@ public class TimeTableSetup {
         this.timeTableModifier = timeTableModifier;
         timeTableActivity.setContentView(R.layout.timetable_activity_layout);
         viewPager = (ViewPager) timeTableActivity.findViewById(R.id.pager);
-        dataSource = new TimeTableDataSource(timeTableActivity);
-        dataSource.open();
-        if(!dataSource.areSettingsInDatabase()) {
+
+        this.timeTableModifier.dataSource.open();
+        if(!this.timeTableModifier.dataSource.areSettingsInDatabase()) {
             Intent intent = new Intent(timeTableActivity, TimeTableSetupActivity.class);
             timeTableActivity.startActivityForResult(intent, REQUEST_CODE_SETUP);
         } else {
-            TimeTableSetupBundle bundle = dataSource.getSettings();
+            TimeTableSetupBundle bundle = timeTableModifier.dataSource.getSettings();
             generateTimetables(bundle);
         }
-        dataSource.close();
+        this.timeTableModifier.dataSource.close();
     }
 
     public void onReceiveSetupBundle(TimeTableSetupBundle timeTableSetupBundle) {
         generateTimetables(timeTableSetupBundle);
-        dataSource.open();
-        dataSource.saveSettings(timeTableSetupBundle);
-        dataSource.close();
+        timeTableModifier.dataSource.open();
+        timeTableModifier.dataSource.saveSettings(timeTableSetupBundle);
+        timeTableModifier.dataSource.close();
     }
 
     private void generateTimetables(TimeTableSetupBundle timeTableSetupBundle) {

@@ -1,5 +1,9 @@
 package de.szut.ita13.app.schulapp.timetable;
 
+import android.database.Cursor;
+
+import java.util.ArrayList;
+
 /**
  * Created by Rene on 21.06.2015.
  */
@@ -25,10 +29,6 @@ public class TimeTableItem{
         return id;
     }
 
-    public void setID(int id) {
-        this.id = id;
-    }
-
     public TimeTableRowItem getRowItem() {
         return rowItem;
     }
@@ -37,31 +37,93 @@ public class TimeTableItem{
         return subject;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     public String getRoom() {
         return room;
-    }
-
-    public void setRoom(String room) {
-        this.room = room;
     }
 
     public String getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(String teacher) {
-        this.teacher = teacher;
-    }
-
     public int getColorId() {
         return colorId;
     }
 
-    public void setColorId(int colorId) {
-        this.colorId = colorId;
+
+    public static class Builder {
+
+        private TimeTableItem item;
+
+        public Builder(TimeTableRowItem rowItem) {
+            item = new TimeTableItem(rowItem);
+        }
+
+        public Builder setSubject(String subject) {
+            item.subject = subject;
+            return this;
+        }
+
+        public Builder setRoom(String room) {
+            item.room = room;
+            return this;
+        }
+
+        public Builder setTeacher(String teacher) {
+            item.teacher = teacher;
+            return this;
+        }
+
+        public Builder setID(int id) {
+            item.id = id;
+            return this;
+        }
+
+        public Builder setColorID(int colorId) {
+            item.colorId = colorId;
+            return this;
+        }
+
+        public Builder setRowItem(TimeTableRowItem rowItem) {
+            item.rowItem = rowItem;
+            return this;
+        }
+
+        public TimeTableItem build() {
+            return item;
+        }
+
+    }
+
+    public static class ArrayListBuilder {
+
+        private ArrayList<TimeTableItem> items;
+        private Cursor cursor;
+
+        public ArrayListBuilder(Cursor cursor) {
+            this.cursor = cursor;
+            items = new ArrayList<TimeTableItem>();
+        }
+
+        public ArrayList<TimeTableItem> build() {
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()) {
+                TimeTableItem item = new TimeTableItem.Builder(null)
+                        .setID(cursor.getInt(
+                                cursor.getColumnIndex(TimeTableDatabaseHelper.COLUMN_ID)))
+                        .setRoom(cursor.getString(
+                                cursor.getColumnIndex(TimeTableDatabaseHelper.COLUMN_ROOM)))
+                        .setColorID(cursor.getInt(
+                                cursor.getColumnIndex(TimeTableDatabaseHelper.COLUMN_COLORID)))
+                        .setTeacher(cursor.getString(
+                                cursor.getColumnIndex(TimeTableDatabaseHelper.COLUMN_TEACHER)))
+                        .setSubject(cursor.getString(
+                                cursor.getColumnIndex(TimeTableDatabaseHelper.COLUMN_NAME)))
+                        .build();
+                items.add(item);
+                cursor.moveToNext();
+            }
+            return items;
+        }
+
     }
 }

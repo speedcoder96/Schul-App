@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
 
 
@@ -78,6 +80,13 @@ public class TimeTableDataSource {
 
         }
         return bundle;
+    }
+
+    public ArrayList<TimeTableItem> getItems() {
+        String selectQuery = "SELECT * FROM " + TimeTableDatabaseHelper.TABLE_SUBJECT + ";";
+        Cursor cursor = database.rawQuery(selectQuery, new String[]{});
+        TimeTableItem.ArrayListBuilder builder = new TimeTableItem.ArrayListBuilder(cursor);
+        return builder.build();
     }
 
 

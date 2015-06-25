@@ -71,7 +71,6 @@ public class TimeTable implements TimeTableMatrix {
                 rowItem.setStartTime(currentTime);
                 for(int j = 0; j < DAYS_IN_WEEK; j++){
                     TimeTableItem item = new TimeTableItem(rowItem);
-                    item.setSubject(randomString(5));
                     rowItem.getItems().add(item);
                 }
                 timeTable.rowItems.add(rowItem);

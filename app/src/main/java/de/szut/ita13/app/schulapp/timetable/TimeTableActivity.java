@@ -1,9 +1,9 @@
 package de.szut.ita13.app.schulapp.timetable;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,11 +20,12 @@ public class TimeTableActivity extends FragmentActivity implements View.OnClickL
 
     private TimeTableSetup timeTableSetup;
     public static TimeTableModifier timeTableModifier;
-    private android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+    private FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fm = getSupportFragmentManager();
         timeTableModifier = new TimeTableModifier(this);
         timeTableSetup = new TimeTableSetup(this, timeTableModifier);
     }
@@ -52,10 +53,8 @@ public class TimeTableActivity extends FragmentActivity implements View.OnClickL
     }
 
     public void onClick(View view) {
-        TimeTableItem item = (TimeTableItem)view.getTag();
-        TimeTableSubjectDialog timeTableSubjectDialog =  new TimeTableSubjectDialog(view);
-        timeTableSubjectDialog.show(fm, "Fach Auswahl");
-        Log.d("TimeTableActivity", "Information" + item.getInformation());
+        TimeTableItemDialog timeTableItemDialog = new TimeTableItemDialog(view, this);
+        timeTableItemDialog.show(fm, "Fachauswahl");
     }
 
 

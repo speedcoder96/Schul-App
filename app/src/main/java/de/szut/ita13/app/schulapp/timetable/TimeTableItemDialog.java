@@ -7,20 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
+
 
 import de.szut.ita13.app.schulapp.R;
 
 /**
  * Created by Michelé on 24.06.2015.
  */
-public class TimeTableSubjectDialog extends DialogFragment{
+public class TimeTableItemDialog extends DialogFragment{
 
     private View view;
-    private TimeTableSubjectAdapter timeTableSubjectAdapter;
+    private TimeTableItemAdapter timeTableItemAdapter;
+    private Context context;
 
-    public TimeTableSubjectDialog(View view){
+    public TimeTableItemDialog(View view, Context context){
         this.view = view;
+        this.context = context;
     }
 
     @Override
@@ -30,11 +32,9 @@ public class TimeTableSubjectDialog extends DialogFragment{
                 false);
         getDialog().setTitle("Fachauswahl");
 
-        //Dem Dialog die Werte hizufügen
-        //Fachname Raum Lehrer
         ListView listView = (ListView)rootView.findViewById(R.id.subjectList);
-        timeTableSubjectAdapter = new TimeTableSubjectAdapter(view);
-        listView.setAdapter(timeTableSubjectAdapter);
+        timeTableItemAdapter = new TimeTableItemAdapter(view, context);
+        listView.setAdapter(timeTableItemAdapter);
 
 
         return rootView;

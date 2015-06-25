@@ -8,10 +8,12 @@ import java.util.ArrayList;
 public class TimeTableModifier {
 
     private TimeTableActivity timeTableActivity;
+    public TimeTableDataSource dataSource;
     private ArrayList<TimeTable> timeTables;
 
     public TimeTableModifier(TimeTableActivity timeTableActivity) {
         this.timeTableActivity = timeTableActivity;
+        dataSource = new TimeTableDataSource(timeTableActivity);
         this.timeTables = new ArrayList<>();
     }
 
