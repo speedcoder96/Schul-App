@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mm_background">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fach : "
+        android:textSize="20sp"
+        android:layout_margin="3dp"
+        android:gravity="left"
+        android:id="@+id/subjectTextView"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Bsp. Englisch"
+        android:id="@+id/subjectEditText"
+        android:layout_below="@+id/subjectTextView"
+        android:gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Raum : "
+        android:layout_below="@id/subjectEditText"
+        android:textSize="20sp"
+        android:layout_margin="3dp"
+        android:gravity="left"
+        android:id="@+id/roomTextView"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Bsp. 125"
+        android:id="@+id/roomEditText"
+        android:layout_below="@+id/roomTextView"
+        android:gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lehrer : "
+        android:layout_below="@id/roomEditText"
+        android:textSize="20sp"
+        android:layout_margin="3dp"
+        android:gravity="left"
+        android:id="@+id/teacherTextView"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Bsp. Herr. Mustermann"
+        android:id="@+id/teacherEditText"
+        android:layout_below="@+id/teacherTextView"
+        android:gravity="center_horizontal"/>
+
+
+</RelativeLayout>

@@ -4,9 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_subjects"
+        android:id="@+id/addSubject"
         android:icon="@drawable/ic_action_overflow"
-        android:title="Fächer"
+        android:title="Fache hinzufuegen"
+        app:showAsAction="always"  />
+
+    <item
+        android:id="@+id/removeSubject"
+        android:icon="@drawable/ic_action_overflow"
+        android:title="Fächer entfernen"
         app:showAsAction="always"  />
 
     <item android:id="@+id/action_edit"

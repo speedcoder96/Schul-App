@@ -16,12 +16,10 @@ import de.szut.ita13.app.schulapp.R;
  */
 public class TimeTableItemAdapter extends BaseAdapter {
 
-    private View view;
     private LayoutInflater layoutInflater;
     private ArrayList<TimeTableItem> items;
 
     public TimeTableItemAdapter(View view, Context context) {
-        this.view = view;
         TimeTableActivity.timeTableModifier.dataSource.open();
         items = TimeTableActivity.timeTableModifier.dataSource.getItems();
         TimeTableActivity.timeTableModifier.dataSource.close();
@@ -56,8 +54,6 @@ public class TimeTableItemAdapter extends BaseAdapter {
         roomView.setText(item.getRoom());
         teacherView.setText(item.getTeacher());
         subjectNameView.setText(item.getSubject());
-
-
         return view;
     }
 }

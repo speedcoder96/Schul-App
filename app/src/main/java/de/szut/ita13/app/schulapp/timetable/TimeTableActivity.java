@@ -1,6 +1,7 @@
 package de.szut.ita13.app.schulapp.timetable;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +10,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Switch;
+
+import java.util.ArrayList;
 
 import de.szut.ita13.app.schulapp.R;
 
@@ -21,6 +25,14 @@ public class TimeTableActivity extends FragmentActivity implements View.OnClickL
     private TimeTableSetup timeTableSetup;
     public static TimeTableModifier timeTableModifier;
     private FragmentManager fm;
+    private TimeTableDataSource timeTableDataSource;
+    public static ArrayList<TimeTableItem> subjects;
+
+    public ArrayList<TimeTableItem> getSubjects() {
+        return subjects;
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +40,10 @@ public class TimeTableActivity extends FragmentActivity implements View.OnClickL
         fm = getSupportFragmentManager();
         timeTableModifier = new TimeTableModifier(this);
         timeTableSetup = new TimeTableSetup(this, timeTableModifier);
+        timeTableDataSource = new TimeTableDataSource(getApplicationContext());
+        timeTableDataSource.open();
+        subjects = timeTableDataSource.getItems();
+        timeTableDataSource.close();
     }
 
     @Override
@@ -39,19 +55,30 @@ public class TimeTableActivity extends FragmentActivity implements View.OnClickL
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        TimeTableSetupBundle bundle = new TimeTableSetupBundle.Builder(data)
-                .build();
-        timeTableSetup.onReceiveSetupBundle(bundle);
+        switch (resultCode) {
+            case RESULT_OK :
+                TimeTableSetupBundle bundle = new TimeTableSetupBundle.Builder(data)
+                        .build();
+                timeTableSetup.onReceiveSetupBundle(bundle);
+                break;
+        }
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.action_subjects:
+            case R.id.addSubject:
+                Intent intent = new Intent(this, TimeTableSubjectActivity.class);
+                startActivity(intent);
                 break;
             case R.id.action_edit:
                 timeTableModifier.editMode = !timeTableModifier.editMode;
                 item.setChecked(timeTableModifier.editMode);
+                break;
+            case R.id.removeSubject :
+                RemoveSubjectDialog removeSubjectDialog = new RemoveSubjectDialog(getApplicationContext());
+                removeSubjectDialog.show(fm, "Fach entfernen");
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -60,6 +87,7 @@ public class TimeTableActivity extends FragmentActivity implements View.OnClickL
     public void onClick(View view) {
         TimeTableItemDialog timeTableItemDialog = new TimeTableItemDialog(view, this);
         timeTableItemDialog.show(fm, "Fachauswahl");
+
     }
 
 

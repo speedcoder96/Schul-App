@@ -16,48 +16,39 @@ import android.widget.Button;
 import android.widget.ListView;
 
 
+import java.util.ArrayList;
+
 import de.szut.ita13.app.schulapp.R;
 
 /**
  * Created by Michelé on 24.06.2015.
  */
-public class TimeTableItemDialog extends DialogFragment implements View.OnClickListener {
+public class RemoveSubjectDialog extends DialogFragment implements View.OnClickListener {
 
     public static final String TAG = TimeTableItemDialog.class.getSimpleName();
 
-    private View view;
-    private TimeTableItemAdapter timeTableItemAdapter;
+    private TimeTableRemoveSubjectAdapter timeTableRemoveSubjectAdapter;
     private Context context;
 
-    public TimeTableItemDialog(View view, Context context){
-        this.view = view;
+    public RemoveSubjectDialog(Context context){
         this.context = context;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.timetable_subject_list_layout, container,
+        View rootView = inflater.inflate(R.layout.timetable_show_subjects_list_layout, container,
                 false);
-        ListView listView = (ListView)rootView.findViewById(R.id.subjectList);
-        timeTableItemAdapter = new TimeTableItemAdapter(view, context);
-        listView.setAdapter(timeTableItemAdapter);
-        getDialog().setTitle("Fachauswahl");
-
-        Button addSubject = (Button) rootView.findViewById(R.id.addSubjectButton);
-        addSubject.setOnClickListener(this);
-        Button removeSubject = (Button) rootView.findViewById(R.id.removeSubjectButton);
-
-
-
+        ListView listView = (ListView)rootView.findViewById(R.id.showSubjectList);
+        timeTableRemoveSubjectAdapter = new TimeTableRemoveSubjectAdapter(context);
+        listView.setAdapter(timeTableRemoveSubjectAdapter);
+        getDialog().setTitle("Fach entfernen");
         return rootView;
     }
 
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(context, TimeTableSubjectActivity.class);
-        context.startActivity(intent);
 
     }
 }

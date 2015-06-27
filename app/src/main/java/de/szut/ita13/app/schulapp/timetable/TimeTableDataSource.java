@@ -106,6 +106,7 @@ public class TimeTableDataSource {
         contentValues.put(TimeTableDatabaseHelper.COLUMN_COLORID, item.getColorId());
         contentValues.put(TimeTableDatabaseHelper.COLUMN_TEACHER, item.getTeacher());
         contentValues.put(TimeTableDatabaseHelper.COLUMN_ROOM, item.getRoom());
+
         database.update(TimeTableDatabaseHelper.TABLE_SUBJECT, contentValues,
                 TimeTableDatabaseHelper.COLUMN_ID + " = " + item.getID(), null);
     }
