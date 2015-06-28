@@ -1,5 +1,7 @@
 package de.szut.ita13.app.schulapp.timetable;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -16,7 +18,7 @@ public class TimeTable implements TimeTableMatrix {
     private ArrayList<TimeTableRowItem> rowItems;
     private TimeTableSetupBundle timeTableSetupBundle;
 
-    public TimeTable(TimeTableSetupBundle timeTableSetupBundle, String name){
+    public TimeTable(TimeTableSetupBundle timeTableSetupBundle, String name) {
         this.rowItems = new ArrayList<>();
         this.name = name;
         this.timeTableSetupBundle = timeTableSetupBundle;
@@ -27,7 +29,7 @@ public class TimeTable implements TimeTableMatrix {
         return name;
     }
 
-    public int getRowCount(){
+    public int getRowCount() {
         return rowItems.size();
     }
 
@@ -39,8 +41,16 @@ public class TimeTable implements TimeTableMatrix {
         return rowItems.get(index);
     }
 
-    public TimeTableItem getItemAt(int row, int column) {
-        return rowItems.get(row).getItems().get(column);
+    public TimeTableLessonItem getItemAt(int row, int column) {
+        TimeTableLessonItem lessonItem;
+        try {
+            Log.d("SizeItems", TimeTableActivity.lessonItems.size() + "");
+            lessonItem = TimeTableActivity.lessonItems.get(row).get(column);
+
+        } catch (NullPointerException e) {
+            lessonItem = null;
+        }
+        return lessonItem;
     }
 
     public void setItemAt(int row, int column, TimeTableItem item) {
@@ -51,27 +61,26 @@ public class TimeTable implements TimeTableMatrix {
         rowItems.set(row, rowItem);
     }
 
-    public static class Builder{
+    public static class Builder {
 
         private TimeTable timeTable;
 
-        public Builder (TimeTable timeTable){
+        public Builder(TimeTable timeTable) {
             this.timeTable = timeTable;
         }
 
-        public void build(){
+        public void build() {
 
             TimeTableRowItem header = new TimeTableRowItem(timeTable);
             header.setHeader(true);
             timeTable.rowItems.add(header);
 
-            for (int i = 0; i < timeTable.timeTableSetupBundle.getLessonCount(); i++){
+            for (int i = 0; i < timeTable.timeTableSetupBundle.getLessonCount(); i++) {
                 CalendarTime currentTime = nextTime(i);
                 TimeTableRowItem rowItem = new TimeTableRowItem(timeTable);
                 rowItem.setStartTime(currentTime);
-                for(int j = 0; j < DAYS_IN_WEEK; j++){
+                for (int j = 0; j < DAYS_IN_WEEK; j++) {
                     TimeTableItem item = new TimeTableItem(rowItem);
-                    //Datenbankabfrage für die Items
                     rowItem.getItems().add(item);
                 }
                 timeTable.rowItems.add(rowItem);
@@ -80,6 +89,7 @@ public class TimeTable implements TimeTableMatrix {
 
         private CalendarTime nextTime(int index) {
             int totalMinutes = timeTable.timeTableSetupBundle.getStartTime().totalMinutes();
+            Log.d("Breakintervall", timeTable.timeTableSetupBundle.getBreakInterval() + "");
             int nextTotalMinutes = totalMinutes + (timeTable.timeTableSetupBundle.getLessonLength() * index) +
                     (timeTable.timeTableSetupBundle.getBreakLength() * (index / timeTable.timeTableSetupBundle.getBreakInterval()));
             return new CalendarTime(nextTotalMinutes);
@@ -88,8 +98,8 @@ public class TimeTable implements TimeTableMatrix {
         private String randomString(int length) {
             Random random = new Random();
             StringBuilder builder = new StringBuilder();
-            for(int i = 0; i < length; i++) {
-                builder.append((char)(random.nextInt(26) + 65));
+            for (int i = 0; i < length; i++) {
+                builder.append((char) (random.nextInt(26) + 65));
             }
             return builder.toString();
         }

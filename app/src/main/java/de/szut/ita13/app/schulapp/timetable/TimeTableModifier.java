@@ -1,5 +1,7 @@
 package de.szut.ita13.app.schulapp.timetable;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -11,12 +13,18 @@ public class TimeTableModifier {
     public TimeTableDataSource dataSource;
     public boolean editMode;
     private ArrayList<TimeTable> timeTables;
+    private TimeTableUIUpdater[] timeTableFragments;
 
     public TimeTableModifier(TimeTableActivity timeTableActivity) {
         this.timeTableActivity = timeTableActivity;
         dataSource = new TimeTableDataSource(timeTableActivity);
         this.timeTables = new ArrayList<>();
         editMode = false;
+        timeTableFragments = new TimeTableUIUpdater[2];
+    }
+
+    public void setTimeTableFragment(int i, TimeTableFragment fragment) {
+        timeTableFragments[i] = fragment;
     }
 
     public void addTimeTable(TimeTable timeTable) {
@@ -29,6 +37,15 @@ public class TimeTableModifier {
 
     public TimeTable getTimeTable(int index) {
         return timeTables.get(index);
+    }
+
+    public void update() {
+        for(TimeTableUIUpdater fragment : timeTableFragments) {
+            if(fragment != null) {
+                fragment.changedUI();
+                Log.d("TimeTableModifier", "Test");
+            }
+        }
     }
 
 }

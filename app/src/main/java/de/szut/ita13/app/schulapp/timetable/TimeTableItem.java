@@ -3,6 +3,7 @@ package de.szut.ita13.app.schulapp.timetable;
 import android.database.Cursor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Rene on 21.06.2015.
@@ -105,6 +106,7 @@ public class TimeTableItem{
         }
 
         public ArrayList<TimeTableItem> build() {
+            TimeTableActivity.subjectMap = new HashMap<>();
             cursor.moveToFirst();
             while(!cursor.isAfterLast()) {
                 TimeTableItem item = new TimeTableItem.Builder(null)
@@ -120,6 +122,7 @@ public class TimeTableItem{
                                 cursor.getColumnIndex(TimeTableDatabaseHelper.COLUMN_NAME)))
                         .build();
                 items.add(item);
+                TimeTableActivity.subjectMap.put(item.getID(), item);
                 cursor.moveToNext();
             }
             return items;

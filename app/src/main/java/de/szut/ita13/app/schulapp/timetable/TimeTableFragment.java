@@ -12,9 +12,10 @@ import de.szut.ita13.app.schulapp.R;
 /**
  * Created by Rene on 21.06.2015.
  */
-public class TimeTableFragment extends Fragment {
+public class TimeTableFragment extends Fragment implements TimeTableUIUpdater {
 
     private TimeTableAdapter timeTableAdapter;
+    private TimeTablePagerAdapter timeTablePagerAdapter;
 
     public TimeTableFragment(TimeTableActivity timeTableActivity, TimeTable timeTable){
         timeTableAdapter = new TimeTableAdapter(timeTableActivity, timeTable);
@@ -26,5 +27,14 @@ public class TimeTableFragment extends Fragment {
         ListView listView = (ListView) view.findViewById(R.id.timetableList);
         listView.setAdapter(timeTableAdapter);
         return view;
+    }
+
+    public void setTimeTablePagerAdapter(TimeTablePagerAdapter timeTablePagerAdapter) {
+        this.timeTablePagerAdapter = timeTablePagerAdapter;
+    }
+
+    @Override
+    public void changedUI() {
+        timeTableAdapter.notifyDataSetChanged();
     }
 }

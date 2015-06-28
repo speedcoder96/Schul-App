@@ -24,7 +24,11 @@ public class TimeTablePagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        return new TimeTableFragment(timeTableActivity, timeTableModifier.getTimeTable(i));
+        TimeTableFragment fragment = new TimeTableFragment(timeTableActivity, timeTableModifier.getTimeTable(i));
+        fragment.setTimeTablePagerAdapter(this);
+        timeTableModifier.setTimeTableFragment(i, fragment);
+
+        return fragment;
     }
 
     @Override

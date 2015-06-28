@@ -1,37 +1,32 @@
 package de.szut.ita13.app.schulapp.timetable;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
-
-
-import java.util.ArrayList;
 
 import de.szut.ita13.app.schulapp.R;
 
 /**
- * Created by Michelé on 24.06.2015.
+ * Created by Michelé on 28.06.2015.
  */
-public class RemoveSubjectDialog extends DialogFragment implements View.OnClickListener {
+public class TimeTableChooserSubjectDialog extends DialogFragment {
 
     public static final String TAG = TimeTableItemDialog.class.getSimpleName();
 
-    private TimeTableRemoveSubjectAdapter timeTableRemoveSubjectAdapter;
     private Context context;
+    private int row;
+    private int column;
+    private TimeTableItemDialog itemDialog;
 
-    public RemoveSubjectDialog(Context context){
+    public TimeTableChooserSubjectDialog(Context context, int row, int column, TimeTableItemDialog itemDialog){
         this.context = context;
+        this.row = row;
+        this.column = column;
+        this.itemDialog = itemDialog;
     }
 
     @Override
@@ -40,15 +35,13 @@ public class RemoveSubjectDialog extends DialogFragment implements View.OnClickL
         View rootView = inflater.inflate(R.layout.timetable_show_subjects_list_layout, container,
                 false);
         ListView listView = (ListView)rootView.findViewById(R.id.showSubjectList);
-        timeTableRemoveSubjectAdapter = new TimeTableRemoveSubjectAdapter(context);
-        listView.setAdapter(timeTableRemoveSubjectAdapter);
-        getDialog().setTitle("Fach entfernen");
+        TimeTableChooserSubjectAdapter timeTableChooseSubjecAdapter= new TimeTableChooserSubjectAdapter(context, row, column, this);
+        listView.setAdapter(timeTableChooseSubjecAdapter);
+        getDialog().setTitle("Faecher");
         return rootView;
     }
 
-
-    @Override
-    public void onClick(View view) {
-
+    public TimeTableItemDialog getItemDialog() {
+        return itemDialog;
     }
 }

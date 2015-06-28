@@ -75,7 +75,7 @@ public class CalendarMonth {
             if((i + firstOfMonthOffset) % 7 == 0 && i != 0) {
                 calendarMonth.addCalendarElement(week);
                 week = new CalendarWeek(calendar);
-                firstWeekNumberOfMonth += 1;
+                firstWeekNumberOfMonth = DateUtil.getWeekOfYear(i + 1, month, year);
                 week.setWeekNumber(firstWeekNumberOfMonth);
             }
             if(!hasFilledBlanks) {

@@ -1,7 +1,7 @@
 package de.szut.ita13.app.schulapp.timetable;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -10,9 +10,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Switch;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 
 import de.szut.ita13.app.schulapp.R;
 
@@ -20,19 +21,23 @@ import de.szut.ita13.app.schulapp.R;
 /**
  * Created by Rene on 19.06.2015.
  */
-public class TimeTableActivity extends FragmentActivity implements View.OnClickListener {
+public class TimeTableActivity extends FragmentActivity implements View.OnClickListener, DialogInterface.OnDismissListener {
 
     private TimeTableSetup timeTableSetup;
     public static TimeTableModifier timeTableModifier;
     private FragmentManager fm;
-    private TimeTableDataSource timeTableDataSource;
+    public static TimeTableDataSource timeTableDataSource;
     public static ArrayList<TimeTableItem> subjects;
-
+    public static Hashtable<Integer,Hashtable<Integer,TimeTableLessonItem>> lessonItems;
+    public static HashMap<Integer,TimeTableItem> subjectMap;
     public ArrayList<TimeTableItem> getSubjects() {
         return subjects;
     }
 
 
+    public static Hashtable<Integer,Hashtable<Integer,TimeTableLessonItem>> getLessonItems() {
+        return lessonItems;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,7 @@ public class TimeTableActivity extends FragmentActivity implements View.OnClickL
         timeTableDataSource = new TimeTableDataSource(getApplicationContext());
         timeTableDataSource.open();
         subjects = timeTableDataSource.getItems();
+        lessonItems = timeTableDataSource.getLessonItems();
         timeTableDataSource.close();
     }
 
@@ -77,7 +83,7 @@ public class TimeTableActivity extends FragmentActivity implements View.OnClickL
                 item.setChecked(timeTableModifier.editMode);
                 break;
             case R.id.removeSubject :
-                RemoveSubjectDialog removeSubjectDialog = new RemoveSubjectDialog(getApplicationContext());
+                TimeTableRemoveSubjectDialog removeSubjectDialog = new TimeTableRemoveSubjectDialog(getApplicationContext());
                 removeSubjectDialog.show(fm, "Fach entfernen");
                 break;
         }
@@ -85,10 +91,19 @@ public class TimeTableActivity extends FragmentActivity implements View.OnClickL
     }
 
     public void onClick(View view) {
-        TimeTableItemDialog timeTableItemDialog = new TimeTableItemDialog(view, this);
+        TimeTableItemDialog timeTableItemDialog = new TimeTableItemDialog(view, this, fm);
         timeTableItemDialog.show(fm, "Fachauswahl");
 
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+        Log.d("TimeTableActivity", "OnDismiss");
+        timeTableDataSource.open();
+        lessonItems = timeTableDataSource.getLessonItems();
+        timeTableDataSource.close();
 
+
+        timeTableModifier.update();
+    }
 }

@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import de.szut.ita13.app.schulapp.calendar.container.CalendarTime;
 import de.szut.ita13.app.schulapp.calendar.dao.DatabaseHelper;
@@ -114,6 +116,27 @@ public class TimeTableDataSource {
     public void deleteTimeTableItem(TimeTableItem item) {
         database.delete(TimeTableDatabaseHelper.TABLE_SUBJECT, TimeTableDatabaseHelper.COLUMN_ID
                 + " = " + item.getID(), null);
+    }
+
+    public Hashtable<Integer,Hashtable<Integer,TimeTableLessonItem>> getLessonItems(){
+        String selectQuery = "SELECT * FROM " + TimeTableDatabaseHelper.TABLE_TIMETABLE + ";";
+        Cursor cursor = database.rawQuery(selectQuery, new String[]{});
+        Hashtable<Integer,Hashtable<Integer,TimeTableLessonItem>> timeTableLessonItems = new TimeTableLessonItem.ArrayListBuilder().ArrayListBuilder(cursor);
+        return timeTableLessonItems;
+    }
+
+    public void insertLessonItem(TimeTableLessonItem item){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TimeTableDatabaseHelper.COLUMN_COLUMN, item.getColumn());
+        contentValues.put(TimeTableDatabaseHelper.COLUMN_ROW, item.getRow());
+        contentValues.put(TimeTableDatabaseHelper.COLUMN_SUBJECTID, item.getSubjectID());
+        contentValues.put(TimeTableDatabaseHelper.COLUMN_WEEK, item.getWeek());
+        long id = database.insert(TimeTableDatabaseHelper.TABLE_TIMETABLE, null, contentValues);
+    }
+
+    public void deleteLessonItem (TimeTableLessonItem item){
+        database.delete(TimeTableDatabaseHelper.TABLE_TIMETABLE, TimeTableDatabaseHelper.COLUMN_ID2
+                + " = " + item.getId(), null);
     }
 
 

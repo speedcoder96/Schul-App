@@ -7,7 +7,7 @@ public interface TimeTableMatrix {
 
     public TimeTableRowItem getRowAt(int index);
 
-    public TimeTableItem getItemAt(int row, int column);
+    public TimeTableLessonItem getItemAt(int row, int column);
 
     public void setItemAt(int row, int column, TimeTableItem item);
 

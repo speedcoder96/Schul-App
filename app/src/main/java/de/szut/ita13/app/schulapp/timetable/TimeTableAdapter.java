@@ -1,6 +1,7 @@
 package de.szut.ita13.app.schulapp.timetable;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class TimeTableAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
+        Log.d("TimeTableAdapter", "Tes");
         if(position == 0){
 
             view = layoutInflater.inflate(R.layout.timetable_header_layout, viewGroup, false);
@@ -60,8 +62,12 @@ public class TimeTableAdapter extends BaseAdapter {
             for(int i = 0; i < timeTableMatrix.getColumnCount(position); i++){
                 TextView itemTextView = (TextView) view.findViewById(TimeTableRowItem.IDS[i + 1]);
                 itemTextView.setOnClickListener(timeTableActivity);
-                itemTextView.setTag(timeTableMatrix.getItemAt(position, i));
-                itemTextView.setText(timeTableMatrix.getItemAt(position, i).getInformation());
+                if(timeTableMatrix.getItemAt(position, i) == null){
+                    itemTextView.setText("" + "\n" + "");
+                } else {
+                    itemTextView.setText(TimeTableActivity.subjectMap.get(timeTableMatrix.getItemAt(position, i).getSubjectID()).getInformation());
+                }
+                itemTextView.setTag(new int[]{position,i});
             }
         }
         return view;
